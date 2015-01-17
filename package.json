@@ -1,0 +1,28 @@
+{
+  "name": "u.js",
+  "version": "0.1.0",
+  "description": "micro framework, inspired by ki.js",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://git.dev.so/libs/u-js"
+  },
+  "author": {
+    "name": "Steve Ottoz",
+    "email": "so@dev.so"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-uglify": "^0.6.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-jsdoc": "^0.5.7",
+    "grunt-notify": "^0.4.1",
+    "grunt-text-replace": "^0.4.0",
+    "load-grunt-config": "^0.16.0",
+    "time-grunt": "^1.0.0"
+  }
+}
