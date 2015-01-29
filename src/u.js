@@ -8,32 +8,32 @@
    * @param {(string|object|function)} arg - selector, dom element or function
    */
   function Init(arg) {
-    arr.push.apply(this, arg && arg.nodeType ? [arg] : µ.isArray(arg) ? arg : '' + arg === arg ? doc.querySelectorAll(arg) : undef);
+    arr.push.apply(this, arg && arg.nodeType ? [arg] : u.isArray(arg) ? arg : '' + arg === arg ? doc.querySelectorAll(arg) : undef);
   }
 
 
   /**
-   * µ main function
+   * u main function
    * @param  {(string|object|function)} arg - selector, dom element or function
    * @return {(object|undefined)}             instance or execute function on dom ready
    */
-  win.µ = function(arg) {
-    return /^f/.test(typeof arg) ? /c/.test(doc.readyState) ? arg() : µ(doc).on('DOMContentLoaded', arg) : new Init(arg);
+  win.u = function(arg) {
+    return /^f/.test(typeof arg) ? /c/.test(doc.readyState) ? arg() : u(doc).on('DOMContentLoaded', arg) : new Init(arg);
   };
 
 
   /**
-   * µ version
+   * u version
    * @type {string}
    */
-  µ.version = '{{version}}';
+  u.version = '{{version}}';
 
 
   /**
-   * µ prototype definition
+   * u prototype definition
    * @type {object}
    */
-  µ[proto] = Init[proto] = {
+  u[proto] = Init[proto] = {
 
 
     /**
@@ -53,7 +53,7 @@
     on: function(event, handler) {
       return this.each(function(el) {
         var events = event.split(' ');
-        µ.each(events, function(i, event){
+        u.each(events, function(i, event){
           el.addEventListener(event, handler);
         });
       });
@@ -70,7 +70,7 @@
     one: function(event, handler) {
       return this.each(function(el) {
         var events = event.split(' ');
-        µ.each(events, function(i, event){
+        u.each(events, function(i, event){
           el.addEventListener(event, function temp(e) {
             el.removeEventListener(event, temp);
             handler.call(this,e);
@@ -90,7 +90,7 @@
     off: function(event, handler) {
       return this.each(function(el) {
         var events = event.split(' ');
-        µ.each(events, function(i, event){
+        u.each(events, function(i, event){
           el.removeEventListener(event, handler);
         });
       });
@@ -257,8 +257,8 @@
      * @return {(string|object)}         attribute value or this
      */
     data: function(attr, val) {
-      return val === undef ? this[0].dataset ? this[0].dataset[µ.toCamel(attr)] : this[0].getAttribute('data-' + attr) : this.each(function(el) {
-        (el.dataset[µ.toCamel(attr)] = val) || (el.setAttribute('data-' + attr, val));
+      return val === undef ? this[0].dataset ? this[0].dataset[u.toCamel(attr)] : this[0].getAttribute('data-' + attr) : this.each(function(el) {
+        (el.dataset[u.toCamel(attr)] = val) || (el.setAttribute('data-' + attr, val));
       });
     },
 
@@ -344,7 +344,7 @@
      * @return {object} element
      */
     first: function() {
-      return µ(this[0]);
+      return u(this[0]);
     },
 
 
@@ -354,7 +354,7 @@
      * @return {object} element
      */
     last: function() {
-      return µ(this[this.length - 1]);
+      return u(this[this.length - 1]);
     },
 
 
@@ -365,7 +365,7 @@
      * @return {object} element
      */
     get: function(index) {
-      return µ(this[index]);
+      return u(this[index]);
     },
 
 
@@ -375,7 +375,7 @@
      * @return {object} element clone
      */
     clone: function() {
-      return µ(this[0].cloneNode(true));
+      return u(this[0].cloneNode(true));
     },
 
 
@@ -397,7 +397,7 @@
      * @return {object}       matching elements
      */
     find: function(sel) {
-      return µ(µ.nl2arr(this[0].querySelectorAll(sel)));
+      return u(u.nl2arr(this[0].querySelectorAll(sel)));
     },
 
 
@@ -407,7 +407,7 @@
      * @return {object} child elements
      */
     children: function() {
-      return µ(µ.nl2arr(this[0].children));
+      return u(u.nl2arr(this[0].children));
     },
 
 
@@ -417,7 +417,7 @@
      * @return {object} sibling element
      */
     prev: function() {
-      return µ(this[0].previousElementSibling);
+      return u(this[0].previousElementSibling);
     },
 
 
@@ -427,7 +427,7 @@
      * @return {object} sibling element
      */
     next: function() {
-      return µ(this[0].nextElementSibling);
+      return u(this[0].nextElementSibling);
     },
 
 
@@ -439,8 +439,8 @@
      */
     siblings: function(sel) {
       var el = this[0];
-      return µ(arr.filter.call(el.parentNode.children, function(child) {
-        return sel ? child !== el && µ(child).is(sel) : child !== el;
+      return u(arr.filter.call(el.parentNode.children, function(child) {
+        return sel ? child !== el && u(child).is(sel) : child !== el;
       }));
     },
 
@@ -502,7 +502,7 @@
      * @return {object} element
      */
     parent: function() {
-      return (this.length < 2) ? µ(this[0].parentNode): [];
+      return (this.length < 2) ? u(this[0].parentNode): [];
     },
 
 
@@ -575,7 +575,7 @@
    * @param  {function} callback - function to call on each item
    * @return {object}   this
    */
-  µ.each = function(array, callback) {
+  u.each = function(array, callback) {
     for(var i in array) {
       callback.call(array[i], i, array[i]);
     }
@@ -597,10 +597,10 @@
    * @return {object} this
    */
   props.forEach(function(prop, index) {
-    µ[proto][prop] = function(cls) {
+    u[proto][prop] = function(cls) {
       return this.each(function(el) {
         var classes =  cls.split(' ');
-        µ.each(classes, function(i,cls){
+        u.each(classes, function(i,cls){
           el.classList[maps[index]](cls);
         });
       });
@@ -614,7 +614,7 @@
    * @param  {string} val - string to trim
    * @return {string}       trimmed value
    */
-  µ.trim = function(val) {
+  u.trim = function(val) {
     return val.replace(/^\s+|\s+$/g, '');
   };
 
@@ -626,7 +626,7 @@
    * @param  {object} b - object to extend by
    * @return {object}     extended object
    */
-  µ.extend = function(a, b){
+  u.extend = function(a, b){
     var c = {}, p;
     for(p in a) {
       c[p] = (typeof b[p] === 'undefined') ? a[p] : b[p];
@@ -646,7 +646,7 @@
    * @return {object}
    */
   "push pop shift unshift filter map splice".split(" ").forEach(function(m) {
-    µ[m] = function(a, b) {
+    u[m] = function(a, b) {
       return a[m](b);
     };
   });
@@ -658,7 +658,7 @@
    * @param {string} item  - string to find
    * @param {object} array - array to search
    */
-  µ.inArray = function(item, array) {
+  u.inArray = function(item, array) {
     return array.indexOf(item);
   };
 
@@ -669,7 +669,7 @@
    * @param  {object}  array - array to check
    * @return {boolean}
    */
-  µ.isArray = function(array) {
+  u.isArray = function(array) {
     return Array.isArray(array);
   };
 
@@ -680,7 +680,7 @@
    * @param  {object} nl - NodeList object
    * @return {object}      array
    */
-  µ.nl2arr = function(nl) {
+  u.nl2arr = function(nl) {
     return arr.slice.call(nl);
   },
 
@@ -691,7 +691,7 @@
    * @param  {string} str - camelCase string
    * @return {string}       converted string
    */
-  µ.toDash = function(str) {
+  u.toDash = function(str) {
     return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
   };
 
@@ -702,7 +702,7 @@
    * @param  {string} str - dash-separated string
    * @return {string}       converted string
    */
-  µ.toCamel = function(str) {
+  u.toCamel = function(str) {
     return str.toLowerCase().replace(/\b-([a-z])/g, function(all, char) {
       return char.toUpperCase();
     });
@@ -715,7 +715,7 @@
    * @param  {object}    e - event
    * @return {undefined}
    */
-  µ.stop = function(e) {
+  u.stop = function(e) {
     if (!e.preventDefault) {
       e.returnValue = false;
     } else {
@@ -732,7 +732,7 @@
    * @param  {string}  prefix - prefix for form encoded params
    * @return {string}           prepared string
    */
-  µ.param = function(obj, json, prefix) {
+  u.param = function(obj, json, prefix) {
     if (json) {
       return JSON.stringify(obj);
     }
@@ -741,7 +741,7 @@
       for(var p in obj) {
         var k = prefix ? prefix + "[" + p + "]" : p,
         v = obj[p];
-        str.push(typeof v === "object" ? µ.param(v, json, k) : encodeURIComponent(k) + "=" + encodeURIComponent(v));
+        str.push(typeof v === "object" ? u.param(v, json, k) : encodeURIComponent(k) + "=" + encodeURIComponent(v));
       }
       return str.join("&");
     }
@@ -753,7 +753,7 @@
    * @param  {string}          obj - string to be parsed
    * @return {(string|object)}       unparsed string or parsed object
    */
-  µ.parse = function(obj) {
+  u.parse = function(obj) {
     try {
       return JSON.parse(obj);
     }
@@ -767,7 +767,7 @@
    * ajax setup
    * @type {object}
    */
-  µ.ajax = {
+  u.ajax = {
 
 
     /**
@@ -804,18 +804,18 @@
       // create function vars
       var cts = this.cts,
           xhr = new XMLHttpRequest(),
-          data = µ.param(opts.data, opts.json);
+          data = u.param(opts.data, opts.json);
 
       // XMLHttpRequest state change function
       xhr.onreadystatechange = function(){
         if (xhr.readyState === 4) {
           if (xhr.status >= 200 && xhr.status < 400){
             // call success callback
-            opts.success(µ.parse(xhr.response), xhr.statusText);
+            opts.success(u.parse(xhr.response), xhr.statusText);
           }
           else {
             // call error callback
-            opts.error(µ.parse(xhr.response), xhr.statusText);
+            opts.error(u.parse(xhr.response), xhr.statusText);
           }
         }
 
@@ -844,7 +844,7 @@
      * @return {undefined}
      */
     defaults: function(opts) {
-      this.opts = µ.extend(this.opts, opts);
+      this.opts = u.extend(this.opts, opts);
     }
   };
 
@@ -855,11 +855,11 @@
    * @param  {object}    opts - ajax options
    * @return {undefined}
    */
-  µ.get = function(opts) {
-    opts = µ.extend(µ.ajax.opts, opts);
+  u.get = function(opts) {
+    opts = u.extend(u.ajax.opts, opts);
     opts.json = false;
-    opts.url += '?' + (µ.param(opts.data) || '');
-    µ.ajax._send(opts, 'GET');
+    opts.url += '?' + (u.param(opts.data) || '');
+    u.ajax._send(opts, 'GET');
   };
 
 
@@ -871,17 +871,24 @@
    */
   var methods = ['post', 'put', 'patch', 'options', 'delete'];
   methods.forEach(function(method, index) {
-    µ[method] = function(opts) {
-      opts = µ.extend(µ.ajax.opts, opts);
-      µ.ajax._send(opts, method.toUpperCase());
+    u[method] = function(opts) {
+      opts = u.extend(u.ajax.opts, opts);
+      u.ajax._send(opts, method.toUpperCase());
     };
   });
 
 
   /**
-   * if $ is not used assign µ to it
+   * if $ is not used assign u to it
    * @type {object}
    */
-  win.$ = win.$ || µ;
+  win.$ = win.$ || u;
+
+
+  /**
+   * assign u to µ
+   * @type {object}
+   */
+  win.µ = u;
 
 })(window, document, [], 'prototype');
