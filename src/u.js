@@ -622,19 +622,23 @@
   /**
    * extend method
    * extend an object by another object
-   * @param  {object} a - object to be extended
-   * @param  {object} b - object to extend by
-   * @return {object}     extended object
+   * @param  {object} base  - object to be extended or object to extend u.fn by
+   * @param  {object} [ext] - object to extend by
+   * @return {object}         extended object
    */
-  u.extend = function(a, b){
-    var c = {}, p;
-    for(p in a) {
-      c[p] = (typeof b[p] === 'undefined') ? a[p] : b[p];
+  u.extend = u.fn.extend = function(base, ext){
+    var result = {},
+        prop;
+
+    arguments[1] || (ext = base, base = result = u.fn);
+
+    for(prop in base) {
+      result[prop] = (ext[prop] === undef) ? base[prop] : ext[prop];
     }
-    for(p in b) {
-      c[p] = (typeof b[p] === 'undefined') ? a[p] : b[p];
+    for(prop in ext) {
+      result[prop] = ext[prop];
     }
-    return c;
+    return result;
   };
 
 
