@@ -33,7 +33,7 @@
    * u prototype definition
    * @type {object}
    */
-  u[proto] = Init[proto] = {
+  u.fn = u[proto] = Init[proto] = {
 
 
     /**
