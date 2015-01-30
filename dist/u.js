@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.1.1
+ * u.js - Version 0.1.2
  * micro framework, inspired by ki.js
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-01-29 17:46:47
+ * Build date: 2015-01-30 16:45:02
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -33,14 +33,14 @@
    * u version
    * @type {string}
    */
-  u.version = '0.1.1';
+  u.version = '0.1.2';
 
 
   /**
    * u prototype definition
    * @type {object}
    */
-  u[proto] = Init[proto] = {
+  u.fn = u[proto] = Init[proto] = {
 
 
     /**
@@ -629,19 +629,23 @@
   /**
    * extend method
    * extend an object by another object
-   * @param  {object} a - object to be extended
-   * @param  {object} b - object to extend by
-   * @return {object}     extended object
+   * @param  {object} base  - object to be extended or object to extend u.fn by
+   * @param  {object} [ext] - object to extend by
+   * @return {object}         extended object
    */
-  u.extend = function(a, b){
-    var c = {}, p;
-    for(p in a) {
-      c[p] = (typeof b[p] === 'undefined') ? a[p] : b[p];
+  u.extend = u.fn.extend = function(base, ext){
+    var result = {},
+        prop;
+
+    arguments[1] || (ext = base, base = result = u.fn);
+
+    for(prop in base) {
+      result[prop] = (ext[prop] === undef) ? base[prop] : ext[prop];
     }
-    for(p in b) {
-      c[p] = (typeof b[p] === 'undefined') ? a[p] : b[p];
+    for(prop in ext) {
+      result[prop] = ext[prop];
     }
-    return c;
+    return result;
   };
 
 
