@@ -474,7 +474,7 @@
     /**
      * outerHTML method
      * get or set outerHTML value
-     * @param  {[type]}          [val] - html value
+     * @param  {string}          [val] - html value
      * @return {(string|object)}         html value or this
      */
     outerHTML: function(val) {
