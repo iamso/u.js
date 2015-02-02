@@ -509,6 +509,16 @@
 
 
     /**
+     * bytes method
+     * get byte size of an element's text
+     * @return {number} byte size
+     */
+    bytes: function() {
+      return u.bytes(this[0].value || this[0].textContent);
+    },
+
+
+    /**
      * parent method
      * get the parent element
      * @return {object} element
@@ -722,6 +732,17 @@
     return str.toLowerCase().replace(/\b-([a-z])/g, function(all, char) {
       return char.toUpperCase();
     });
+  };
+
+
+  /**
+   * bytes method
+   * get byte size of a UTF-8 string
+   * @param  {string} str - UTF-8 string
+   * @return {number}       byte size
+   */
+  u.bytes = function(str) {
+    return ~-encodeURI(str).split(/%..|./).length;
   };
 
 
