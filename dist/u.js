@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.1.2
+ * u.js - Version 0.1.3
  * micro framework, inspired by ki.js
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-01-30 16:45:02
+ * Build date: 2015-03-26 16:00:11
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -33,7 +33,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.1.2';
+  u.version = '0.1.3';
 
 
   /**
@@ -481,12 +481,24 @@
     /**
      * outerHTML method
      * get or set outerHTML value
-     * @param  {[type]}          [val] - html value
+     * @param  {string}          [val] - html value
      * @return {(string|object)}         html value or this
      */
     outerHTML: function(val) {
       return val === undef ? this[0].outerHTML : this.each(function(el) {
         el.outerHTML = val;
+      });
+    },
+
+    /**
+     * val method
+     * get or set the value property of inputs and textareas
+     * @param  {string}          [val] - text value
+     * @return {(string|object)}         text value or this
+     */
+    val: function(val) {
+      return val === undef ? this[0].value : this.each(function(el) {
+        el.value = val;
       });
     },
 
@@ -500,6 +512,16 @@
       return this.each(function(el) {
         el.innerHTML = '';
       });
+    },
+
+
+    /**
+     * bytes method
+     * get byte size of an element's text
+     * @return {number} byte size
+     */
+    bytes: function() {
+      return u.bytes(this[0].value || this[0].textContent);
     },
 
 
@@ -721,6 +743,32 @@
 
 
   /**
+   * bytes method
+   * get byte size of a UTF-8 string
+   * @param  {string} str - UTF-8 string
+   * @return {number}       byte size
+   */
+  u.bytes = function(str) {
+    return ~-encodeURI(str).split(/%..|./).length;
+  };
+
+
+  /**
+   * prfx method
+   * get prefixed version of css properties
+   * @param  {string}    a     - css property
+   * @param  {undefined} b,c,d - placeholder variables
+   * @return {string}            prefixed css property
+   */
+  u.prfx = function prfx(a,b,c,d){
+    for (d?d=b.toUpperCase():b=4;!d&&b--;d=(d=d.replace(/-(.)/g,prfx)) in (new Image).style&&d) {
+      d=[['Moz-','Webkit-','Ms-','O-'][b]]+a;
+    }
+    return d;
+  },
+
+
+  /**
    * stop method
    * preventDefaut
    * @param  {object}    e - event
@@ -772,6 +820,26 @@
       return obj;
     }
   };
+
+  /**
+   * tpl method
+   * parse a template string with values
+   * from https://gist.github.com/haochi/1075080
+   * @param  {string} str - string containing {{variables}}
+   * @param  {object} obj - object containing values
+   * @return {string}       parsed string
+   */
+  u.tpl = function(str, obj){
+    return str.replace(/{{*([^}]+)*}}/g,
+      function(tmp, val){
+        tmp = obj;
+        val.replace(/[^.]+/g,function(key){
+          tmp = tmp[key];
+        });
+        return tmp;
+      }
+    );
+  },
 
 
   /**
