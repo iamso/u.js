@@ -851,7 +851,8 @@
       json: true, // true to send as json
       auth: null,
       success: function() {},
-      error: function() {}
+      error: function() {},
+      progress: function() {}
     },
 
 
@@ -890,7 +891,14 @@
             opts.error(u.parse(xhr.response), xhr.statusText);
           }
         }
+      };
 
+      // XMLHttpRequest on progress function
+      xhr.onprogress = function(event) {
+        if (event.lengthComputable) {
+          // call progress callback
+          opts.progress(event.total, event.loaded);
+        }
       };
 
       // open request and set headers
