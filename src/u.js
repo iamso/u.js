@@ -852,7 +852,8 @@
       auth: null,
       success: function() {},
       error: function() {},
-      progress: function() {}
+      up: function() {},
+      down: function() {}
     },
 
 
@@ -893,11 +894,19 @@
         }
       };
 
-      // XMLHttpRequest on progress function
+      // XMLHttpRequest upload progress function
+      xhr.upload.onprogress = function(event) {
+        if (event.lengthComputable) {
+          // call progress callback
+          opts.up(event.total, event.loaded);
+        }
+      };
+
+      // XMLHttpRequest download progress function
       xhr.onprogress = function(event) {
         if (event.lengthComputable) {
           // call progress callback
-          opts.progress(event.total, event.loaded);
+          opts.down(event.total, event.loaded);
         }
       };
 
