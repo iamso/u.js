@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.1.3
+ * u.js - Version 0.1.4
  * micro framework, inspired by ki.js
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-03-26 16:00:11
+ * Build date: 2015-04-04 02:34:29
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -33,7 +33,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.1.3';
+  u.version = '0.1.4';
 
 
   /**
@@ -858,7 +858,9 @@
       json: true, // true to send as json
       auth: null,
       success: function() {},
-      error: function() {}
+      error: function() {},
+      up: function() {},
+      down: function() {}
     },
 
 
@@ -897,7 +899,22 @@
             opts.error(u.parse(xhr.response), xhr.statusText);
           }
         }
+      };
 
+      // XMLHttpRequest upload progress function
+      xhr.upload.onprogress = function(event) {
+        if (event.lengthComputable) {
+          // call progress callback
+          opts.up(event.total, event.loaded);
+        }
+      };
+
+      // XMLHttpRequest download progress function
+      xhr.onprogress = function(event) {
+        if (event.lengthComputable) {
+          // call progress callback
+          opts.down(event.total, event.loaded);
+        }
       };
 
       // open request and set headers
@@ -913,6 +930,8 @@
 
       // send the request
       xhr.send(data || null);
+
+      return xhr;
 
     },
 
@@ -938,7 +957,7 @@
     opts = u.extend(u.ajax.opts, opts);
     opts.json = false;
     opts.url += '?' + (u.param(opts.data) || '');
-    u.ajax._send(opts, 'GET');
+    return u.ajax._send(opts, 'GET');
   };
 
 
@@ -952,7 +971,7 @@
   methods.forEach(function(method, index) {
     u[method] = function(opts) {
       opts = u.extend(u.ajax.opts, opts);
-      u.ajax._send(opts, method.toUpperCase());
+      return u.ajax._send(opts, method.toUpperCase());
     };
   });
 
