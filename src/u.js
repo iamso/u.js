@@ -924,6 +924,8 @@
       // send the request
       xhr.send(data || null);
 
+      return xhr;
+
     },
 
 
@@ -948,7 +950,7 @@
     opts = u.extend(u.ajax.opts, opts);
     opts.json = false;
     opts.url += '?' + (u.param(opts.data) || '');
-    u.ajax._send(opts, 'GET');
+    return u.ajax._send(opts, 'GET');
   };
 
 
@@ -962,7 +964,7 @@
   methods.forEach(function(method, index) {
     u[method] = function(opts) {
       opts = u.extend(u.ajax.opts, opts);
-      u.ajax._send(opts, method.toUpperCase());
+      return u.ajax._send(opts, method.toUpperCase());
     };
   });
 
