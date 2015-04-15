@@ -769,7 +769,7 @@
 
   /**
    * stop method
-   * preventDefaut
+   * preventDefault
    * @param  {object}    e - event
    * @return {undefined}
    */
