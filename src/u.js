@@ -147,11 +147,14 @@
 
     /**
      * width method
-     * get element width
+     * get or set element width
+     * @param  {number} val   - new width
      * @return {number} width
      */
-    width: function() {
-      return this[0].clientWidth;
+    width: function(val) {
+      return val === undef ? this[0].clientWidth || this[0].innerWidth : this.each(function(el) {
+        el.style.width = val + 'px';
+      });
     },
 
 
@@ -168,11 +171,14 @@
 
     /**
      * height method
-     * get element height
+     * get or set element height
+     * @param  {number} val    - new height
      * @return {number} height
      */
-    height: function() {
-      return this[0].clientHeight;
+    height: function(val) {
+      return val === undef ? this[0].clientHeight || this[0].innerHeight : this.each(function(el) {
+        el.style.height = val + 'px';
+      });
     },
 
 
