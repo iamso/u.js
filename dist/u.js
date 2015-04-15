@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.1.4
+ * u.js - Version 0.1.5
  * micro framework, inspired by ki.js
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-04-04 02:34:29
+ * Build date: 2015-04-15 09:50:14
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -15,7 +15,7 @@
    * @param {(string|object|function)} arg - selector, dom element or function
    */
   function Init(arg) {
-    arr.push.apply(this, arg && arg.nodeType ? [arg] : u.isArray(arg) ? arg : '' + arg === arg ? doc.querySelectorAll(arg) : undef);
+    arr.push.apply(this, arg && (arg.nodeType || /^o/.test(typeof arg)) && arg !== null ? [arg] : u.isArray(arg) ? arg : '' + arg === arg ? doc.querySelectorAll(arg) : undef);
   }
 
 
@@ -33,7 +33,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.1.4';
+  u.version = '0.1.5';
 
 
   /**
@@ -154,11 +154,14 @@
 
     /**
      * width method
-     * get element width
+     * get or set element width
+     * @param  {number} val   - new width
      * @return {number} width
      */
-    width: function() {
-      return this[0].clientWidth;
+    width: function(val) {
+      return val === undef ? this[0].clientWidth || this[0].innerWidth : this.each(function(el) {
+        el.style.width = val + 'px';
+      });
     },
 
 
@@ -175,11 +178,14 @@
 
     /**
      * height method
-     * get element height
+     * get or set element height
+     * @param  {number} val    - new height
      * @return {number} height
      */
-    height: function() {
-      return this[0].clientHeight;
+    height: function(val) {
+      return val === undef ? this[0].clientHeight || this[0].innerHeight : this.each(function(el) {
+        el.style.height = val + 'px';
+      });
     },
 
 
