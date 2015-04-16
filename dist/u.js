@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.1.5
+ * u.js - Version 0.1.6
  * micro framework, inspired by ki.js
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-04-15 09:50:14
+ * Build date: 2015-04-16 10:46:01
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -33,7 +33,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.1.5';
+  u.version = '0.1.6';
 
 
   /**
@@ -149,6 +149,19 @@
         top: rect.top + doc.body.scrollTop,
         left: rect.left + doc.body.scrollLeft
       };
+    },
+
+
+    /**
+     * scrollTop method
+     * get or set element scrollTop
+     * @param  {number} val       - new scrollTop
+     * @return {number} scrollTop
+     */
+    scrollTop: function(val) {
+      return val === undef ? this[0].scrollTop : this.each(function(el) {
+        el.scrollTop = val;
+      });
     },
 
 
@@ -776,7 +789,7 @@
 
   /**
    * stop method
-   * preventDefaut
+   * preventDefault
    * @param  {object}    e - event
    * @return {undefined}
    */
