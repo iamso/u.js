@@ -146,6 +146,19 @@
 
 
     /**
+     * scrollTop method
+     * get or set element scrollTop
+     * @param  {number} val       - new scrollTop
+     * @return {number} scrollTop
+     */
+    scrollTop: function(val) {
+      return val === undef ? this[0].scrollTop : this.each(function(el) {
+        el.scrollTop = val;
+      });
+    },
+
+
+    /**
      * width method
      * get or set element width
      * @param  {number} val   - new width
