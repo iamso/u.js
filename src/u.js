@@ -603,6 +603,29 @@
 
 
     /**
+     * focus method
+     * give an element focus
+     * @return {object} this
+     */
+    focus: function() {
+      this[0].focus();
+      return this;
+    },
+
+
+    /**
+     * blur method
+     * remove focus from elements
+     * @return {object} this
+     */
+    blur: function() {
+      return this.each(function(el) {
+        el.blur();
+      });
+    },
+
+
+    /**
      * for some reason is needed to get an array-like
      * representation instead of an object
      */
