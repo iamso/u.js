@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.1.6
+ * u.js - Version 0.1.7
  * micro framework, inspired by ki.js
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-04-16 10:46:01
+ * Build date: 2015-04-17 08:38:22
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -33,7 +33,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.1.6';
+  u.version = '0.1.7';
 
 
   /**
@@ -606,6 +606,29 @@
         }
         return false;
       }
+    },
+
+
+    /**
+     * focus method
+     * give an element focus
+     * @return {object} this
+     */
+    focus: function() {
+      this[0].focus();
+      return this;
+    },
+
+
+    /**
+     * blur method
+     * remove focus from elements
+     * @return {object} this
+     */
+    blur: function() {
+      return this.each(function(el) {
+        el.blur();
+      });
     },
 
 
