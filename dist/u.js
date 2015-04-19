@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.1.7
+ * u.js - Version 0.1.8
  * micro framework, inspired by ki.js
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-04-17 08:38:22
+ * Build date: 2015-04-19 23:56:42
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -33,7 +33,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.1.7';
+  u.version = '0.1.8';
 
 
   /**
@@ -155,7 +155,7 @@
     /**
      * scrollTop method
      * get or set element scrollTop
-     * @param  {number} val       - new scrollTop
+     * @param  {number} [val]     - new scrollTop
      * @return {number} scrollTop
      */
     scrollTop: function(val) {
@@ -168,7 +168,7 @@
     /**
      * width method
      * get or set element width
-     * @param  {number} val   - new width
+     * @param  {number} [val] - new width
      * @return {number} width
      */
     width: function(val) {
@@ -181,7 +181,7 @@
     /**
      * outerWidth method
      * get element outer width
-     * @param  {boolean} margin - if true, includes margin
+     * @param  {boolean} [margin]   - if true, includes margin
      * @return {number}  outerWidth
      */
     outerWidth: function(margin) {
@@ -192,7 +192,7 @@
     /**
      * height method
      * get or set element height
-     * @param  {number} val    - new height
+     * @param  {number} [val]  - new height
      * @return {number} height
      */
     height: function(val) {
@@ -205,7 +205,7 @@
     /**
      * outerHeight method
      * get element outer height
-     * @param  {boolean} margin - if true, includes margin
+     * @param  {boolean} [margin]    - if true, includes margin
      * @return {number}  outerHeight
      */
     outerHeight: function(margin) {
@@ -569,7 +569,7 @@
     /**
      * trigger method
      * trigger an event for an element
-     * @param  {string} e - event name
+     * @param  {string} e    - event name
      * @return {object} this
      */
     trigger: function(e) {
@@ -641,8 +641,8 @@
 
 
   /**
-   * each method
-   * @param  {array} arr - array to iterate over
+   * each function
+   * @param  {array}    arr      - array to iterate over
    * @param  {function} callback - function to call on each item
    * @return {object}   this
    */
@@ -655,7 +655,7 @@
 
 
   /**
-   * map class function names
+   * map class method names
    * @type {array}
    */
   var props = ['addClass', 'removeClass', 'toggleClass'],
@@ -663,8 +663,8 @@
 
 
   /**
-   * addClass, removeClass and toggleClass method
-   * @param  {string} cls - class name
+   * addClass, removeClass and toggleClass methods
+   * @param  {string} cls  - class name
    * @return {object} this
    */
   props.forEach(function(prop, index) {
@@ -680,7 +680,7 @@
 
 
   /**
-   * trim method
+   * trim function
    * trim trailing whitespace
    * @param  {string} val - string to trim
    * @return {string}       trimmed value
@@ -691,7 +691,7 @@
 
 
   /**
-   * extend method
+   * extend function
    * extend an object by another object
    * @param  {object} base  - object to be extended or object to extend u.fn by
    * @param  {object} [ext] - object to extend by
@@ -714,7 +714,7 @@
 
 
   /**
-   * array methods
+   * array function
    * push, pop, shift, unshift, filter, map, slice
    * @param  {object} a - array to call the method on
    * @param  {*}      b - argument to pass to the method
@@ -728,10 +728,11 @@
 
 
   /**
-   * inArray method
+   * inArray function
    * check if string is in array
-   * @param {string} item  - string to find
-   * @param {object} array - array to search
+   * @param  {string}  item  - string to find
+   * @param  {object}  array - array to search
+   * @return {boolean}
    */
   u.inArray = function(item, array) {
     return array.indexOf(item);
@@ -739,7 +740,7 @@
 
 
   /**
-   * isArray method
+   * isArray function
    * check if passed object is an array
    * @param  {object}  array - array to check
    * @return {boolean}
@@ -750,7 +751,7 @@
 
 
   /**
-   * nl2arr method
+   * nl2arr function
    * convert a NodeList object to an array
    * @param  {object} nl - NodeList object
    * @return {object}      array
@@ -761,7 +762,7 @@
 
 
   /**
-   * toDash method
+   * toDash function
    * convert camelCase string to dash-separated
    * @param  {string} str - camelCase string
    * @return {string}       converted string
@@ -772,7 +773,7 @@
 
 
   /**
-   * toCamel method
+   * toCamel function
    * convert dash-separated string to camelCase
    * @param  {string} str - dash-separated string
    * @return {string}       converted string
@@ -785,7 +786,7 @@
 
 
   /**
-   * bytes method
+   * bytes function
    * get byte size of a UTF-8 string
    * @param  {string} str - UTF-8 string
    * @return {number}       byte size
@@ -796,7 +797,34 @@
 
 
   /**
-   * prfx method
+   * uuid function
+   * create a random uuid
+   * from https://gist.github.com/jed/982883
+   * @param  {string} [a] - placeholder
+   * @return {string}       uuid
+   */
+  u.uuid = function uuid(a) {
+    return a ? (a ^ Math.random() * 16 >> a/4).toString(16) : ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, uuid);
+  };
+
+
+  /**
+   * rid function
+   * create a random id
+   * @param  {number} [a] - length of the id (default 32)
+   * @param  {number} [b] - radix (default 16)
+   * @return {string}       random id
+   */
+  u.rid = function(a, b) {
+    b = b || 16;
+    return Array(a || 32).join(0).replace(/./g, function() {
+        return(0| Math.random() * b).toString(b);
+    });
+  };
+
+
+  /**
+   * prfx function
    * get prefixed version of css properties
    * @param  {string}    a     - css property
    * @param  {undefined} b,c,d - placeholder variables
@@ -811,10 +839,10 @@
 
 
   /**
-   * stop method
+   * stop function
    * preventDefault
-   * @param  {object}    e - event
-   * @return {undefined}
+   * @param  {object} e - event
+   * @return {object} e - event
    */
   u.stop = function(e) {
     if (!e.preventDefault) {
@@ -822,11 +850,12 @@
     } else {
       e.preventDefault();
     }
+    return e;
   };
 
 
   /**
-   * param method
+   * param function
    * prepare data as json or form encoded param string
    * @param  {object}  obj    - data to prepare
    * @param  {boolean} json   - true for json
@@ -850,7 +879,7 @@
 
 
   /**
-   * parse method
+   * parse function
    * @param  {string}          obj - string to be parsed
    * @return {(string|object)}       unparsed string or parsed object
    */
@@ -864,7 +893,7 @@
   };
 
   /**
-   * tpl method
+   * tpl function
    * parse a template string with values
    * from https://gist.github.com/haochi/1075080
    * @param  {string} str - string containing {{variables}}
@@ -917,10 +946,10 @@
 
 
     /**
-     * ajax send method (internal use)
-     * @param  {object}    opts   - ajax options
-     * @param  {string}    method - http method
-     * @return {undefined}
+     * ajax send function (internal use)
+     * @param  {object} opts   - ajax options
+     * @param  {string} method - http method
+     * @return {object} xhr    - xhr object
      */
     _send: function(opts, method) {
 
@@ -990,10 +1019,10 @@
 
 
   /**
-   * get method
+   * get function
    * shortcut for ajx GET request
-   * @param  {object}    opts - ajax options
-   * @return {undefined}
+   * @param  {object} opts - ajax options
+   * @return {object} xhr  - xhr object
    */
   u.get = function(opts) {
     opts = u.extend(u.ajax.opts, opts);
@@ -1004,10 +1033,10 @@
 
 
   /**
-   * post, put, patch, options, delete methods
+   * post, put, patch, options, delete functions
    * shortcut for ajax POST, PUT, PATCH, OPTIONS and DELETE request
-   * @param  {object}    opts - ajax options
-   * @return {undefined}
+   * @param  {object} opts - ajax options
+   * @return {object} xhr  - xhr object
    */
   var methods = ['post', 'put', 'patch', 'options', 'delete'];
   methods.forEach(function(method, index) {
