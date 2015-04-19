@@ -790,6 +790,18 @@
 
 
   /**
+   * uuid function
+   * create a random uuid
+   * from https://gist.github.com/jed/982883
+   * @param  {string} [a] - placeholder
+   * @return {string}       uuid
+   */
+  u.uuid = function uuid(a) {
+    return a ? (a ^ Math.random() * 16 >> a/4).toString(16) : ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, uuid);
+  };
+
+
+  /**
    * prfx function
    * get prefixed version of css properties
    * @param  {string}    a     - css property
