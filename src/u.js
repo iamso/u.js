@@ -806,8 +806,8 @@
   /**
    * stop method
    * preventDefault
-   * @param  {object}    e - event
-   * @return {undefined}
+   * @param  {object} e - event
+   * @return {object} e - event
    */
   u.stop = function(e) {
     if (!e.preventDefault) {
@@ -815,6 +815,7 @@
     } else {
       e.preventDefault();
     }
+    return e;
   };
 
 
