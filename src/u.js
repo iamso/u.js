@@ -148,7 +148,7 @@
     /**
      * scrollTop method
      * get or set element scrollTop
-     * @param  {number} val       - new scrollTop
+     * @param  {number} [val]     - new scrollTop
      * @return {number} scrollTop
      */
     scrollTop: function(val) {
@@ -161,7 +161,7 @@
     /**
      * width method
      * get or set element width
-     * @param  {number} val   - new width
+     * @param  {number} [val] - new width
      * @return {number} width
      */
     width: function(val) {
@@ -174,7 +174,7 @@
     /**
      * outerWidth method
      * get element outer width
-     * @param  {boolean} margin - if true, includes margin
+     * @param  {boolean} [margin]   - if true, includes margin
      * @return {number}  outerWidth
      */
     outerWidth: function(margin) {
@@ -185,7 +185,7 @@
     /**
      * height method
      * get or set element height
-     * @param  {number} val    - new height
+     * @param  {number} [val]  - new height
      * @return {number} height
      */
     height: function(val) {
@@ -198,7 +198,7 @@
     /**
      * outerHeight method
      * get element outer height
-     * @param  {boolean} margin - if true, includes margin
+     * @param  {boolean} [margin]    - if true, includes margin
      * @return {number}  outerHeight
      */
     outerHeight: function(margin) {
@@ -562,7 +562,7 @@
     /**
      * trigger method
      * trigger an event for an element
-     * @param  {string} e - event name
+     * @param  {string} e    - event name
      * @return {object} this
      */
     trigger: function(e) {
@@ -635,7 +635,7 @@
 
   /**
    * each function
-   * @param  {array} arr - array to iterate over
+   * @param  {array}    arr      - array to iterate over
    * @param  {function} callback - function to call on each item
    * @return {object}   this
    */
@@ -657,7 +657,7 @@
 
   /**
    * addClass, removeClass and toggleClass methods
-   * @param  {string} cls - class name
+   * @param  {string} cls  - class name
    * @return {object} this
    */
   props.forEach(function(prop, index) {
@@ -723,8 +723,9 @@
   /**
    * inArray function
    * check if string is in array
-   * @param {string} item  - string to find
-   * @param {object} array - array to search
+   * @param  {string}  item  - string to find
+   * @param  {object}  array - array to search
+   * @return {boolean}
    */
   u.inArray = function(item, array) {
     return array.indexOf(item);
@@ -912,9 +913,9 @@
 
     /**
      * ajax send function (internal use)
-     * @param  {object}    opts   - ajax options
-     * @param  {string}    method - http method
-     * @return {undefined}
+     * @param  {object} opts   - ajax options
+     * @param  {string} method - http method
+     * @return {object} xhr    - xhr object
      */
     _send: function(opts, method) {
 
@@ -986,8 +987,8 @@
   /**
    * get function
    * shortcut for ajx GET request
-   * @param  {object}    opts - ajax options
-   * @return {undefined}
+   * @param  {object} opts - ajax options
+   * @return {object} xhr  - xhr object
    */
   u.get = function(opts) {
     opts = u.extend(u.ajax.opts, opts);
@@ -1000,8 +1001,8 @@
   /**
    * post, put, patch, options, delete functions
    * shortcut for ajax POST, PUT, PATCH, OPTIONS and DELETE request
-   * @param  {object}    opts - ajax options
-   * @return {undefined}
+   * @param  {object} opts - ajax options
+   * @return {object} xhr  - xhr object
    */
   var methods = ['post', 'put', 'patch', 'options', 'delete'];
   methods.forEach(function(method, index) {
