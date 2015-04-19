@@ -634,7 +634,7 @@
 
 
   /**
-   * each method
+   * each function
    * @param  {array} arr - array to iterate over
    * @param  {function} callback - function to call on each item
    * @return {object}   this
@@ -648,7 +648,7 @@
 
 
   /**
-   * map class function names
+   * map class method names
    * @type {array}
    */
   var props = ['addClass', 'removeClass', 'toggleClass'],
@@ -656,7 +656,7 @@
 
 
   /**
-   * addClass, removeClass and toggleClass method
+   * addClass, removeClass and toggleClass methods
    * @param  {string} cls - class name
    * @return {object} this
    */
@@ -673,7 +673,7 @@
 
 
   /**
-   * trim method
+   * trim function
    * trim trailing whitespace
    * @param  {string} val - string to trim
    * @return {string}       trimmed value
@@ -684,7 +684,7 @@
 
 
   /**
-   * extend method
+   * extend function
    * extend an object by another object
    * @param  {object} base  - object to be extended or object to extend u.fn by
    * @param  {object} [ext] - object to extend by
@@ -707,7 +707,7 @@
 
 
   /**
-   * array methods
+   * array function
    * push, pop, shift, unshift, filter, map, slice
    * @param  {object} a - array to call the method on
    * @param  {*}      b - argument to pass to the method
@@ -721,7 +721,7 @@
 
 
   /**
-   * inArray method
+   * inArray function
    * check if string is in array
    * @param {string} item  - string to find
    * @param {object} array - array to search
@@ -732,7 +732,7 @@
 
 
   /**
-   * isArray method
+   * isArray function
    * check if passed object is an array
    * @param  {object}  array - array to check
    * @return {boolean}
@@ -743,7 +743,7 @@
 
 
   /**
-   * nl2arr method
+   * nl2arr function
    * convert a NodeList object to an array
    * @param  {object} nl - NodeList object
    * @return {object}      array
@@ -754,7 +754,7 @@
 
 
   /**
-   * toDash method
+   * toDash function
    * convert camelCase string to dash-separated
    * @param  {string} str - camelCase string
    * @return {string}       converted string
@@ -765,7 +765,7 @@
 
 
   /**
-   * toCamel method
+   * toCamel function
    * convert dash-separated string to camelCase
    * @param  {string} str - dash-separated string
    * @return {string}       converted string
@@ -778,7 +778,7 @@
 
 
   /**
-   * bytes method
+   * bytes function
    * get byte size of a UTF-8 string
    * @param  {string} str - UTF-8 string
    * @return {number}       byte size
@@ -789,7 +789,7 @@
 
 
   /**
-   * prfx method
+   * prfx function
    * get prefixed version of css properties
    * @param  {string}    a     - css property
    * @param  {undefined} b,c,d - placeholder variables
@@ -804,7 +804,7 @@
 
 
   /**
-   * stop method
+   * stop function
    * preventDefault
    * @param  {object} e - event
    * @return {object} e - event
@@ -820,7 +820,7 @@
 
 
   /**
-   * param method
+   * param function
    * prepare data as json or form encoded param string
    * @param  {object}  obj    - data to prepare
    * @param  {boolean} json   - true for json
@@ -844,7 +844,7 @@
 
 
   /**
-   * parse method
+   * parse function
    * @param  {string}          obj - string to be parsed
    * @return {(string|object)}       unparsed string or parsed object
    */
@@ -858,7 +858,7 @@
   };
 
   /**
-   * tpl method
+   * tpl function
    * parse a template string with values
    * from https://gist.github.com/haochi/1075080
    * @param  {string} str - string containing {{variables}}
@@ -911,7 +911,7 @@
 
 
     /**
-     * ajax send method (internal use)
+     * ajax send function (internal use)
      * @param  {object}    opts   - ajax options
      * @param  {string}    method - http method
      * @return {undefined}
@@ -984,7 +984,7 @@
 
 
   /**
-   * get method
+   * get function
    * shortcut for ajx GET request
    * @param  {object}    opts - ajax options
    * @return {undefined}
@@ -998,7 +998,7 @@
 
 
   /**
-   * post, put, patch, options, delete methods
+   * post, put, patch, options, delete functions
    * shortcut for ajax POST, PUT, PATCH, OPTIONS and DELETE request
    * @param  {object}    opts - ajax options
    * @return {undefined}
