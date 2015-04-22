@@ -8,7 +8,7 @@
    * @param {(string|object|function)} arg - selector, dom element or function
    */
   function Init(arg) {
-    arr.push.apply(this, arg && (arg.nodeType || /^o/.test(typeof arg)) && arg !== null ? [arg] : u.isArray(arg) ? arg : '' + arg === arg ? doc.querySelectorAll(arg) : undef);
+    arr.push.apply(this, arg && (arg.nodeType || /^o/.test(typeof arg)) && !u.isArray(arg) && arg !== null ? [arg] : u.isArray(arg) ? arg : '' + arg === arg ? doc.querySelectorAll(arg) : undef);
   }
 
 
@@ -555,8 +555,7 @@
     parents: function(sel) {
       var parents = [],
           finished = false,
-          currentElement = this[0],
-          currentParent = false;
+          currentElement = this[0];
 
       while (!finished) {
         currentElement = currentElement.parentNode;
@@ -572,7 +571,7 @@
           finished = true;
         }
       }
-      return parents;
+      return u(parents);
     },
 
 
