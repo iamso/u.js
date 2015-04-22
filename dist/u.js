@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.1.8
+ * u.js - Version 0.2.0
  * micro framework, inspired by ki.js
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-04-19 23:56:42
+ * Build date: 2015-04-22 10:21:59
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -33,7 +33,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.1.8';
+  u.version = '0.2.0';
 
 
   /**
@@ -555,6 +555,35 @@
 
 
     /**
+     * parents method
+     * get the parent elements
+     * @return {object} element
+     */
+    parents: function(sel) {
+      var parents = [],
+          finished = false,
+          currentElement = this[0],
+          currentParent = false;
+
+      while (!finished) {
+        currentElement = currentElement.parentNode;
+        if (currentElement) {
+          if (sel === undef) {
+            parents.push(currentElement);
+          }
+          else if (u(currentElement).is(sel)) {
+            parents.push(currentElement);
+          }
+        }
+        else {
+          finished = true;
+        }
+      }
+      return parents;
+    },
+
+
+    /**
      * remove method
      * remove element from dom
      * @return {object} element
@@ -597,15 +626,15 @@
       var m = (this[0].matches || this[0].matchesSelector || this[0].msMatchesSelector || this[0].mozMatchesSelector || this[0].webkitMatchesSelector || this[0].oMatchesSelector);
       if (m) {
         return m.call(this[0], sel);
-      } else {
+      } else if (this[0].parentNode) {
         var n = this[0].parentNode.querySelectorAll(sel);
         for (var i = n.length; i--;) {
           if (n[i] === this[0]) {
             return true;
           }
         }
-        return false;
       }
+      return false;
     },
 
 
