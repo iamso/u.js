@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.2.0
+ * u.js - Version 0.2.1
  * micro framework, inspired by ki.js
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-04-22 10:21:59
+ * Build date: 2015-04-22 16:02:42
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -15,7 +15,7 @@
    * @param {(string|object|function)} arg - selector, dom element or function
    */
   function Init(arg) {
-    arr.push.apply(this, arg && (arg.nodeType || /^o/.test(typeof arg)) && arg !== null ? [arg] : u.isArray(arg) ? arg : '' + arg === arg ? doc.querySelectorAll(arg) : undef);
+    arr.push.apply(this, arg && (arg.nodeType || /^o/.test(typeof arg)) && !u.isArray(arg) && arg !== null ? [arg] : u.isArray(arg) ? arg : '' + arg === arg ? doc.querySelectorAll(arg) : undef);
   }
 
 
@@ -33,7 +33,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.2.0';
+  u.version = '0.2.1';
 
 
   /**
@@ -562,8 +562,7 @@
     parents: function(sel) {
       var parents = [],
           finished = false,
-          currentElement = this[0],
-          currentParent = false;
+          currentElement = this[0];
 
       while (!finished) {
         currentElement = currentElement.parentNode;
@@ -579,7 +578,7 @@
           finished = true;
         }
       }
-      return parents;
+      return u(parents);
     },
 
 
