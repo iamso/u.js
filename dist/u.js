@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.2.1
+ * u.js - Version 0.3.0
  * micro framework, inspired by ki.js
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-04-22 16:02:42
+ * Build date: 2015-04-26 20:39:24
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -33,7 +33,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.2.1';
+  u.version = '0.3.0';
 
 
   /**
@@ -282,10 +282,61 @@
      * @param  {string}          [val] - attribute value
      * @return {(string|object)}         attribute value or this
      */
-    data: function(attr, val) {
-      return val === undef ? this[0].dataset ? this[0].dataset[u.toCamel(attr)] : this[0].getAttribute('data-' + attr) : this.each(function(el) {
-        (el.dataset[u.toCamel(attr)] = val) || (el.setAttribute('data-' + attr, val));
-      });
+
+
+    /**
+     * data method
+     * get or set a data attribute
+     * @param  {string}          attr    - attribute name
+     * @param  {string}          [val]   - attribute value
+     * @param  {undefined}       [el]    - element placeholder
+     * @param  {undefined}       [index] - index placeholder
+     * @param  {undefined}       [obj]   - object placeholder
+     * @return {(string|object)}         attribute value or this
+     */
+    data: function(attr, val, el, index, obj) {
+      el = this[0];
+
+      // Shorthand Version
+      //
+      // return val === undef ?
+      //   (index = el[u._id]) === undef ?
+      //     u._data[el[u._id] = index = u._data.push({[attr]: this[0].getAttribute('data-' + attr)}) - 1][attr] :
+      //     !!u._data[index][attr] ?
+      //       u._data[index][attr] :
+      //       (u._data[index][attr] = this[0].getAttribute('data-' + attr)) :
+      //   this.each(function(el) {
+      //     (index = el[u._id]) === undef ?
+      //       el[u._id] = index = u._data.push({[attr]: val}) - 1 :
+      //       u._data[index][attr] = val;
+      //   });
+
+      // Normal Version
+      //
+      if (val === undef) {
+        if ((index = el[u._id]) === undef) {
+          obj = {};
+          obj[attr] = this[0].getAttribute('data-' + attr);
+          el[u._id] = index = u._data.push(obj) - 1;
+          return obj[attr];
+        }
+        else {
+          return !!u._data[index][attr] ? u._data[index][attr] : (u._data[index][attr] = this[0].getAttribute('data-' + attr));
+        }
+      }
+      else {
+        return this.each(function(el) {
+          if ((index = el[u._id]) === undef) {
+            obj = {};
+            obj[attr] = val;
+            el[u._id] = index = u._data.push(obj) - 1;
+          }
+          else {
+            u._data[index][attr] = val;
+          }
+        });
+      }
+
     },
 
 
@@ -1073,6 +1124,20 @@
       return u.ajax._send(opts, method.toUpperCase());
     };
   });
+
+
+  /**
+   * u session id
+   * @type {string}
+   */
+  u._id = u.uuid();
+
+
+  /**
+   * data object
+   * @type {array}
+   */
+  u._data = [];
 
 
   /**
