@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.4.0 - IE 9 fix
+ * u.js - Version 0.4.1 - IE 9 fix
  * Fix for the missing classList in IE 9
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-04-30 09:03:00
+ * Build date: 2015-05-08 19:28:00
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -46,7 +46,7 @@
      */
     u.fn.removeClass = function(cls) {
       return this.each(function(el) {
-        el.className = el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+        el.className = el.className.replace(new RegExp('(^|\\b)' + cls.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
       });
     };
 
@@ -59,13 +59,13 @@
     u.fn.toggleClass = function(cls) {
       return this.each(function(el) {
         var classes = el.className.split(' '),
-            existingIndex = classes.indexOf(className);
+            existingIndex = classes.indexOf(cls);
 
         if (existingIndex >= 0) {
           classes.splice(existingIndex, 1);
         }
         else {
-          classes.push(className);
+          classes.push(cls);
         }
 
         el.className = classes.join(' ');

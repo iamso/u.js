@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.4.0
+ * u.js - Version 0.4.1
  * micro framework, inspired by ki.js
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-04-30 09:03:00
+ * Build date: 2015-05-08 19:28:00
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -33,7 +33,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.4.0';
+  u.version = '0.4.1';
 
 
   /**
