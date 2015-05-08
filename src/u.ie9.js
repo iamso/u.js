@@ -39,7 +39,7 @@
      */
     u.fn.removeClass = function(cls) {
       return this.each(function(el) {
-        el.className = el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+        el.className = el.className.replace(new RegExp('(^|\\b)' + cls.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
       });
     };
 
@@ -52,13 +52,13 @@
     u.fn.toggleClass = function(cls) {
       return this.each(function(el) {
         var classes = el.className.split(' '),
-            existingIndex = classes.indexOf(className);
+            existingIndex = classes.indexOf(cls);
 
         if (existingIndex >= 0) {
           classes.splice(existingIndex, 1);
         }
         else {
-          classes.push(className);
+          classes.push(cls);
         }
 
         el.className = classes.join(' ');
