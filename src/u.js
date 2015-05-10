@@ -373,13 +373,16 @@
 
     /**
      * prepend method
-     * prepend child element to this element
-     * @param  {object} child - dom element to be appended
+     * prepend child element(s) to this element
+     * @param  {object} children - dom element(s) to be prepended
      * @return {object} this
      */
-    prepend: function(child) {
-      return this.each(function(el) {
-        el.insertBefore(child[0], el.parentNode.firstChild);
+    prepend: function(children) {
+      return this.each(function(el, first) {
+        first = el.firstChild;
+        children.each(function(child) {
+          el.insertBefore(child, first);
+        });
       });
     },
 
