@@ -389,13 +389,15 @@
 
     /**
      * before method
-     * insert an element before this element
-     * @param  {object} sibl - element to be inserted before this
+     * insert element(s) before this element
+     * @param  {object} siblings - element(s) to be inserted before this
      * @return {object} this
      */
-    before: function(sibl) {
+    before: function(siblings) {
       return this.each(function(el) {
-        el.insertAdjacentHTML('beforebegin', sibl);
+        siblings.each(function(sibling) {
+          el.insertAdjacentHTML('beforebegin', sibling.outerHTML);
+        });
       });
     },
 
