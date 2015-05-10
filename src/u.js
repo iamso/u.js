@@ -358,13 +358,15 @@
 
     /**
      * append method
-     * append child element to this element
-     * @param  {object} child - dom element to be appended
+     * append child element(s) to this element
+     * @param  {object} children - dom element(s) to be appended
      * @return {object} this
      */
-    append: function(child) {
+    append: function(children) {
       return this.each(function(el) {
-        el.appendChild(child[0]);
+        children.each(function(child) {
+          el.appendChild(child);
+        });
       });
     },
 
