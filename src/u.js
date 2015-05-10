@@ -8,7 +8,7 @@
    * @param {(string|object|function)} arg - selector, dom element or function
    */
   function Init(arg) {
-    arr.push.apply(this, arg && (arg.nodeType || /^o/.test(typeof arg)) && !u.isArray(arg) && arg !== null ? [arg] : u.isArray(arg) ? arg : '' + arg === arg ? doc.querySelectorAll(arg) : undef);
+    arr.push.apply(this, arg && (arg.nodeType || /^o/.test(typeof arg)) && !u.isArray(arg) && arg !== null ? [arg] : u.isArray(arg) ? arg : '' + arg === arg ? u.isHtml(arg) ? u.toHtml(arg) : doc.querySelectorAll(arg) : undef);
   }
 
 
