@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.4.1
+ * u.js - Version 0.5.0
  * micro framework, inspired by ki.js
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-05-08 19:28:00
+ * Build date: 2015-05-10 23:30:41
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -15,7 +15,7 @@
    * @param {(string|object|function)} arg - selector, dom element or function
    */
   function Init(arg) {
-    arr.push.apply(this, arg && (arg.nodeType || /^o/.test(typeof arg)) && !u.isArray(arg) && arg !== null ? [arg] : u.isArray(arg) ? arg : '' + arg === arg ? doc.querySelectorAll(arg) : undef);
+    arr.push.apply(this, arg && (arg.nodeType || /^o/.test(typeof arg)) && !u.isArray(arg) && arg !== null ? [arg] : u.isArray(arg) ? arg : '' + arg === arg ? u.isHtml(arg) ? u.toHtml(arg) : doc.querySelectorAll(arg) : undef);
   }
 
 
@@ -33,7 +33,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.4.1';
+  u.version = '0.5.0';
 
 
   /**
@@ -365,52 +365,61 @@
 
     /**
      * append method
-     * append child element to this element
-     * @param  {object} child - dom element to be appended
+     * append child element(s) to this element
+     * @param  {object} children - dom element(s) to be appended
      * @return {object} this
      */
-    append: function(child) {
+    append: function(children) {
       return this.each(function(el) {
-        el.appendChild(child[0]);
+        children.each(function(child) {
+          el.appendChild(child);
+        });
       });
     },
 
 
     /**
      * prepend method
-     * prepend child element to this element
-     * @param  {object} child - dom element to be appended
+     * prepend child element(s) to this element
+     * @param  {object} children - dom element(s) to be prepended
      * @return {object} this
      */
-    prepend: function(child) {
-      return this.each(function(el) {
-        el.insertBefore(child[0], el.parentNode.firstChild);
+    prepend: function(children) {
+      return this.each(function(el, first) {
+        first = el.firstChild;
+        children.each(function(child) {
+          el.insertBefore(child, first);
+        });
       });
     },
 
 
     /**
      * before method
-     * insert an element before this element
-     * @param  {object} sibl - element to be inserted before this
+     * insert element(s) before this element
+     * @param  {object} siblings - element(s) to be inserted before this
      * @return {object} this
      */
-    before: function(sibl) {
+    before: function(siblings) {
       return this.each(function(el) {
-        el.insertAdjacentHTML('beforebegin', sibl);
+        siblings.each(function(sibling) {
+          el.insertAdjacentHTML('beforebegin', sibling.outerHTML);
+        });
       });
     },
 
 
     /**
      * after method
-     * insert an element after this element
-     * @param  {object} sibl - element to be inserted after this
+     * insert element(s) after this element
+     * @param  {object} siblings - element(s) to be inserted after this
      * @return {object} this
      */
-    after: function(sibl) {
+    after: function(siblings) {
       return this.each(function(el) {
-        el.insertAdjacentHTML('afterend', sibl);
+        siblings.each(function(sibling) {
+          el.insertAdjacentHTML('afterend', sibling.outerHTML);
+        });
       });
     },
 
@@ -865,6 +874,31 @@
 
 
   /**
+   * isHtml function
+   * check if a string contains html tags
+   * @param  {string}  str - string to be checked
+   * @return {boolean}
+   */
+  u.isHtml = function(str) {
+    return /<[a-z][\s\S]*>/i.test(str);
+  };
+
+
+  /**
+   * toHtml function
+   * convert an html string to DOM elements
+   * @param  {string} str   - string to be converted
+   * @param  {null}   [tmp] - placeholder for the temporary element
+   * @return {object}       - nodeList of the converted elements
+   */
+  u.toHtml = function(str, tmp) {
+    tmp = document.createElement('div');
+    tmp.innerHTML = str;
+    return str ? tmp.childNodes : [];
+  };
+
+
+  /**
    * bytes function
    * get byte size of a UTF-8 string
    * @param  {string} str - UTF-8 string
@@ -1157,10 +1191,10 @@
 
 
 /*!
- * u.js - Version 0.4.1 - IE 9 fix
+ * u.js - Version 0.5.0 - IE 9 fix
  * Fix for the missing classList in IE 9
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-05-08 19:28:00
+ * Build date: 2015-05-10 23:30:41
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
