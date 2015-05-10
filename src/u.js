@@ -404,13 +404,15 @@
 
     /**
      * after method
-     * insert an element after this element
-     * @param  {object} sibl - element to be inserted after this
+     * insert element(s) after this element
+     * @param  {object} siblings - element(s) to be inserted after this
      * @return {object} this
      */
-    after: function(sibl) {
+    after: function(siblings) {
       return this.each(function(el) {
-        el.insertAdjacentHTML('afterend', sibl);
+        siblings.each(function(sibling) {
+          el.insertAdjacentHTML('afterend', sibling.outerHTML);
+        });
       });
     },
 
