@@ -9,12 +9,8 @@
   "homepage": "https://dev.so",
   "ignore": [
     ".editorconfig",
-    ".git",
     ".gitattributes",
     ".gitignore",
-    "demo",
-    "doc",
-    "extensions",
     "grunt",
     "Gruntfile.js",
     "node_modules",
