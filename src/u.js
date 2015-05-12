@@ -515,6 +515,21 @@
 
 
     /**
+     * filter method
+     * filter elements by selector or filter function
+     * @param  {string|function} filter - selector or filter function
+     * @return {object}                   matching elements
+     */
+    filter: function(filter) {
+      return /^f/.test(typeof filter) ? u(arr.filter.call(this, function(el, index) {
+        return filter(index, el);
+      })) : u(arr.filter.call(this, function(el, index) {
+        return u(el).is(filter);
+      }));
+    },
+
+
+    /**
      * text method
      * get or set the textContent value
      * @param  {string}          [val] - text value
