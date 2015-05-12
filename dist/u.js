@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.5.2
+ * u.js - Version 0.6.0
  * micro framework, inspired by ki.js
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-05-12
+ * Build date: 2015-05-13
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -33,7 +33,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.5.2';
+  u.version = '0.6.0';
 
 
   /**
@@ -58,7 +58,7 @@
      * @return {object}   this
      */
     on: function(event, handler) {
-      return this.each(function(el) {
+      return this.each(function(index, el) {
         var events = event.split(' ');
         u.each(events, function(i, event){
           el.addEventListener(event, handler);
@@ -75,7 +75,7 @@
      * @return {object}   this
      */
     one: function(event, handler) {
-      return this.each(function(el) {
+      return this.each(function(index, el) {
         var events = event.split(' ');
         u.each(events, function(i, event){
           el.addEventListener(event, function temp(e) {
@@ -95,7 +95,7 @@
      * @return {object}   this
      */
     off: function(event, handler) {
-      return this.each(function(el) {
+      return this.each(function(index, el) {
         var events = event.split(' ');
         u.each(events, function(i, event){
           el.removeEventListener(event, handler);
@@ -108,11 +108,10 @@
      * each method
      * use native forEach to iterate collection
      * @param  {function} callback - function to call on each element
-     * @param  {object}   el       - dom elements
      * @return {object}   this
      */
-    each: function(callback, el) {
-      arr.forEach.call(this, callback, el);
+    each: function(callback) {
+      u.each(u.nl2arr(this), callback);
       return this;
     },
 
@@ -159,7 +158,7 @@
      * @return {number} scrollTop
      */
     scrollTop: function(val) {
-      return val === undef ? this[0].scrollTop : this.each(function(el) {
+      return val === undef ? this[0].scrollTop : this.each(function(index, el) {
         el.scrollTop = val;
       });
     },
@@ -172,7 +171,7 @@
      * @return {number} width
      */
     width: function(val) {
-      return val === undef ? this[0].clientWidth || this[0].innerWidth : this.each(function(el) {
+      return val === undef ? this[0].clientWidth || this[0].innerWidth : this.each(function(index, el) {
         el.style.width = val + 'px';
       });
     },
@@ -196,7 +195,7 @@
      * @return {number} height
      */
     height: function(val) {
-      return val === undef ? this[0].clientHeight || this[0].innerHeight : this.each(function(el) {
+      return val === undef ? this[0].clientHeight || this[0].innerHeight : this.each(function(index, el) {
         el.style.height = val + 'px';
       });
     },
@@ -219,7 +218,7 @@
      * @return {object} this
      */
     hide: function() {
-      return this.each(function(el) {
+      return this.each(function(index, el) {
         el.style.display = 'none';
       });
     },
@@ -231,7 +230,7 @@
      * @return {object} this
      */
     show: function() {
-      return this.each(function(el) {
+      return this.each(function(index, el) {
         el.style.display = '';
       });
     },
@@ -245,7 +244,7 @@
      * @return {(string|object)}         attribute value or this
      */
     attr: function(attr, val) {
-      return val === undef ? this[0].getAttribute(attr) : this.each(function(el) {
+      return val === undef ? this[0].getAttribute(attr) : this.each(function(index, el) {
         el.setAttribute(attr, val);
       });
     },
@@ -258,7 +257,7 @@
      * @return {object} this
      */
     removeAttr: function(attr) {
-      return this.each(function(el) {
+      return this.each(function(index, el) {
         el.removeAttribute(attr);
       });
     },
@@ -278,15 +277,6 @@
     /**
      * data method
      * get or set a data attribute
-     * @param  {string}          attr  - attribute name
-     * @param  {string}          [val] - attribute value
-     * @return {(string|object)}         attribute value or this
-     */
-
-
-    /**
-     * data method
-     * get or set a data attribute
      * @param  {string}          attr    - attribute name
      * @param  {string}          [val]   - attribute value
      * @param  {undefined}       [el]    - element placeholder
@@ -295,7 +285,6 @@
      * @return {(string|object)}         attribute value or this
      */
     data: function(attr, val, el, index, obj) {
-      el = this[0];
 
       // Shorthand Version
       //
@@ -305,7 +294,7 @@
       //     !!u._data[index][attr] ?
       //       u._data[index][attr] :
       //       (u._data[index][attr] = this[0].getAttribute('data-' + attr)) :
-      //   this.each(function(el) {
+      //   this.each(function(index, el) {
       //     (index = el[u._id]) === undef ?
       //       el[u._id] = index = u._data.push({[attr]: val}) - 1 :
       //       u._data[index][attr] = val;
@@ -314,6 +303,7 @@
       // Normal Version
       //
       if (val === undef) {
+        el = this[0];
         if ((index = el[u._id]) === undef) {
           obj = {};
           obj[attr] = this[0].getAttribute('data-' + attr);
@@ -325,7 +315,7 @@
         }
       }
       else {
-        return this.each(function(el) {
+        return this.each(function(index, el) {
           if ((index = el[u._id]) === undef) {
             obj = {};
             obj[attr] = val;
@@ -350,13 +340,13 @@
     css: function(props, val) {
       if (typeof props === 'object') {
         for(var prop in props) {
-          this.each(function(el) {
+          this.each(function(index, el) {
             el.style[prop] = props[prop];
           });
         }
         return this;
       } else {
-        return val === undef ? this[0].style[props] : this.each(function(el) {
+        return val === undef ? this[0].style[props] : this.each(function(index, el) {
           el.style[props] = val;
         });
       }
@@ -370,7 +360,7 @@
      * @return {object} this
      */
     append: function(children) {
-      return this.each(function(el) {
+      return this.each(function(index, el) {
         children.each(function(child) {
           el.appendChild(child);
         });
@@ -385,7 +375,7 @@
      * @return {object} this
      */
     prepend: function(children) {
-      return this.each(function(el, first) {
+      return this.each(function(index, el, first) {
         first = el.firstChild;
         children.each(function(child) {
           el.insertBefore(child, first);
@@ -401,7 +391,7 @@
      * @return {object} this
      */
     before: function(siblings) {
-      return this.each(function(el) {
+      return this.each(function(index, el) {
         siblings.each(function(sibling) {
           el.insertAdjacentHTML('beforebegin', sibling.outerHTML);
         });
@@ -416,7 +406,7 @@
      * @return {object} this
      */
     after: function(siblings) {
-      return this.each(function(el) {
+      return this.each(function(index, el) {
         siblings.each(function(sibling) {
           el.insertAdjacentHTML('afterend', sibling.outerHTML);
         });
@@ -532,13 +522,28 @@
 
 
     /**
+     * filter method
+     * filter elements by selector or filter function
+     * @param  {string|function} filter - selector or filter function
+     * @return {object}                   matching elements
+     */
+    filter: function(filter) {
+      return /^f/.test(typeof filter) ? u(arr.filter.call(this, function(el, index) {
+        return filter(index, el);
+      })) : u(arr.filter.call(this, function(el, index) {
+        return u(el).is(filter);
+      }));
+    },
+
+
+    /**
      * text method
      * get or set the textContent value
      * @param  {string}          [val] - text value
      * @return {(string|object)}         text value or this
      */
     text: function(val) {
-      return val === undef ? this[0].textContent : this.each(function(el) {
+      return val === undef ? this[0].textContent : this.each(function(index, el) {
         el.textContent = val;
       });
     },
@@ -551,7 +556,7 @@
      * @return {(string|object)}         html value or this
      */
     html: function(val) {
-      return val === undef ? this[0].innerHTML : this.each(function(el) {
+      return val === undef ? this[0].innerHTML : this.each(function(index, el) {
         el.innerHTML = val;
       });
     },
@@ -564,7 +569,7 @@
      * @return {(string|object)}         html value or this
      */
     outerHTML: function(val) {
-      return val === undef ? this[0].outerHTML : this.each(function(el) {
+      return val === undef ? this[0].outerHTML : this.each(function(index, el) {
         el.outerHTML = val;
       });
     },
@@ -576,7 +581,7 @@
      * @return {(string|object)}         text value or this
      */
     val: function(val) {
-      return val === undef ? this[0].value : this.each(function(el) {
+      return val === undef ? this[0].value : this.each(function(index, el) {
         el.value = val;
       });
     },
@@ -588,7 +593,7 @@
      * @return {object} this
      */
     empty: function() {
-      return this.each(function(el) {
+      return this.each(function(index, el) {
         el.innerHTML = '';
       });
     },
@@ -648,7 +653,7 @@
      * @return {object} element
      */
     remove: function() {
-      return this.each(function(el) {
+      return this.each(function(index, el) {
         el.parentNode.removeChild(el);
       });
     },
@@ -664,11 +669,11 @@
       if (document.createEvent) {
         var event = document.createEvent('HTMLEvents');
         event.initEvent(e, true, false);
-        this.each(function(el) {
+        this.each(function(index, el) {
           el.dispatchEvent(event);
         });
       } else {
-        this.each(function(el) {
+        this.each(function(index, el) {
           el.fireEvent('on' + e);
         });
       }
@@ -714,7 +719,7 @@
      * @return {object} this
      */
     blur: function() {
-      return this.each(function(el) {
+      return this.each(function(index, el) {
         el.blur();
       });
     },
@@ -738,7 +743,7 @@
     for(var i in array) {
       callback.call(array[i], i, array[i]);
     }
-    return this;
+    return array;
   };
 
 
@@ -757,7 +762,7 @@
    */
   props.forEach(function(prop, index) {
     u[proto][prop] = function(cls) {
-      return this.each(function(el) {
+      return this.each(function(index, el) {
         var classes =  cls.split(' ');
         u.each(classes, function(i,cls){
           el.classList[maps[index]](cls);
