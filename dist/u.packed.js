@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.5.1
+ * u.js - Version 0.5.2
  * micro framework, inspired by ki.js
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-05-12 11:31:10
+ * Build date: 2015-05-12
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -33,7 +33,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.5.1';
+  u.version = '0.5.2';
 
 
   /**
@@ -1191,10 +1191,10 @@
 
 
 /*!
- * u.js - Version 0.5.1 - IE 9 fix
+ * u.js - Version 0.5.2 - IE 9 fix
  * Fix for the missing classList in IE 9
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-05-12 11:31:10
+ * Build date: 2015-05-12
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
