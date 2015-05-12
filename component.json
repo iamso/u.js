@@ -1,0 +1,22 @@
+{
+  "name": "u.js",
+  "repository": "iamso/u.js",
+  "description": "micro framework, inspired by ki.js",
+  "version": "0.5.2",
+  "keywords": [
+    "micro",
+    "framework",
+    "utility",
+    "library",
+    "jQuery",
+    "ki.js"
+  ],
+  "dependencies": {},
+  "development": {},
+  "templates": [],
+  "scripts": {
+    "dist/u.min.js": "u.min.js"
+  },
+  "styles": [],
+  "license": "MIT"
+}

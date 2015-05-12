@@ -1,16 +1,28 @@
 {
   "name": "u.js",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "micro framework, inspired by ki.js",
   "private": true,
   "repository": {
     "type": "git",
     "url": "git://github.com/iamso/u.js.git"
   },
+  "bugs": {
+    "url": "https://github.com/iamso/u.js/issues"
+  },
   "author": {
     "name": "Steve Ottoz",
     "email": "so@dev.so"
   },
+  "main": "dist/u.min.js",
+  "keywords": [
+    "micro",
+    "framework",
+    "utility",
+    "library",
+    "jQuery",
+    "ki.js"
+  ],
   "license": "MIT",
   "devDependencies": {
     "grunt": "^0.4.5",
