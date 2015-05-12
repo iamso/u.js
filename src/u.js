@@ -278,7 +278,6 @@
      * @return {(string|object)}         attribute value or this
      */
     data: function(attr, val, el, index, obj) {
-      el = this[0];
 
       // Shorthand Version
       //
@@ -297,6 +296,7 @@
       // Normal Version
       //
       if (val === undef) {
+        el = this[0];
         if ((index = el[u._id]) === undef) {
           obj = {};
           obj[attr] = this[0].getAttribute('data-' + attr);
