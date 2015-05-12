@@ -11,4 +11,4 @@ micro framework, inspired by [ki.js](https://github.com/dciccale/ki.js), [ki.ext
 License
 -------
 
-[MIT License](blob/master/LICENSE)
+[MIT License](LICENSE)
