@@ -12,6 +12,7 @@
     "replace",
     "jshint",
     "uglify",
+    "update_json",
     "notify:dist"
   ]
 }

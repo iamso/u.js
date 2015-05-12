@@ -5,7 +5,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://git.dev.so/libs/u-js"
+    "url": "git://github.com/iamso/u.js.git"
   },
   "author": {
     "name": "Steve Ottoz",
@@ -22,6 +22,7 @@
     "grunt-jsdoc": "^0.5.7",
     "grunt-notify": "^0.4.1",
     "grunt-text-replace": "^0.4.0",
+    "grunt-update-json": "^0.2.1",
     "load-grunt-config": "^0.16.0",
     "time-grunt": "^1.0.0"
   }
