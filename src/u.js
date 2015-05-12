@@ -270,15 +270,6 @@
     /**
      * data method
      * get or set a data attribute
-     * @param  {string}          attr  - attribute name
-     * @param  {string}          [val] - attribute value
-     * @return {(string|object)}         attribute value or this
-     */
-
-
-    /**
-     * data method
-     * get or set a data attribute
      * @param  {string}          attr    - attribute name
      * @param  {string}          [val]   - attribute value
      * @param  {undefined}       [el]    - element placeholder
