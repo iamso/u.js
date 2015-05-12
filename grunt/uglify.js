@@ -1,16 +1,18 @@
 module.exports = {
   options: {
     mangle: {
-      except: ['µ']
+      except: ['u', 'µ']
     },
     compress: {
       drop_console: true
     },
     preserveComments: false,
-    sourceMap: true,
-    banner: '<%= banner %>'
+    sourceMap: true
   },
   dist: {
+    options: {
+      banner: '<%= banner %>'
+    },
     src: ['dist/u.js'],
     dest: 'dist/u.min.js'
   },
@@ -22,6 +24,9 @@ module.exports = {
     dest: 'dist/u.ie9.min.js'
   },
   packed: {
+    options: {
+      banner: '<%= bannerIEpack %>'
+    },
     src: ['dist/u.packed.js'],
     dest: 'dist/u.packed.min.js'
   }
