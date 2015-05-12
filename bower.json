@@ -1,13 +1,19 @@
 {
   "name": "u.js",
-  "version": "0.5.0",
+  "version": "0.5.1",
+  "description": "micro framework, inspired by ki.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/iamso/u.js.git"
+  },
   "authors": [
     "Steve <so@dev.so>"
   ],
   "main": "dist/u.min.js",
   "license": "MIT",
-  "homepage": "https://dev.so",
+  "homepage": "https://github.com/iamso/u.js.git",
   "ignore": [
+    ".bower.json",
     ".editorconfig",
     ".git",
     ".gitattributes",
