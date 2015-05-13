@@ -660,11 +660,11 @@
       if (document.createEvent) {
         var event = document.createEvent('HTMLEvents');
         event.initEvent(e, true, false);
-        this.each(function(index, el) {
+        return this.each(function(index, el) {
           el.dispatchEvent(event);
         });
       } else {
-        this.each(function(index, el) {
+        return this.each(function(index, el) {
           el.fireEvent('on' + e);
         });
       }
