@@ -1,7 +1,7 @@
 {
   "name": "u.js",
-  "version": "0.6.2",
-  "description": "micro framework, inspired by ki.js",
+  "version": "0.6.3",
+  "description": "micro framework, utility library",
   "repository": {
     "type": "git",
     "url": "git://github.com/iamso/u.js.git"

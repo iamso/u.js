@@ -1,7 +1,7 @@
 {
   "name": "u.js",
-  "version": "0.6.2",
-  "description": "micro framework, inspired by ki.js",
+  "version": "0.6.3",
+  "description": "micro framework, utility library",
   "private": true,
   "repository": {
     "type": "git",
