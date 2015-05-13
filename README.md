@@ -8,6 +8,13 @@ micro framework, inspired by [ki.js](https://github.com/dciccale/ki.js), [ki.ext
 - lightweight
 - extensible
 
+
+Documentation
+-------------
+
+Check out the docs [here](docs/api.md)
+
+
 License
 -------
 
