@@ -521,10 +521,8 @@
      * @return {object}                   matching elements
      */
     filter: function(filter) {
-      return /^f/.test(typeof filter) ? u(arr.filter.call(this, function(el, index) {
-        return filter(index, el);
-      })) : u(arr.filter.call(this, function(el, index) {
-        return u(el).is(filter);
+      return u(arr.filter.call(this, function(el, index) {
+        return /^f/.test(typeof filter) ? filter(index, el) : u(el).is(filter);
       }));
     },
 
