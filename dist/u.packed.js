@@ -1,5 +1,5 @@
 /*!
- * u.js - Version 0.6.1
+ * u.js - Version 0.6.2
  * micro framework, inspired by ki.js
  * Author: Steve Ottoz <so@dev.so>
  * Build date: 2015-05-13
@@ -33,7 +33,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.6.1';
+  u.version = '0.6.2';
 
 
   /**
@@ -667,11 +667,11 @@
       if (document.createEvent) {
         var event = document.createEvent('HTMLEvents');
         event.initEvent(e, true, false);
-        this.each(function(index, el) {
+        return this.each(function(index, el) {
           el.dispatchEvent(event);
         });
       } else {
-        this.each(function(index, el) {
+        return this.each(function(index, el) {
           el.fireEvent('on' + e);
         });
       }
@@ -1194,7 +1194,7 @@
 
 
 /*!
- * u.js - Version 0.6.1 - IE 9 fix
+ * u.js - Version 0.6.2 - IE 9 fix
  * Fix for the missing classList in IE 9
  * Author: Steve Ottoz <so@dev.so>
  * Build date: 2015-05-13

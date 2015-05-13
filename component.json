@@ -2,7 +2,7 @@
   "name": "u.js",
   "repository": "iamso/u.js",
   "description": "micro framework, inspired by ki.js",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "keywords": [
     "micro",
     "framework",
