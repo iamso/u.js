@@ -1,5 +1,5 @@
 /*!
- * u.js - Version 0.6.0
+ * u.js - Version 0.6.1
  * micro framework, inspired by ki.js
  * Author: Steve Ottoz <so@dev.so>
  * Build date: 2015-05-13
@@ -33,7 +33,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.6.0';
+  u.version = '0.6.1';
 
 
   /**
@@ -528,10 +528,8 @@
      * @return {object}                   matching elements
      */
     filter: function(filter) {
-      return /^f/.test(typeof filter) ? u(arr.filter.call(this, function(el, index) {
-        return filter(index, el);
-      })) : u(arr.filter.call(this, function(el, index) {
-        return u(el).is(filter);
+      return u(arr.filter.call(this, function(el, index) {
+        return /^f/.test(typeof filter) ? filter(index, el) : u(el).is(filter);
       }));
     },
 
@@ -1196,7 +1194,7 @@
 
 
 /*!
- * u.js - Version 0.6.0 - IE 9 fix
+ * u.js - Version 0.6.1 - IE 9 fix
  * Fix for the missing classList in IE 9
  * Author: Steve Ottoz <so@dev.so>
  * Build date: 2015-05-13
