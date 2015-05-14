@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.6.3
+ * u.js - Version 0.6.4
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-05-13
+ * Build date: 2015-05-14
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -33,7 +33,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.6.3';
+  u.version = '0.6.4';
 
 
   /**
@@ -361,7 +361,7 @@
      */
     append: function(children) {
       return this.each(function(index, el) {
-        children.each(function(child) {
+        children.each(function(index, child) {
           el.appendChild(child);
         });
       });
@@ -377,7 +377,7 @@
     prepend: function(children) {
       return this.each(function(index, el, first) {
         first = el.firstChild;
-        children.each(function(child) {
+        children.each(function(index, child) {
           el.insertBefore(child, first);
         });
       });
@@ -392,7 +392,7 @@
      */
     before: function(siblings) {
       return this.each(function(index, el) {
-        siblings.each(function(sibling) {
+        siblings.each(function(index, sibling) {
           el.insertAdjacentHTML('beforebegin', sibling.outerHTML);
         });
       });
@@ -407,7 +407,7 @@
      */
     after: function(siblings) {
       return this.each(function(index, el) {
-        siblings.each(function(sibling) {
+        siblings.each(function(index, sibling) {
           el.insertAdjacentHTML('afterend', sibling.outerHTML);
         });
       });
@@ -1194,10 +1194,10 @@
 
 
 /*!
- * u.js - Version 0.6.3 - IE 9 fix
+ * u.js - Version 0.6.4 - IE 9 fix
  * Fix for the missing classList in IE 9
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-05-13
+ * Build date: 2015-05-14
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
