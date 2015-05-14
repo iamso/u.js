@@ -354,7 +354,7 @@
      */
     append: function(children) {
       return this.each(function(index, el) {
-        children.each(function(child) {
+        children.each(function(index, child) {
           el.appendChild(child);
         });
       });
@@ -370,7 +370,7 @@
     prepend: function(children) {
       return this.each(function(index, el, first) {
         first = el.firstChild;
-        children.each(function(child) {
+        children.each(function(index, child) {
           el.insertBefore(child, first);
         });
       });
@@ -385,7 +385,7 @@
      */
     before: function(siblings) {
       return this.each(function(index, el) {
-        siblings.each(function(sibling) {
+        siblings.each(function(index, sibling) {
           el.insertAdjacentHTML('beforebegin', sibling.outerHTML);
         });
       });
@@ -400,7 +400,7 @@
      */
     after: function(siblings) {
       return this.each(function(index, el) {
-        siblings.each(function(sibling) {
+        siblings.each(function(index, sibling) {
           el.insertAdjacentHTML('afterend', sibling.outerHTML);
         });
       });
