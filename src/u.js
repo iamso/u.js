@@ -753,9 +753,9 @@
    */
   props.forEach(function(prop, index) {
     u[proto][prop] = function(cls) {
-      return this.each(function(index, el) {
+      return this.each(function(i, el) {
         var classes =  cls.split(' ');
-        u.each(classes, function(i,cls){
+        u.each(classes, function(ii, cls){
           el.classList[maps[index]](cls);
         });
       });
