@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.6.4
+ * u.js - Version 0.6.5
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-05-14
+ * Build date: 2015-05-15
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -33,7 +33,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.6.4';
+  u.version = '0.6.5';
 
 
   /**
@@ -760,9 +760,9 @@
    */
   props.forEach(function(prop, index) {
     u[proto][prop] = function(cls) {
-      return this.each(function(index, el) {
+      return this.each(function(i, el) {
         var classes =  cls.split(' ');
-        u.each(classes, function(i,cls){
+        u.each(classes, function(ii, cls){
           el.classList[maps[index]](cls);
         });
       });
@@ -1194,10 +1194,10 @@
 
 
 /*!
- * u.js - Version 0.6.4 - IE 9 fix
+ * u.js - Version 0.6.5 - IE 9 fix
  * Fix for the missing classList in IE 9
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-05-14
+ * Build date: 2015-05-15
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
