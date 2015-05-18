@@ -11,12 +11,8 @@
     "jQuery",
     "ki.js"
   ],
-  "dependencies": {},
-  "development": {},
-  "templates": [],
-  "scripts": {
-    "dist/u.min.js": "u.min.js"
-  },
-  "styles": [],
+  "scripts": [
+    "dist/u.min.js"
+  ],
   "license": "MIT"
 }
