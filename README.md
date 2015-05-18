@@ -8,6 +8,21 @@ micro framework, inspired by [ki.js](https://github.com/dciccale/ki.js), [ki.ext
 - lightweight
 - extensible
 
+Install
+-------
+
+### With Bower
+
+```bash
+bower install u.js
+```
+
+### With Components
+```bash
+component install u.js
+```
+
+
 
 Documentation
 -------------
