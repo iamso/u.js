@@ -903,6 +903,42 @@ var template = 'Hi my name is {{person.firstName}}.';
 u.parse(template, {persion: {firstName: 'Steve'}}) // Hi my name is Steve.
 ```
 
+### u.defer()
+A single "defer()" function that returns an object that is both a deferred and a thenable promise.  
+Taken from https://gist.github.com/kirbysayshi/1129049
+
+Returns the promise object.
+
+| Parameter | Type | Description |
+|---|---|---|
+| callbacks | function | **Optional**. Callback function. Acts as placeholder for all callbacks. |
+| value | * | **Optional**. Placeholder for the values passed to the callbacks. |
+
+#### u.defer() - promise object
+The promise object has 2 functions, `.then()` and `.resolve()`.
+
+##### .then(callback)
+Add a callback for when the promise is resolved.
+
+| Parameter | Type | Description |
+|---|---|---|
+| callback | function | Callback function. |
+
+##### .resolve(values, ...)
+Resolve the promise and pass arguments for the callback.
+
+
+```javascript
+var x = u.defer();
+x.then(function() {
+	console.log(arguments);
+});
+setTimeout(function() {
+	x.resolve({key: 'value'}, 'string', [1,2,3,4]);
+}, 2000);
+```
+
+
 ### AJAX functions
 #### u.get(options), u.post(options), u.put(options), u.patch(options), u.options(options), u.delete(options)
 u.js AJAX functions all work pretty much the same. You call the function and pass the options object. All options work the same on all those functions, except for the get function, which ignores the json flag.
