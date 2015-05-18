@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.6.5
+ * u.js - Version 0.7.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-05-15
+ * Build date: 2015-05-18
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -33,7 +33,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.6.5';
+  u.version = '0.7.0';
 
 
   /**
@@ -890,9 +890,9 @@
   /**
    * toHtml function
    * convert an html string to DOM elements
-   * @param  {string} str   - string to be converted
-   * @param  {null}   [tmp] - placeholder for the temporary element
-   * @return {object}       - nodeList of the converted elements
+   * @param  {string}      str   - string to be converted
+   * @param  {undefined}   [tmp] - placeholder for the temporary element
+   * @return {object}            - nodeList of the converted elements
    */
   u.toHtml = function(str, tmp) {
     tmp = document.createElement('div');
@@ -1164,6 +1164,32 @@
 
 
   /**
+   * defer function
+   * a single "defer()" function that returns an object
+   * that is both a deferred and a thenable promise
+   * from https://gist.github.com/kirbysayshi/1129049
+   * @param  {function} [callbacks] - placeholder for pending callbacks
+   * @param  {*}        [value]     - placeholder for fulfilled value
+   * @return {object}               - the promise object
+   */
+  u.defer = function (callbacks, value) {
+    callbacks = [];
+    return {
+      resolve: function () {
+        value = arguments;
+        while (callbacks.length) {
+          callbacks.shift().apply({}, value);
+        }
+        callbacks = 0;
+      },
+      then: function (callback) {
+        callbacks ? callbacks.push(callback) : callback.apply({}, value);
+      }
+    };
+  };
+
+
+  /**
    * u session id
    * @type {string}
    */
@@ -1194,10 +1220,10 @@
 
 
 /*!
- * u.js - Version 0.6.5 - IE 9 fix
+ * u.js - Version 0.7.0 - IE 9 fix
  * Fix for the missing classList in IE 9
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-05-15
+ * Build date: 2015-05-18
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
