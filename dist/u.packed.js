@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.7.0
+ * u.js - Version 0.8.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-05-18
+ * Build date: 2015-05-20
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -33,7 +33,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.7.0';
+  u.version = '0.8.0';
 
 
   /**
@@ -111,7 +111,7 @@
      * @return {object}   this
      */
     each: function(callback) {
-      u.each(u.nl2arr(this), callback);
+      u.each(u.toArray(this), callback);
       return this;
     },
 
@@ -473,7 +473,7 @@
      * @return {object}       matching elements
      */
     find: function(sel) {
-      return u(u.nl2arr(this[0].querySelectorAll(sel)));
+      return u(u.toArray(this[0].querySelectorAll(sel)));
     },
 
 
@@ -483,7 +483,7 @@
      * @return {object} child elements
      */
     children: function() {
-      return u(u.nl2arr(this[0].children));
+      return u(u.toArray(this[0].children));
     },
 
 
@@ -842,12 +842,12 @@
 
 
   /**
-   * nl2arr function
+   * toArray function
    * convert a NodeList object to an array
    * @param  {object} nl - NodeList object
    * @return {object}      array
    */
-  u.nl2arr = function(nl) {
+  u.toArray = function(nl) {
     return arr.slice.call(nl);
   },
 
@@ -1220,10 +1220,10 @@
 
 
 /*!
- * u.js - Version 0.7.0 - IE 9 fix
+ * u.js - Version 0.8.0 - IE 9 fix
  * Fix for the missing classList in IE 9
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-05-18
+ * Build date: 2015-05-20
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
