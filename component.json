@@ -12,7 +12,7 @@
     "ki.js"
   ],
   "scripts": [
-    "dist/u.min.js"
+    "dist/*.*"
   ],
   "license": "MIT"
 }
