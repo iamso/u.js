@@ -1163,7 +1163,7 @@
    * from https://gist.github.com/kirbysayshi/1129049
    * @param  {function} [callbacks] - placeholder for pending callbacks
    * @param  {*}        [value]     - placeholder for fulfilled value
-   * @return {object}               - the promise object
+   * @return {object}               - the defer object
    */
   u.defer = function (callbacks, value) {
     callbacks = [];
@@ -1174,9 +1174,11 @@
           callbacks.shift().apply({}, value);
         }
         callbacks = 0;
+        return this;
       },
       then: function (callback) {
         callbacks ? callbacks.push(callback) : callback.apply({}, value);
+        return this;
       }
     };
   };
