@@ -1,5 +1,5 @@
 /*!
- * u.js - Version 0.8.0
+ * u.js - Version 0.8.1
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
  * Build date: 2015-05-20
@@ -33,7 +33,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.8.0';
+  u.version = '0.8.1';
 
 
   /**
@@ -1170,7 +1170,7 @@
    * from https://gist.github.com/kirbysayshi/1129049
    * @param  {function} [callbacks] - placeholder for pending callbacks
    * @param  {*}        [value]     - placeholder for fulfilled value
-   * @return {object}               - the promise object
+   * @return {object}               - the defer object
    */
   u.defer = function (callbacks, value) {
     callbacks = [];
@@ -1181,9 +1181,11 @@
           callbacks.shift().apply({}, value);
         }
         callbacks = 0;
+        return this;
       },
       then: function (callback) {
         callbacks ? callbacks.push(callback) : callback.apply({}, value);
+        return this;
       }
     };
   };
@@ -1220,7 +1222,7 @@
 
 
 /*!
- * u.js - Version 0.8.0 - IE 9 fix
+ * u.js - Version 0.8.1 - IE 9 fix
  * Fix for the missing classList in IE 9
  * Author: Steve Ottoz <so@dev.so>
  * Build date: 2015-05-20

@@ -2,7 +2,7 @@
   "name": "u.js",
   "repository": "iamso/u.js",
   "description": "micro framework, utility library",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "keywords": [
     "micro",
     "framework",
@@ -12,7 +12,15 @@
     "ki.js"
   ],
   "scripts": [
-    "dist/*.*"
+    "dist/u.ie9.js",
+    "dist/u.ie9.min.js",
+    "dist/u.ie9.min.js.map",
+    "dist/u.js",
+    "dist/u.min.js",
+    "dist/u.min.js.map",
+    "dist/u.packed.js",
+    "dist/u.packed.min.js",
+    "dist/u.packed.min.js.map"
   ],
   "license": "MIT"
 }
