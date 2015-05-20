@@ -749,13 +749,13 @@ Returns a boolean.
 u.isArray(docuemnt.querySelectorAll('li')) // false
 ```
 
-### u.nl2arr(nodeList)
+### u.toArray(nodeList)
 Converts a nodeList to an array.
 
 Returns an array.
 
 ```javascript
-u.nl2arr(docuemnt.querySelectorAll('li')) // array
+u.toArray(docuemnt.querySelectorAll('li')) // array
 ```
 
 ### u.toDash(string)

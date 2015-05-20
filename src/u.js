@@ -104,7 +104,7 @@
      * @return {object}   this
      */
     each: function(callback) {
-      u.each(u.nl2arr(this), callback);
+      u.each(u.toArray(this), callback);
       return this;
     },
 
@@ -466,7 +466,7 @@
      * @return {object}       matching elements
      */
     find: function(sel) {
-      return u(u.nl2arr(this[0].querySelectorAll(sel)));
+      return u(u.toArray(this[0].querySelectorAll(sel)));
     },
 
 
@@ -476,7 +476,7 @@
      * @return {object} child elements
      */
     children: function() {
-      return u(u.nl2arr(this[0].children));
+      return u(u.toArray(this[0].children));
     },
 
 
@@ -835,12 +835,12 @@
 
 
   /**
-   * nl2arr function
+   * toArray function
    * convert a NodeList object to an array
    * @param  {object} nl - NodeList object
    * @return {object}      array
    */
-  u.nl2arr = function(nl) {
+  u.toArray = function(nl) {
     return arr.slice.call(nl);
   },
 
