@@ -16,7 +16,7 @@
      * @return {boolean}
      */
     u.fn.hasClass = function(cls) {
-      return new RegExp('(^| )' + cls + '( |$)', 'gi').test(el.className);
+      return new RegExp('(^| )' + cls + '( |$)', 'gi').test(this[0].className);
     };
 
 
