@@ -2,6 +2,12 @@
 (function(u,window,document) {
   'use strict';
 
+  /**
+   * wait for body to be available
+   * insert function call at beginning of list to execute it before any other registered function
+   */
+  u._deferredInitHandlers.unshift(function () {
+
 
   /**
    * overwrite class methods if classList is not defined
@@ -66,5 +72,7 @@
     };
 
   }
+
+  });
 
 })(u,window,document);
