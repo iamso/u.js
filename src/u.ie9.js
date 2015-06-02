@@ -2,77 +2,80 @@
 (function(u,window,document) {
   'use strict';
 
+
   /**
    * wait for body to be available
    * insert function call at beginning of list to execute it before any other registered function
    */
-  u._deferredInitHandlers.unshift(function () {
-
-
-  /**
-   * overwrite class methods if classList is not defined
-   */
-  if (!document.body.classList) {
+  u._defInit.unshift(function () {
 
 
     /**
-     * hasClass method
-     * check if element has class
-     * @param  {string}  cls - class name to check for
-     * @return {boolean}
+     * overwrite class methods if classList is not defined
      */
-    u.fn.hasClass = function(cls) {
-      return new RegExp('(^| )' + cls + '( |$)', 'gi').test(this[0].className);
-    };
+    if (!document.body.classList) {
 
 
-    /**
-     * addClass method
-     * @param  {string} cls  - class name
-     * @return {object} this
-     */
-    u.fn.addClass = function(cls) {
-      return this.each(function(i, el) {
-        el.className += ' ' + cls;
-      });
-    };
+      /**
+       * hasClass method
+       * check if element has class
+       * @param  {string}  cls - class name to check for
+       * @return {boolean}
+       */
+      u.fn.hasClass = function(cls) {
+        return new RegExp('(^| )' + cls + '( |$)', 'gi').test(this[0].className);
+      };
 
 
-    /**
-     * removeClass method
-     * @param  {string} cls  - class name
-     * @return {object} this
-     */
-    u.fn.removeClass = function(cls) {
-      return this.each(function(i, el) {
-        el.className = el.className.replace(new RegExp('(^|\\b)' + cls.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
-      });
-    };
+      /**
+       * addClass method
+       * @param  {string} cls  - class name
+       * @return {object} this
+       */
+      u.fn.addClass = function(cls) {
+        return this.each(function(i, el) {
+          el.className += ' ' + cls;
+        });
+      };
 
 
-    /**
-     * toggleClass method
-     * @param  {string} cls  - class name
-     * @return {object} this
-     */
-    u.fn.toggleClass = function(cls) {
-      return this.each(function(i, el) {
-        var classes = el.className.split(' '),
-            existingIndex = classes.indexOf(cls);
+      /**
+       * removeClass method
+       * @param  {string} cls  - class name
+       * @return {object} this
+       */
+      u.fn.removeClass = function(cls) {
+        return this.each(function(i, el) {
+          el.className = el.className.replace(new RegExp('(^|\\b)' + cls.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+        });
+      };
 
-        if (existingIndex >= 0) {
-          classes.splice(existingIndex, 1);
-        }
-        else {
-          classes.push(cls);
-        }
 
-        el.className = classes.join(' ');
-      });
-    };
+      /**
+       * toggleClass method
+       * @param  {string} cls  - class name
+       * @return {object} this
+       */
+      u.fn.toggleClass = function(cls) {
+        return this.each(function(i, el) {
+          var classes = el.className.split(' '),
+              existingIndex = classes.indexOf(cls);
 
-  }
+          if (existingIndex >= 0) {
+            classes.splice(existingIndex, 1);
+          }
+          else {
+            classes.push(cls);
+          }
+
+          el.className = classes.join(' ');
+        });
+      };
+
+    }
+    
 
   });
+
 
 })(u,window,document);
