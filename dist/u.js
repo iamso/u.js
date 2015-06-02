@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.8.2
+ * u.js - Version 0.9.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-05-22
+ * Build date: 2015-06-02
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -25,15 +25,24 @@
    * @return {(object|undefined)}             instance or execute function on dom ready
    */
   win.u = function(arg) {
-    return /^f/.test(typeof arg) ? /c/.test(doc.readyState) ? arg() : u(doc).on('DOMContentLoaded', arg) : new Init(arg);
+    return /^f/.test(typeof arg) ? /c/.test(doc.readyState) ? arg() : u._defInit.push(arg) : new Init(arg);
   };
+
+
+  /**
+   * u _defInit
+   * list of deferred intializer functions
+   * will be called in the given order on DOMContentLoaded and emptied afterwards
+   * @type {array}
+   */
+  u._defInit = [];
 
 
   /**
    * u version
    * @type {string}
    */
-  u.version = '0.8.2';
+  u.version = '0.9.0';
 
 
   /**
@@ -758,7 +767,7 @@
    * @param  {string} cls  - class name
    * @return {object} this
    */
-  props.forEach(function(prop, index) {
+  u.each(props, function(index, prop) {
     u[proto][prop] = function(cls) {
       return this.each(function(i, el) {
         var classes =  cls.split(' ');
@@ -811,7 +820,7 @@
    * @param  {*}      b - argument to pass to the method
    * @return {object}
    */
-  "push pop shift unshift filter map splice".split(" ").forEach(function(m) {
+  u.each("push pop shift unshift filter map splice".split(" "), function(i,m) {
     u[m] = function(a, b) {
       return a[m](b);
     };
@@ -1088,13 +1097,15 @@
         }
       };
 
-      // XMLHttpRequest upload progress function
-      xhr.upload.onprogress = function(event) {
-        if (event.lengthComputable) {
-          // call progress callback
-          opts.up(event.total, event.loaded);
-        }
-      };
+      if (xhr.upload) {
+        // XMLHttpRequest upload progress function
+        xhr.upload.onprogress = function(event) {
+          if (event.lengthComputable) {
+            // call progress callback
+            opts.up(event.total, event.loaded);
+          }
+        };
+      }
 
       // XMLHttpRequest download progress function
       xhr.onprogress = function(event) {
@@ -1155,7 +1166,7 @@
    * @return {object} xhr  - xhr object
    */
   var methods = ['post', 'put', 'patch', 'options', 'delete'];
-  methods.forEach(function(method, index) {
+  u.each(methods, function(index, method) {
     u[method] = function(opts) {
       opts = u.extend(u.ajax.opts, opts);
       return u.ajax._send(opts, method.toUpperCase());
@@ -1217,5 +1228,18 @@
    * @type {object}
    */
   win.µ = u;
+
+
+  /**
+   * DOMContentLoaded function calls
+   * call functions registered with u(func)
+   */
+  u(doc).on('DOMContentLoaded', function (e) {
+    for (var i in u._defInit) {
+      u._defInit[i](e);
+    }
+    u._defInit = [];
+  });
+
 
 })(window, document, [], 'prototype');
