@@ -18,8 +18,15 @@
    * @return {(object|undefined)}             instance or execute function on dom ready
    */
   win.u = function(arg) {
-    return /^f/.test(typeof arg) ? /c/.test(doc.readyState) ? arg() : u(doc).on('DOMContentLoaded', arg) : new Init(arg);
+    return /^f/.test(typeof arg) ? /c/.test(doc.readyState) ? arg() : u._deferredInitHandlers.push(arg) : new Init(arg);
   };
+
+
+  /**
+   * list of deferred intializer functions
+   * will be called in the given order on DOMContentLoaded and emptied afterwards
+   */
+  u._deferredInitHandlers = [];
 
 
   /**
@@ -1210,5 +1217,16 @@
    * @type {object}
    */
   win.µ = u;
+
+
+  /**
+   * call functions registered with u(func)
+   */
+  u(doc).on('DOMContentLoaded', function (e) {
+    for (var i = 0; i < u._deferredInitHandlers.length; i++) {
+      u._deferredInitHandlers[i](e);
+    }
+    u._deferredInitHandlers = [];
+  });
 
 })(window, document, [], 'prototype');

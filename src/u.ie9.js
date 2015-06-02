@@ -2,6 +2,12 @@
 (function(u,window,document) {
   'use strict';
 
+  /**
+   * wait for body to be available
+   * insert function call at beginning of list to execute it before any other registered function
+   */
+  u._deferredInitHandlers.unshift(function () {
+
 
   /**
    * overwrite class methods if classList is not defined
@@ -26,7 +32,7 @@
      * @return {object} this
      */
     u.fn.addClass = function(cls) {
-      return this.each(function(el) {
+      return this.each(function(i, el) {
         el.className += ' ' + cls;
       });
     };
@@ -38,7 +44,7 @@
      * @return {object} this
      */
     u.fn.removeClass = function(cls) {
-      return this.each(function(el) {
+      return this.each(function(i, el) {
         el.className = el.className.replace(new RegExp('(^|\\b)' + cls.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
       });
     };
@@ -50,7 +56,7 @@
      * @return {object} this
      */
     u.fn.toggleClass = function(cls) {
-      return this.each(function(el) {
+      return this.each(function(i, el) {
         var classes = el.className.split(' '),
             existingIndex = classes.indexOf(cls);
 
@@ -66,5 +72,7 @@
     };
 
   }
+
+  });
 
 })(u,window,document);
