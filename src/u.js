@@ -1023,7 +1023,7 @@
       function(tmp, val){
         tmp = obj;
         val.replace(/[^.]+/g,function(key){
-          tmp = tmp[key];
+          tmp = tmp[key] || '';
         });
         return tmp;
       }
