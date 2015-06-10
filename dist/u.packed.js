@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.9.0
+ * u.js - Version 0.9.1
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-06-02
+ * Build date: 2015-06-10
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -42,7 +42,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.9.0';
+  u.version = '0.9.1';
 
 
   /**
@@ -1030,7 +1030,7 @@
       function(tmp, val){
         tmp = obj;
         val.replace(/[^.]+/g,function(key){
-          tmp = tmp[key];
+          tmp = tmp[key] || '';
         });
         return tmp;
       }
@@ -1246,10 +1246,10 @@
 
 
 /*!
- * u.js - Version 0.9.0 - IE 9 fix
+ * u.js - Version 0.9.1 - IE 9 fix
  * Fix for the missing classList in IE 9
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-06-02
+ * Build date: 2015-06-10
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
