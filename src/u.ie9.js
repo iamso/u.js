@@ -7,7 +7,7 @@
    * wait for body to be available
    * insert function call at beginning of list to execute it before any other registered function
    */
-  u._defInit.unshift(function () {
+  u(function () {
 
 
     /**
@@ -73,7 +73,7 @@
       };
 
     }
-    
+
 
   });
 
