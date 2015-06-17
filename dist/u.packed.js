@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.9.1
+ * u.js - Version 0.9.2
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-06-10
+ * Build date: 2015-06-17
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -42,7 +42,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.9.1';
+  u.version = '0.9.2';
 
 
   /**
@@ -1246,10 +1246,10 @@
 
 
 /*!
- * u.js - Version 0.9.1 - IE 9 fix
+ * u.js - Version 0.9.2 - IE 9 fix
  * Fix for the missing classList in IE 9
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-06-10
+ * Build date: 2015-06-17
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -1261,7 +1261,7 @@
    * wait for body to be available
    * insert function call at beginning of list to execute it before any other registered function
    */
-  u._defInit.unshift(function () {
+  u(function () {
 
 
     /**
@@ -1327,7 +1327,7 @@
       };
 
     }
-    
+
 
   });
 
