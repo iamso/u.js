@@ -1,5 +1,5 @@
 /*!
- * u.js - Version 0.9.2
+ * u.js - Version 0.9.3
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
  * Build date: 2015-06-17
@@ -42,7 +42,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.9.2';
+  u.version = '0.9.3';
 
 
   /**
@@ -1088,11 +1088,11 @@
         if (xhr.readyState === 4) {
           if (xhr.status >= 200 && xhr.status < 400){
             // call success callback
-            opts.success(u.parse(xhr.response), xhr.statusText);
+            opts.success(u.parse(xhr.response || xhr.responseText), xhr.statusText);
           }
           else {
             // call error callback
-            opts.error(u.parse(xhr.response), xhr.statusText);
+            opts.error(u.parse(xhr.response || xhr.responseText), xhr.statusText);
           }
         }
       };
@@ -1246,7 +1246,7 @@
 
 
 /*!
- * u.js - Version 0.9.2 - IE 9 fix
+ * u.js - Version 0.9.3 - IE 9 fix
  * Fix for the missing classList in IE 9
  * Author: Steve Ottoz <so@dev.so>
  * Build date: 2015-06-17
