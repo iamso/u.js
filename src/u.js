@@ -1081,11 +1081,11 @@
         if (xhr.readyState === 4) {
           if (xhr.status >= 200 && xhr.status < 400){
             // call success callback
-            opts.success(u.parse(xhr.response), xhr.statusText);
+            opts.success(u.parse(xhr.response || xhr.responseText), xhr.statusText);
           }
           else {
             // call error callback
-            opts.error(u.parse(xhr.response), xhr.statusText);
+            opts.error(u.parse(xhr.response || xhr.responseText), xhr.statusText);
           }
         }
       };
