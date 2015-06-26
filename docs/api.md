@@ -981,5 +981,21 @@ u.post({
 })
 ```
 
+#### u.getScript(url, callback)
+Load a script into global scope.
+
+| Parameter | Type | Description |
+|---|---|---|
+| url | function | The url of the script to load. |
+| callback | function(**event**) | **Optional**. Callback function for the onload event. |
+
+```javascript
+u.getScript('https://www.google.com/jsapi', function() {
+	google.load('maps', '3.9', { other_params: 'sensor=false', callback: function() {
+		// google maps setup
+	});
+});
+```
+
 ---
 
