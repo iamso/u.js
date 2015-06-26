@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.9.3
+ * u.js - Version 0.10.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-06-17
+ * Build date: 2015-06-26
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -42,7 +42,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.9.3';
+  u.version = '0.10.0';
 
 
   /**
@@ -1172,6 +1172,24 @@
       return u.ajax._send(opts, method.toUpperCase());
     };
   });
+
+
+  /**
+   * getScript Function
+   * load a script into global scope
+   * @param  {[type]}   url      [description]
+   * @param  {Function} callback [description]
+   * @return {[type]}            [description]
+   */
+  u.getScript = function(url, callback) {
+		var body = u('body'),
+				script = doc.createElement('script');
+
+		script.onload = callback || function(){};
+		script.src = url;
+		body.append(script = u(script));
+		script.remove();
+	};
 
 
   /**

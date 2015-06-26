@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.9.3
+ * u.js - Version 0.10.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-06-17
+ * Build date: 2015-06-26
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -42,7 +42,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.9.3';
+  u.version = '0.10.0';
 
 
   /**
@@ -1175,6 +1175,24 @@
 
 
   /**
+   * getScript Function
+   * load a script into global scope
+   * @param  {[type]}   url      [description]
+   * @param  {Function} callback [description]
+   * @return {[type]}            [description]
+   */
+  u.getScript = function(url, callback) {
+		var body = u('body'),
+				script = doc.createElement('script');
+
+		script.onload = callback || function(){};
+		script.src = url;
+		body.append(script = u(script));
+		script.remove();
+	};
+
+
+  /**
    * defer function
    * a single "defer()" function that returns an object
    * that is both a deferred and a thenable promise
@@ -1246,10 +1264,10 @@
 
 
 /*!
- * u.js - Version 0.9.3 - IE 9 fix
+ * u.js - Version 0.10.0 - IE 9 fix
  * Fix for the missing classList in IE 9
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-06-17
+ * Build date: 2015-06-26
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
