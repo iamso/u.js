@@ -1175,13 +1175,11 @@
    * @return {[type]}            [description]
    */
   u.getScript = function(url, callback) {
-		var body = u('body'),
-				script = doc.createElement('script');
+		var script = doc.createElement('script');
 
 		script.onload = callback || function(){};
 		script.src = url;
-		body.append(script = u(script));
-		script.remove();
+    doc.head.appendChild(script).parentNode.removeChild(script);
 	};
 
 
