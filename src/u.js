@@ -1168,6 +1168,24 @@
 
 
   /**
+   * getScript Function
+   * load a script into global scope
+   * @param  {[type]}   url      [description]
+   * @param  {Function} callback [description]
+   * @return {[type]}            [description]
+   */
+  u.getScript = function(url, callback) {
+		var body = u('body'),
+				script = doc.createElement('script');
+
+		script.onload = callback || function(){};
+		script.src = url;
+		body.append(script = u(script));
+		script.remove();
+	};
+
+
+  /**
    * defer function
    * a single "defer()" function that returns an object
    * that is both a deferred and a thenable promise
