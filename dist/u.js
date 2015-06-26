@@ -1,5 +1,5 @@
 /*!
- * u.js - Version 0.10.0
+ * u.js - Version 0.10.1
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
  * Build date: 2015-06-26
@@ -42,7 +42,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.10.0';
+  u.version = '0.10.1';
 
 
   /**
@@ -1182,13 +1182,11 @@
    * @return {[type]}            [description]
    */
   u.getScript = function(url, callback) {
-		var body = u('body'),
-				script = doc.createElement('script');
+		var script = doc.createElement('script');
 
 		script.onload = callback || function(){};
 		script.src = url;
-		body.append(script = u(script));
-		script.remove();
+    doc.head.appendChild(script).parentNode.removeChild(script);
 	};
 
 
