@@ -990,10 +990,11 @@ Load a script into global scope.
 | callback | function(**event**) | **Optional**. Callback function for the onload event. |
 
 ```javascript
+// i.e. load Google Maps script when needed
 u.getScript('https://www.google.com/jsapi', function() {
 	google.load('maps', '3.9', { other_params: 'sensor=false', callback: function() {
 		// google maps setup
-	});
+	}});
 });
 ```
 
