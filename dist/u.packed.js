@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.10.1
+ * u.js - Version 0.11.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-06-26
+ * Build date: 2015-06-30
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -42,7 +42,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.10.1';
+  u.version = '0.11.0';
 
 
   /**
@@ -733,6 +733,18 @@
 
 
     /**
+     * extend method
+     * extend the u.js prototype object
+     * @return {object} u.js prototype
+     */
+    extend: function() {
+      var args = u.toArray(arguments);
+      args.unshift(u.fn);
+      return u.extend.apply(this, args);
+    },
+
+
+    /**
      * for some reason is needed to get an array-like
      * representation instead of an object
      */
@@ -792,24 +804,25 @@
 
   /**
    * extend function
-   * extend an object by another object
-   * @param  {object} base  - object to be extended or object to extend u.fn by
-   * @param  {object} [ext] - object to extend by
+   * extend an object by any number of objects
+   * @param  {object} base  - object to be extended or to extend u.js namespace
    * @return {object}         extended object
    */
-  u.extend = u.fn.extend = function(base, ext){
-    var result = {},
+  u.extend = function(base){
+    var args = arguments,
+        i,
         prop;
 
-    arguments[1] || (ext = base, base = result = u.fn);
+    args[1] || (args[1] = base, base = u);
 
-    for(prop in base) {
-      result[prop] = (ext[prop] === undef) ? base[prop] : ext[prop];
+    for (i in args) {
+      if (i > 0) {
+        for(prop in args[i]) {
+          base[prop] = args[i][prop];
+        }
+      }
     }
-    for(prop in ext) {
-      result[prop] = ext[prop];
-    }
-    return result;
+    return base;
   };
 
 
@@ -1262,10 +1275,10 @@
 
 
 /*!
- * u.js - Version 0.10.1 - IE 9 fix
+ * u.js - Version 0.11.0 - IE 9 fix
  * Fix for the missing classList in IE 9
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-06-26
+ * Build date: 2015-06-30
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
