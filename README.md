@@ -27,7 +27,7 @@ component install u.js
 Documentation
 -------------
 
-Check out the docs [here](docs/api.md)
+Check out the docs [here](docs/index.md) or [here](http://iamso.viewdocs.io/u.js).
 
 
 License
