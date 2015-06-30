@@ -700,19 +700,23 @@ Returns the string.
 u.trim('blabla ') // 'blabla'
 ```
 
-### u.extend(base, extension)
-Create a new object by extending the base object with the extension object.
+### u.extend(base)
+Extending the base object with any number of extension objects.
+If only one argument is passed, the u.js namespace is extended, otherwise the first object is extended by the following objects.
 
-Returns a new object.
+Returns the extended object.
 
 | Parameter | Type | Description |
 |---|---|---|
 | base | object | The base object. |
-| extension | object | The extension object. |
 
 ```javascript
 u.extend({key: 'value'}, {key: 'newvalue', newKey: 'value'}) // {key: 'newvalue', newKey: 'value}
 ```
+
+#### u.fn.extend()
+Use `u.fn.extend({...})` to extend the u.js prototype, i.e. for plugins.
+
 
 ### u.push(array, argument), u.pop(array, argument), u.shift(array, argument), u.unshift(array, argument), u.filter(array, argument), u.map(array, argument), u.splice(array, argument)
 Array methods.
