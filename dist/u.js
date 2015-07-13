@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.11.0
+ * u.js - Version 0.12.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-06-30
+ * Build date: 2015-07-13
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -42,7 +42,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.11.0';
+  u.version = '0.12.0';
 
 
   /**
@@ -57,6 +57,13 @@
      * @type {number}
      */
     length: 0,
+
+
+    /**
+     * u.js object identifier
+     * @type {string}
+     */
+    ujs: '0.12.0',
 
 
     /**
@@ -1132,7 +1139,10 @@
       xhr.open(method, opts.url, opts.sync);
       xhr.setRequestHeader('Content-type', (opts.json ? cts.json : cts.form));
       xhr.setRequestHeader('Accept', cts.json);
-      xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+      opts.headers && u.each(opts.headers, function(header, value) {
+        xhr.setRequestHeader(header, value);
+      });
 
       // if set, send authorization header
       if (opts.auth) {
