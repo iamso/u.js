@@ -53,6 +53,13 @@
 
 
     /**
+     * u.js object identifier
+     * @type {string}
+     */
+    ujs: '{{version}}',
+
+
+    /**
      * on method
      * add event listeners to elements
      * @param  {string}   event   - event type i.e 'click'
