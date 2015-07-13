@@ -1132,7 +1132,10 @@
       xhr.open(method, opts.url, opts.sync);
       xhr.setRequestHeader('Content-type', (opts.json ? cts.json : cts.form));
       xhr.setRequestHeader('Accept', cts.json);
-      xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+      opts.headers && u.each(opts.headers, function(header, value) {
+        xhr.setRequestHeader(header, value);
+      });
 
       // if set, send authorization header
       if (opts.auth) {
