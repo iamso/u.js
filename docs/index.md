@@ -954,6 +954,7 @@ u.js AJAX functions all work pretty much the same. You call the function and pas
 | sync | boolean | **Optional**. Sync or Async. **Default true**. |
 | json | boolean | **Optional**. Send as JSON or form encoded. **Default true**. |
 | auth | string | **Optional**. String passed in the Authorization HTTP header. **Default null** |
+| headers | object | **Optional**. Object containing additional HTTP headers. |
 | success | function(data, status) | Success handler function. |
 | error | function(data, status) | Error handler function. |
 | up | function(total, loaded) | Upload progress handler function. |
@@ -966,6 +967,10 @@ u.post({
 	sync: true,
 	json: true,
 	auth: 'Bearer token',
+	headers: {
+		'X-Requested-With': 'XMLHttpRequest',
+		'a-custom-hader': 'with a custom value'
+	},
 	success: function(data, status) {
 		// do something
 	},
