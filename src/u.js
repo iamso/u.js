@@ -499,20 +499,60 @@
     /**
      * prev method
      * get previous element sibling
-     * @return {object} sibling element
+     * @param  {string} [sel] - selector to filter siblings
+     * @return {object}         sibling element
      */
-    prev: function() {
-      return u(this[0].previousElementSibling);
+    prev: function(sel) {
+      return u(u.toArray(this.prevAll(selector)).shift());
+    },
+
+
+    /**
+     * prevAll method
+     * get all previous element siblings
+     * @param  {string} [sel] - selector to filter siblings
+     * @return {object}         sibling elements
+     */
+    prevAll: function(sel) {
+      var matched = [],
+    	 		el = this[0];
+
+    	while (el = el.previousElementSibling) {
+    		sel ?
+    			(u(el).is(sel) && matched.push(el)) :
+    			matched.push(el);
+    	}
+    	return u(matched);
     },
 
 
     /**
      * next method
      * get next element sibling
-     * @return {object} sibling element
+     * @param  {string} [sel] - selector to filter siblings
+     * @return {object}         sibling element
      */
-    next: function() {
-      return u(this[0].nextElementSibling);
+    next: function(sel) {
+      return u(u.toArray(this.nextAll(sel)).shift());
+    },
+
+
+    /**
+     * nextAll method
+     * get all next element siblings
+     * @param  {string} [sel] - selector to filter siblings
+     * @return {object}         sibling elements
+     */
+    nextAll: function(sel) {
+      var matched = [],
+    	 		el = this[0];
+
+    	while (el = el.nextElementSibling) {
+    		sel ?
+    			(u(el).is(sel) && matched.push(el)) :
+    			matched.push(el);
+    	}
+    	return u(matched);
     },
 
 
