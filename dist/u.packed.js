@@ -1,5 +1,5 @@
 /*!
- * u.js - Version 0.13.1
+ * u.js - Version 0.14.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
  * Build date: 2015-07-16
@@ -42,7 +42,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.13.1';
+  u.version = '0.14.0';
 
 
   /**
@@ -63,7 +63,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.13.1',
+    ujs: '0.14.0',
 
 
     /**
@@ -906,6 +906,17 @@
 
 
   /**
+   * type function
+   * get the type of an object
+   * @param  {*}      obj - object to check
+   * @return {string}       type of the object
+   */
+  u.type = function(obj) {
+    return Object.prototype.toString.call(obj).replace(/^\[object (.+)\]$/, "$1").toLowerCase();
+  };
+
+
+  /**
    * inArray function
    * check if string is in array
    * @param  {string}  item  - string to find
@@ -1343,7 +1354,7 @@
 
 
 /*!
- * u.js - Version 0.13.1 - IE 9 fix
+ * u.js - Version 0.14.0 - IE 9 fix
  * Fix for the missing classList in IE 9
  * Author: Steve Ottoz <so@dev.so>
  * Build date: 2015-07-16
