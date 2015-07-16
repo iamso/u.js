@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.12.0
+ * u.js - Version 0.13.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-07-13
+ * Build date: 2015-07-16
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -42,7 +42,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.12.0';
+  u.version = '0.13.0';
 
 
   /**
@@ -63,7 +63,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.12.0',
+    ujs: '0.13.0',
 
 
     /**
@@ -504,22 +504,80 @@
 
 
     /**
+     * index method
+     * get the index of an element
+     * @param  {object|string} [el] - elements or css selector
+     * @return {number}               index
+     */
+    index: function(el) {
+      if (!el) {
+    		return this[0] ? this.first().prevAll().length : -1;
+    	}
+    	if (''+el === el) {
+    		return u.toArray(u(el)).indexOf(this[0]);
+    	}
+      el = el.ujs ? el[0] : el;
+    	return u.toArray(this).indexOf(el);
+    },
+
+
+    /**
      * prev method
      * get previous element sibling
-     * @return {object} sibling element
+     * @param  {string} [sel] - selector to filter siblings
+     * @return {object}         sibling element
      */
-    prev: function() {
-      return u(this[0].previousElementSibling);
+    prev: function(sel) {
+      return u(u.toArray(this.prevAll(selector)).shift());
+    },
+
+
+    /**
+     * prevAll method
+     * get all previous element siblings
+     * @param  {string} [sel] - selector to filter siblings
+     * @return {object}         sibling elements
+     */
+    prevAll: function(sel) {
+      var matched = [],
+    	 		el = this[0];
+
+    	while (el = el.previousElementSibling) {
+    		sel ?
+    			(u(el).is(sel) && matched.push(el)) :
+    			matched.push(el);
+    	}
+    	return u(matched);
     },
 
 
     /**
      * next method
      * get next element sibling
-     * @return {object} sibling element
+     * @param  {string} [sel] - selector to filter siblings
+     * @return {object}         sibling element
      */
-    next: function() {
-      return u(this[0].nextElementSibling);
+    next: function(sel) {
+      return u(u.toArray(this.nextAll(sel)).shift());
+    },
+
+
+    /**
+     * nextAll method
+     * get all next element siblings
+     * @param  {string} [sel] - selector to filter siblings
+     * @return {object}         sibling elements
+     */
+    nextAll: function(sel) {
+      var matched = [],
+    	 		el = this[0];
+
+    	while (el = el.nextElementSibling) {
+    		sel ?
+    			(u(el).is(sel) && matched.push(el)) :
+    			matched.push(el);
+    	}
+    	return u(matched);
     },
 
 
