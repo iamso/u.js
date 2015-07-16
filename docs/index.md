@@ -469,22 +469,76 @@ Returns a u object with child elements.
 u('selector').children() // u object
 ```
 
-### .prev()
-Get previous sisbling element.
+### .index(element)
+Get the 0 based index of an element. 
+
+If no argument is passed, returns the index of the first element in the current u object relative to all sibling elements.
+
+If a selector is passed, returns the index of the first element in the current u object relative to all elements matching the selector.
+
+If an element is passed (u object or DOM element), returns the index of the first passed element relative to the current u object.
+
+| Parameter | Type | Description |
+|---|---|---|
+| element | object, string | **Optional**. An element or a css selector |
+
+```javascript
+u('selector').index() // element index
+u('selector').index('other-selector') // element index
+u('selector').index(u('other-selector')) // element index
+```
+
+
+### .prev(selector)
+Get previous sisbling element. Optionally matching a css selector.
 
 Returns a u object with the previous sibling element.
+
+| Parameter | Type | Description |
+|---|---|---|
+| selector | string | **Optional**. A css selector |
 
 ```javascript
 u('selector').prev() // u object
 ```
 
-### .next()
-Get next sisbling element.
+### .prevAll(selector)
+Get all previous sisbling elements. Optionally matching a css selector.
+
+Returns a u object with the previous sibling elements.
+
+| Parameter | Type | Description |
+|---|---|---|
+| selector | string | **Optional**. A css selector |
+
+```javascript
+u('selector').prevAll() // u object
+```
+
+### .next(selector)
+Get next sisbling element. Optionally matching a css selector.
 
 Returns a u object with the next sibling element.
 
+| Parameter | Type | Description |
+|---|---|---|
+| selector | string | **Optional**. A css selector |
+
 ```javascript
 u('selector').next() // u object
+```
+
+### .next(selector)
+Get all next sisbling elements. Optionally matching a css selector.
+
+Returns a u object with the next sibling elements.
+
+| Parameter | Type | Description |
+|---|---|---|
+| selector | string | **Optional**. A css selector |
+
+```javascript
+u('selector').nextAll() // u object
 ```
 
 ### .siblings(selector)
