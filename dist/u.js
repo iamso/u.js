@@ -1,5 +1,5 @@
 /*!
- * u.js - Version 0.13.0
+ * u.js - Version 0.13.1
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
  * Build date: 2015-07-16
@@ -42,7 +42,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.13.0';
+  u.version = '0.13.1';
 
 
   /**
@@ -63,7 +63,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.13.0',
+    ujs: '0.13.1',
 
 
     /**
@@ -1221,7 +1221,7 @@
      * @return {undefined}
      */
     defaults: function(opts) {
-      this.opts = u.extend(this.opts, opts);
+      this.opts = u.extend({}, this.opts, opts);
     }
   };
 
@@ -1233,7 +1233,7 @@
    * @return {object} xhr  - xhr object
    */
   u.get = function(opts) {
-    opts = u.extend(u.ajax.opts, opts);
+    opts = u.extend({}, u.ajax.opts, opts);
     opts.json = false;
     opts.url += '?' + (u.param(opts.data) || '');
     return u.ajax._send(opts, 'GET');
@@ -1249,7 +1249,7 @@
   var methods = ['post', 'put', 'patch', 'options', 'delete'];
   u.each(methods, function(index, method) {
     u[method] = function(opts) {
-      opts = u.extend(u.ajax.opts, opts);
+      opts = u.extend({}, u.ajax.opts, opts);
       return u.ajax._send(opts, method.toUpperCase());
     };
   });
