@@ -1214,7 +1214,7 @@
      * @return {undefined}
      */
     defaults: function(opts) {
-      this.opts = u.extend(this.opts, opts);
+      this.opts = u.extend({}, this.opts, opts);
     }
   };
 
@@ -1226,7 +1226,7 @@
    * @return {object} xhr  - xhr object
    */
   u.get = function(opts) {
-    opts = u.extend(u.ajax.opts, opts);
+    opts = u.extend({}, u.ajax.opts, opts);
     opts.json = false;
     opts.url += '?' + (u.param(opts.data) || '');
     return u.ajax._send(opts, 'GET');
@@ -1242,7 +1242,7 @@
   var methods = ['post', 'put', 'patch', 'options', 'delete'];
   u.each(methods, function(index, method) {
     u[method] = function(opts) {
-      opts = u.extend(u.ajax.opts, opts);
+      opts = u.extend({}, u.ajax.opts, opts);
       return u.ajax._send(opts, method.toUpperCase());
     };
   });
