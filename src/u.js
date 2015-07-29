@@ -347,16 +347,18 @@
      * @return {(string|object)}         property value or this
      */
     css: function(props, val) {
-      if (typeof props === 'object') {
+      if (/^o/.test(typeof props)) {
         for(var prop in props) {
+          var prefixed = u.prfx(prop);
           this.each(function(index, el) {
-            el.style[prop] = props[prop];
+            el.style[prefixed] = props[prop];
           });
         }
         return this;
       } else {
         return val === undef ? this[0].style[props] : this.each(function(index, el) {
-          el.style[props] = val;
+          var prefixed = u.prfx(props);
+          el.style[prefixed] = val;
         });
       }
     },
