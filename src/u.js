@@ -1041,7 +1041,7 @@
     for (d?d=b.toUpperCase():b=4;!d&&b--;d=(d=d.replace(/-(.)/g,prfx)) in (new Image).style&&d) {
       d=[['Moz-','Webkit-','Ms-','O-'][b]]+a;
     }
-    return d;
+    return d || a;
   },
 
 
