@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.14.0
+ * u.js - Version 0.15.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-07-16
+ * Build date: 2015-07-29
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -42,7 +42,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.14.0';
+  u.version = '0.15.0';
 
 
   /**
@@ -63,7 +63,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.14.0',
+    ujs: '0.15.0',
 
 
     /**
@@ -354,16 +354,18 @@
      * @return {(string|object)}         property value or this
      */
     css: function(props, val) {
-      if (typeof props === 'object') {
+      if (/^o/.test(typeof props)) {
         for(var prop in props) {
+          var prefixed = u.prfx(prop);
           this.each(function(index, el) {
-            el.style[prop] = props[prop];
+            el.style[prefixed] = props[prop];
           });
         }
         return this;
       } else {
         return val === undef ? this[0].style[props] : this.each(function(index, el) {
-          el.style[props] = val;
+          var prefixed = u.prfx(props);
+          el.style[prefixed] = val;
         });
       }
     },
@@ -1048,7 +1050,7 @@
     for (d?d=b.toUpperCase():b=4;!d&&b--;d=(d=d.replace(/-(.)/g,prfx)) in (new Image).style&&d) {
       d=[['Moz-','Webkit-','Ms-','O-'][b]]+a;
     }
-    return d;
+    return d || a;
   },
 
 
@@ -1332,10 +1334,10 @@
 
 
   /**
-   * assign u to µ
+   * assign u to µ and ujs
    * @type {object}
    */
-  win.µ = u;
+  win.µ = win.ujs = u;
 
 
   /**
