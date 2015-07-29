@@ -1325,10 +1325,10 @@
 
 
   /**
-   * assign u to µ
+   * assign u to µ and ujs
    * @type {object}
    */
-  win.µ = u;
+  win.µ = win.ujs = u;
 
 
   /**
