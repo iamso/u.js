@@ -1,5 +1,12 @@
-
-(function(window, document, array, prototype, undefined) {
+/*!
+ * u.js - Version 0.16.0
+ * micro framework, utility library
+ * Author: Steve Ottoz <so@dev.so>
+ * Build date: 2015-08-29
+ * Copyright (c) 2015 Steve Ottoz
+ * Released under the MIT license
+ */
+;(function(window, document, array, prototype, undefined) {
   'use strict';
 
 
@@ -23,6 +30,482 @@
 
 
   /**
+   * each function
+   * @param  {array}    array      - array to iterate over
+   * @param  {function} callback - function to call on each item
+   * @return {object}   this
+   */
+  u.each = function(array, callback) {
+    for(var i in array) {
+      callback.call(array[i], i, array[i]);
+    }
+    return array;
+  };
+
+
+  /**
+   * extend function
+   * extend an object by any number of objects
+   * @param  {object} base  - object to be extended or to extend u.js namespace
+   * @return {object}         extended object
+   */
+  u.extend = function(base){
+    var args = arguments,
+        i,
+        prop;
+
+    args[1] || (args[1] = base, base = u);
+
+    for (i in args) {
+      if (i > 0) {
+        for(prop in args[i]) {
+          base[prop] = args[i][prop];
+        }
+      }
+    }
+    return base;
+  };
+
+
+  /**
+   * trim function
+   * trim trailing whitespace
+   * @param  {string} val - string to trim
+   * @return {string}       trimmed value
+   */
+  u.trim = function(val) {
+    return val.replace(/^\s+|\s+$/g, '');
+  };
+
+
+  /**
+   * type function
+   * get the type of an object
+   * @param  {*}      obj - object to check
+   * @return {string}       type of the object
+   */
+  u.type = function(obj) {
+    return Object.prototype.toString.call(obj).replace(/^\[object (.+)\]$/, "$1").toLowerCase();
+  };
+
+
+  /**
+   * array function
+   * push, pop, shift, unshift, filter, map, slice
+   * @param  {object} a - array to call the method on
+   * @param  {*}      b - argument to pass to the method
+   * @return {object}
+   */
+  u.each("push pop shift unshift filter map splice".split(" "), function(i,m) {
+    u[m] = function(a, b) {
+      return a[m](b);
+    };
+  });
+
+
+  /**
+   * inArray function
+   * check if string is in array
+   * @param  {string}  item  - string to find
+   * @param  {object}  array - array to search
+   * @return {boolean}
+   */
+  u.inArray = function(item, array) {
+    return array.indexOf(item);
+  };
+
+
+  /**
+   * isArray function
+   * check if passed object is an array
+   * @param  {object}  array - array to check
+   * @return {boolean}
+   */
+  u.isArray = function(array) {
+    return Array.isArray(array);
+  };
+
+
+  /**
+   * toArray function
+   * convert a NodeList object to an array
+   * @param  {object} nl - NodeList object
+   * @return {object}      array
+   */
+  u.toArray = function(nl) {
+    return array.slice.call(nl);
+  },
+
+
+  /**
+   * toDash function
+   * convert camelCase string to dash-separated
+   * @param  {string} str - camelCase string
+   * @return {string}       converted string
+   */
+  u.toDash = function(str) {
+    return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+  };
+
+
+  /**
+   * toCamel function
+   * convert dash-separated string to camelCase
+   * @param  {string} str - dash-separated string
+   * @return {string}       converted string
+   */
+  u.toCamel = function(str) {
+    return str.toLowerCase().replace(/\b-([a-z])/g, function(all, char) {
+      return char.toUpperCase();
+    });
+  };
+
+
+  /**
+   * isHtml function
+   * check if a string contains html tags
+   * @param  {string}  str - string to be checked
+   * @return {boolean}
+   */
+  u.isHtml = function(str) {
+    return /<[a-z][\s\S]*>/i.test(str);
+  };
+
+
+  /**
+   * toHtml function
+   * convert an html string to DOM elements
+   * @param  {string}      str   - string to be converted
+   * @param  {undefined}   [tmp] - placeholder for the temporary element
+   * @return {object}            - nodeList of the converted elements
+   */
+  u.toHtml = function(str, tmp) {
+    tmp = document.createElement('div');
+    tmp.innerHTML = str;
+    return str ? tmp.childNodes : [];
+  };
+
+
+  /**
+   * bytes function
+   * get byte size of a UTF-8 string
+   * @param  {string} str - UTF-8 string
+   * @return {number}       byte size
+   */
+  u.bytes = function(str) {
+    return ~-encodeURI(str).split(/%..|./).length;
+  };
+
+
+  /**
+   * uuid function
+   * create a random uuid
+   * from https://gist.github.com/jed/982883
+   * @param  {string} [a] - placeholder
+   * @return {string}       uuid
+   */
+  u.uuid = function uuid(a) {
+    return a ? (a ^ Math.random() * 16 >> a/4).toString(16) : ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, uuid);
+  };
+
+
+  /**
+   * rid function
+   * create a random id
+   * @param  {number} [a] - length of the id (default 32)
+   * @param  {number} [b] - radix (default 16)
+   * @return {string}       random id
+   */
+  u.rid = function(a, b) {
+    b = b || 16;
+    return Array(a || 32).join(0).replace(/./g, function() {
+      return(0| Math.random() * b).toString(b);
+    });
+  };
+
+
+  /**
+   * prfx function
+   * get prefixed version of css properties
+   * @param  {string}    a     - css property
+   * @param  {undefined} b,c,d - placeholder variables
+   * @return {string}            prefixed css property
+   */
+  u.prfx = function prfx(a,b,c,d){
+    for (d?d=b.toUpperCase():b=4;!d&&b--;d=(d=d.replace(/-(.)/g,prfx)) in (new Image).style&&d) {
+      d=[['Moz-','Webkit-','Ms-','O-'][b]]+a;
+    }
+    return d || a;
+  },
+
+
+  /**
+   * stop function
+   * preventDefault
+   * @param  {object} e - event
+   * @return {object} e - event
+   */
+  u.stop = function(e) {
+    if (!e.preventDefault) {
+      e.returnValue = false;
+    } else {
+      e.preventDefault();
+    }
+    return e;
+  };
+
+
+  /**
+   * param function
+   * prepare data as json or form encoded param string
+   * @param  {object}  obj    - data to prepare
+   * @param  {boolean} json   - true for json
+   * @param  {string}  prefix - prefix for form encoded params
+   * @return {string}           prepared string
+   */
+  u.param = function(obj, json, prefix) {
+    if (json) {
+      return JSON.stringify(obj);
+    }
+    else {
+      var str = [];
+      for(var p in obj) {
+        var k = prefix ? prefix + "[" + p + "]" : p,
+        v = obj[p];
+        str.push(typeof v === "object" ? u.param(v, json, k) : encodeURIComponent(k) + "=" + encodeURIComponent(v));
+      }
+      return str.join("&");
+    }
+  };
+
+
+  /**
+   * parse function
+   * @param  {string}          obj - string to be parsed
+   * @return {(string|object)}       unparsed string or parsed object
+   */
+  u.parse = function(obj) {
+    try {
+      return JSON.parse(obj);
+    }
+    catch(ex) {
+      return obj;
+    }
+  };
+
+
+  /**
+   * tpl function
+   * parse a template string with values
+   * from https://gist.github.com/haochi/1075080
+   * @param  {string} str - string containing {{variables}}
+   * @param  {object} obj - object containing values
+   * @return {string}       parsed string
+   */
+  u.tpl = function(str, obj){
+    return str.replace(/{{*([^}]+)*}}/g,
+      function(tmp, val){
+        tmp = obj;
+        val.replace(/[^.]+/g,function(key){
+          tmp = tmp[key] || '';
+        });
+        return tmp;
+      }
+    );
+  };
+
+
+  /**
+   * ajax setup
+   * @type {object}
+   */
+  u.ajax = {
+
+
+    /**
+     * ajax default options
+     * @type {object}
+     */
+    opts: {
+      sync: true,
+      json: true, // true to send as json
+      auth: null,
+      success: function() {},
+      error: function() {},
+      up: function() {},
+      down: function() {}
+    },
+
+
+    /**
+     * ajax content types
+     * @type {object}
+     */
+    cts: {
+      form: 'application/x-www-form-urlencoded',
+      json: 'application/json'
+    },
+
+
+    /**
+     * ajax send function (internal use)
+     * @param  {object} opts   - ajax options
+     * @param  {string} method - http method
+     * @return {object} xhr    - xhr object
+     */
+    _send: function(opts, method) {
+
+      // create function vars
+      var cts = this.cts,
+          xhr = new XMLHttpRequest(),
+          data = u.param(opts.data, opts.json);
+
+      // XMLHttpRequest state change function
+      xhr.onreadystatechange = function(){
+        if (xhr.readyState === 4) {
+          if (xhr.status >= 200 && xhr.status < 400){
+            // call success callback
+            opts.success(u.parse(xhr.response || xhr.responseText), xhr.statusText);
+          }
+          else {
+            // call error callback
+            opts.error(u.parse(xhr.response || xhr.responseText), xhr.statusText);
+          }
+        }
+      };
+
+      if (xhr.upload) {
+        // XMLHttpRequest upload progress function
+        xhr.upload.onprogress = function(event) {
+          if (event.lengthComputable) {
+            // call progress callback
+            opts.up(event.total, event.loaded);
+          }
+        };
+      }
+
+      // XMLHttpRequest download progress function
+      xhr.onprogress = function(event) {
+        if (event.lengthComputable) {
+          // call progress callback
+          opts.down(event.total, event.loaded);
+        }
+      };
+
+      // open request and set headers
+      xhr.open(method, opts.url, opts.sync);
+      xhr.setRequestHeader('Content-type', (opts.json ? cts.json : cts.form));
+      xhr.setRequestHeader('Accept', cts.json);
+
+      opts.headers && u.each(opts.headers, function(header, value) {
+        xhr.setRequestHeader(header, value);
+      });
+
+      // if set, send authorization header
+      if (opts.auth) {
+        xhr.setRequestHeader('Authorization', opts.auth);
+      }
+
+      // send the request
+      xhr.send(data || null);
+
+      return xhr;
+
+    },
+
+
+    /**
+     * set ajax defaults
+     * @param  {object}    opts - new defaults
+     * @return {undefined}
+     */
+    defaults: function(opts) {
+      this.opts = u.extend({}, this.opts, opts);
+    }
+  };
+
+
+  /**
+   * get function
+   * shortcut for ajx GET request
+   * @param  {object} opts - ajax options
+   * @return {object} xhr  - xhr object
+   */
+  u.get = function(opts) {
+    opts = u.extend({}, u.ajax.opts, opts);
+    opts.json = false;
+    opts.url += '?' + (u.param(opts.data) || '');
+    return u.ajax._send(opts, 'GET');
+  };
+
+
+  /**
+   * post, put, patch, options, delete functions
+   * shortcut for ajax POST, PUT, PATCH, OPTIONS and DELETE request
+   * @param  {object} opts - ajax options
+   * @return {object} xhr  - xhr object
+   */
+  var methods = ['post', 'put', 'patch', 'options', 'delete'];
+  u.each(methods, function(index, method) {
+    u[method] = function(opts) {
+      opts = u.extend({}, u.ajax.opts, opts);
+      return u.ajax._send(opts, method.toUpperCase());
+    };
+  });
+
+
+  /**
+   * getScript Function
+   * load a script into global scope
+   * @param  {[type]}   url      [description]
+   * @param  {Function} callback [description]
+   * @return {[type]}            [description]
+   */
+  u.getScript = function(url, callback) {
+		var script = document.createElement('script');
+
+		script.onload = callback || function(){};
+		script.src = url;
+    document.head.appendChild(script).parentNode.removeChild(script);
+	};
+
+
+  /**
+   * defer function
+   * a single "defer()" function that returns an object
+   * that is both a deferred and a thenable promise
+   * from https://gist.github.com/kirbysayshi/1129049
+   * @param  {function} [callbacks] - placeholder for pending callbacks
+   * @param  {*}        [value]     - placeholder for fulfilled value
+   * @return {object}               - the defer object
+   */
+  u.defer = function (callbacks, value) {
+    callbacks = [];
+    return {
+      resolve: function () {
+        value = arguments;
+        while (callbacks.length) {
+          callbacks.shift().apply({}, value);
+        }
+        callbacks = 0;
+        return this;
+      },
+      then: function (callback) {
+        callbacks ? callbacks.push(callback) : callback.apply({}, value);
+        return this;
+      }
+    };
+  };
+
+
+  /**
+   * u version
+   * @type {string}
+   */
+  u.version = '0.16.0';
+
+
+  /**
    * u _defInit
    * list of deferred intializer functions
    * will be called in the given order on DOMContentLoaded and emptied afterwards
@@ -32,10 +515,31 @@
 
 
   /**
-   * u version
+   * u session id
    * @type {string}
    */
-  u.version = '{{version}}';
+  u._id = u.uuid();
+
+
+  /**
+   * data object
+   * @type {array}
+   */
+  u._data = [];
+
+
+  /**
+   * if $ is not used assign u to it
+   * @type {object}
+   */
+  window.$ = window.$ || u;
+
+
+  /**
+   * assign u to µ and ujs
+   * @type {object}
+   */
+  window.µ = window.ujs = u;
 
 
   /**
@@ -56,7 +560,19 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '{{version}}',
+    ujs: '0.16.0',
+
+
+    /**
+     * each method
+     * use native forEach to iterate collection
+     * @param  {function} callback - function to call on each element
+     * @return {object}   this
+     */
+    each: function(callback) {
+      u.each(u.toArray(this), callback);
+      return this;
+    },
 
 
     /**
@@ -114,14 +630,24 @@
 
 
     /**
-     * each method
-     * use native forEach to iterate collection
-     * @param  {function} callback - function to call on each element
-     * @return {object}   this
+     * trigger method
+     * trigger an event for an element
+     * @param  {string} e    - event name
+     * @return {object} this
      */
-    each: function(callback) {
-      u.each(u.toArray(this), callback);
-      return this;
+    trigger: function(e) {
+      if (document.createEvent) {
+        var event = document.createEvent('HTMLEvents');
+        event.initEvent(e, true, false);
+        return this.each(function(index, el) {
+          el.dispatchEvent(event);
+        });
+      }
+      else {
+        return this.each(function(index, el) {
+          el.fireEvent('on' + e);
+        });
+      }
     },
 
 
@@ -489,6 +1015,42 @@
 
 
     /**
+     * filter method
+     * filter elements by selector or filter function
+     * @param  {string|function} filter - selector or filter function
+     * @return {object}                   matching elements
+     */
+    filter: function(filter) {
+      return u(array.filter.call(this, function(el, index) {
+        return /^f/.test(typeof filter) ? filter(index, el) : u(el).is(filter);
+      }));
+    },
+
+
+    /**
+     * is method
+     * matches the element against a selector
+     * @param  {string}  sel - selector to match
+     * @return {boolean}
+     */
+    is: function(sel) {
+      var m = (this[0].matches || this[0].matchesSelector || this[0].msMatchesSelector || this[0].mozMatchesSelector || this[0].webkitMatchesSelector || this[0].oMatchesSelector);
+      if (m) {
+        return m.call(this[0], sel);
+      }
+      else if (this[0].parentNode) {
+        var n = this[0].parentNode.querySelectorAll(sel);
+        for (var i = n.length; i--;) {
+          if (n[i] === this[0]) {
+            return true;
+          }
+        }
+      }
+      return false;
+    },
+
+
+    /**
      * children method
      * get child elements
      * @return {object} child elements
@@ -591,15 +1153,40 @@
 
 
     /**
-     * filter method
-     * filter elements by selector or filter function
-     * @param  {string|function} filter - selector or filter function
-     * @return {object}                   matching elements
+     * parent method
+     * get the parent element
+     * @return {object} element
      */
-    filter: function(filter) {
-      return u(array.filter.call(this, function(el, index) {
-        return /^f/.test(typeof filter) ? filter(index, el) : u(el).is(filter);
-      }));
+    parent: function() {
+      return (this.length < 2) ? u(this[0].parentNode): [];
+    },
+
+
+    /**
+     * parents method
+     * get the parent elements
+     * @return {object} element
+     */
+    parents: function(sel) {
+      var parents = [],
+          finished = false,
+          currentElement = this[0];
+
+      while (!finished) {
+        currentElement = currentElement.parentNode;
+        if (currentElement) {
+          if (sel === undefined) {
+            parents.push(currentElement);
+          }
+          else if (u(currentElement).is(sel)) {
+            parents.push(currentElement);
+          }
+        }
+        else {
+          finished = true;
+        }
+      }
+      return u(parents);
     },
 
 
@@ -668,54 +1255,6 @@
 
 
     /**
-     * bytes method
-     * get byte size of an element's text
-     * @return {number} byte size
-     */
-    bytes: function() {
-      return u.bytes(this[0].value || this[0].textContent);
-    },
-
-
-    /**
-     * parent method
-     * get the parent element
-     * @return {object} element
-     */
-    parent: function() {
-      return (this.length < 2) ? u(this[0].parentNode): [];
-    },
-
-
-    /**
-     * parents method
-     * get the parent elements
-     * @return {object} element
-     */
-    parents: function(sel) {
-      var parents = [],
-          finished = false,
-          currentElement = this[0];
-
-      while (!finished) {
-        currentElement = currentElement.parentNode;
-        if (currentElement) {
-          if (sel === undefined) {
-            parents.push(currentElement);
-          }
-          else if (u(currentElement).is(sel)) {
-            parents.push(currentElement);
-          }
-        }
-        else {
-          finished = true;
-        }
-      }
-      return u(parents);
-    },
-
-
-    /**
      * remove method
      * remove element from dom
      * @return {object} element
@@ -728,45 +1267,12 @@
 
 
     /**
-     * trigger method
-     * trigger an event for an element
-     * @param  {string} e    - event name
-     * @return {object} this
+     * bytes method
+     * get byte size of an element's text
+     * @return {number} byte size
      */
-    trigger: function(e) {
-      if (document.createEvent) {
-        var event = document.createEvent('HTMLEvents');
-        event.initEvent(e, true, false);
-        return this.each(function(index, el) {
-          el.dispatchEvent(event);
-        });
-      } else {
-        return this.each(function(index, el) {
-          el.fireEvent('on' + e);
-        });
-      }
-    },
-
-
-    /**
-     * is method
-     * matches the element against a selector
-     * @param  {string}  sel - selector to match
-     * @return {boolean}
-     */
-    is: function(sel) {
-      var m = (this[0].matches || this[0].matchesSelector || this[0].msMatchesSelector || this[0].mozMatchesSelector || this[0].webkitMatchesSelector || this[0].oMatchesSelector);
-      if (m) {
-        return m.call(this[0], sel);
-      } else if (this[0].parentNode) {
-        var n = this[0].parentNode.querySelectorAll(sel);
-        for (var i = n.length; i--;) {
-          if (n[i] === this[0]) {
-            return true;
-          }
-        }
-      }
-      return false;
+    bytes: function() {
+      return u.bytes(this[0].value || this[0].textContent);
     },
 
 
@@ -814,20 +1320,6 @@
 
 
   /**
-   * each function
-   * @param  {array}    array      - array to iterate over
-   * @param  {function} callback - function to call on each item
-   * @return {object}   this
-   */
-  u.each = function(array, callback) {
-    for(var i in array) {
-      callback.call(array[i], i, array[i]);
-    }
-    return array;
-  };
-
-
-  /**
    * map class method names
    * @type {array}
    */
@@ -850,489 +1342,6 @@
       });
     };
   });
-
-
-  /**
-   * trim function
-   * trim trailing whitespace
-   * @param  {string} val - string to trim
-   * @return {string}       trimmed value
-   */
-  u.trim = function(val) {
-    return val.replace(/^\s+|\s+$/g, '');
-  };
-
-
-  /**
-   * extend function
-   * extend an object by any number of objects
-   * @param  {object} base  - object to be extended or to extend u.js namespace
-   * @return {object}         extended object
-   */
-  u.extend = function(base){
-    var args = arguments,
-        i,
-        prop;
-
-    args[1] || (args[1] = base, base = u);
-
-    for (i in args) {
-      if (i > 0) {
-        for(prop in args[i]) {
-          base[prop] = args[i][prop];
-        }
-      }
-    }
-    return base;
-  };
-
-
-  /**
-   * array function
-   * push, pop, shift, unshift, filter, map, slice
-   * @param  {object} a - array to call the method on
-   * @param  {*}      b - argument to pass to the method
-   * @return {object}
-   */
-  u.each("push pop shift unshift filter map splice".split(" "), function(i,m) {
-    u[m] = function(a, b) {
-      return a[m](b);
-    };
-  });
-
-
-  /**
-   * type function
-   * get the type of an object
-   * @param  {*}      obj - object to check
-   * @return {string}       type of the object
-   */
-  u.type = function(obj) {
-    return Object.prototype.toString.call(obj).replace(/^\[object (.+)\]$/, "$1").toLowerCase();
-  };
-
-
-  /**
-   * inArray function
-   * check if string is in array
-   * @param  {string}  item  - string to find
-   * @param  {object}  array - array to search
-   * @return {boolean}
-   */
-  u.inArray = function(item, array) {
-    return array.indexOf(item);
-  };
-
-
-  /**
-   * isArray function
-   * check if passed object is an array
-   * @param  {object}  array - array to check
-   * @return {boolean}
-   */
-  u.isArray = function(array) {
-    return Array.isArray(array);
-  };
-
-
-  /**
-   * toArray function
-   * convert a NodeList object to an array
-   * @param  {object} nl - NodeList object
-   * @return {object}      array
-   */
-  u.toArray = function(nl) {
-    return array.slice.call(nl);
-  },
-
-
-  /**
-   * toDash function
-   * convert camelCase string to dash-separated
-   * @param  {string} str - camelCase string
-   * @return {string}       converted string
-   */
-  u.toDash = function(str) {
-    return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-  };
-
-
-  /**
-   * toCamel function
-   * convert dash-separated string to camelCase
-   * @param  {string} str - dash-separated string
-   * @return {string}       converted string
-   */
-  u.toCamel = function(str) {
-    return str.toLowerCase().replace(/\b-([a-z])/g, function(all, char) {
-      return char.toUpperCase();
-    });
-  };
-
-
-  /**
-   * isHtml function
-   * check if a string contains html tags
-   * @param  {string}  str - string to be checked
-   * @return {boolean}
-   */
-  u.isHtml = function(str) {
-    return /<[a-z][\s\S]*>/i.test(str);
-  };
-
-
-  /**
-   * toHtml function
-   * convert an html string to DOM elements
-   * @param  {string}      str   - string to be converted
-   * @param  {undefined}   [tmp] - placeholder for the temporary element
-   * @return {object}            - nodeList of the converted elements
-   */
-  u.toHtml = function(str, tmp) {
-    tmp = document.createElement('div');
-    tmp.innerHTML = str;
-    return str ? tmp.childNodes : [];
-  };
-
-
-  /**
-   * bytes function
-   * get byte size of a UTF-8 string
-   * @param  {string} str - UTF-8 string
-   * @return {number}       byte size
-   */
-  u.bytes = function(str) {
-    return ~-encodeURI(str).split(/%..|./).length;
-  };
-
-
-  /**
-   * uuid function
-   * create a random uuid
-   * from https://gist.github.com/jed/982883
-   * @param  {string} [a] - placeholder
-   * @return {string}       uuid
-   */
-  u.uuid = function uuid(a) {
-    return a ? (a ^ Math.random() * 16 >> a/4).toString(16) : ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, uuid);
-  };
-
-
-  /**
-   * rid function
-   * create a random id
-   * @param  {number} [a] - length of the id (default 32)
-   * @param  {number} [b] - radix (default 16)
-   * @return {string}       random id
-   */
-  u.rid = function(a, b) {
-    b = b || 16;
-    return Array(a || 32).join(0).replace(/./g, function() {
-        return(0| Math.random() * b).toString(b);
-    });
-  };
-
-
-  /**
-   * prfx function
-   * get prefixed version of css properties
-   * @param  {string}    a     - css property
-   * @param  {undefined} b,c,d - placeholder variables
-   * @return {string}            prefixed css property
-   */
-  u.prfx = function prfx(a,b,c,d){
-    for (d?d=b.toUpperCase():b=4;!d&&b--;d=(d=d.replace(/-(.)/g,prfx)) in (new Image).style&&d) {
-      d=[['Moz-','Webkit-','Ms-','O-'][b]]+a;
-    }
-    return d || a;
-  },
-
-
-  /**
-   * stop function
-   * preventDefault
-   * @param  {object} e - event
-   * @return {object} e - event
-   */
-  u.stop = function(e) {
-    if (!e.preventDefault) {
-      e.returnValue = false;
-    } else {
-      e.preventDefault();
-    }
-    return e;
-  };
-
-
-  /**
-   * param function
-   * prepare data as json or form encoded param string
-   * @param  {object}  obj    - data to prepare
-   * @param  {boolean} json   - true for json
-   * @param  {string}  prefix - prefix for form encoded params
-   * @return {string}           prepared string
-   */
-  u.param = function(obj, json, prefix) {
-    if (json) {
-      return JSON.stringify(obj);
-    }
-    else {
-      var str = [];
-      for(var p in obj) {
-        var k = prefix ? prefix + "[" + p + "]" : p,
-        v = obj[p];
-        str.push(typeof v === "object" ? u.param(v, json, k) : encodeURIComponent(k) + "=" + encodeURIComponent(v));
-      }
-      return str.join("&");
-    }
-  };
-
-
-  /**
-   * parse function
-   * @param  {string}          obj - string to be parsed
-   * @return {(string|object)}       unparsed string or parsed object
-   */
-  u.parse = function(obj) {
-    try {
-      return JSON.parse(obj);
-    }
-    catch(ex) {
-      return obj;
-    }
-  };
-
-
-  /**
-   * tpl function
-   * parse a template string with values
-   * from https://gist.github.com/haochi/1075080
-   * @param  {string} str - string containing {{variables}}
-   * @param  {object} obj - object containing values
-   * @return {string}       parsed string
-   */
-  u.tpl = function(str, obj){
-    return str.replace(/{{*([^}]+)*}}/g,
-      function(tmp, val){
-        tmp = obj;
-        val.replace(/[^.]+/g,function(key){
-          tmp = tmp[key] || '';
-        });
-        return tmp;
-      }
-    );
-  };
-
-
-  /**
-   * ajax setup
-   * @type {object}
-   */
-  u.ajax = {
-
-
-    /**
-     * ajax default options
-     * @type {object}
-     */
-    opts: {
-      sync: true,
-      json: true, // true to send as json
-      auth: null,
-      success: function() {},
-      error: function() {},
-      up: function() {},
-      down: function() {}
-    },
-
-
-    /**
-     * ajax content types
-     * @type {object}
-     */
-    cts: {
-      form: 'application/x-www-form-urlencoded',
-      json: 'application/json'
-    },
-
-
-    /**
-     * ajax send function (internal use)
-     * @param  {object} opts   - ajax options
-     * @param  {string} method - http method
-     * @return {object} xhr    - xhr object
-     */
-    _send: function(opts, method) {
-
-      // create function vars
-      var cts = this.cts,
-          xhr = new XMLHttpRequest(),
-          data = u.param(opts.data, opts.json);
-
-      // XMLHttpRequest state change function
-      xhr.onreadystatechange = function(){
-        if (xhr.readyState === 4) {
-          if (xhr.status >= 200 && xhr.status < 400){
-            // call success callback
-            opts.success(u.parse(xhr.response || xhr.responseText), xhr.statusText);
-          }
-          else {
-            // call error callback
-            opts.error(u.parse(xhr.response || xhr.responseText), xhr.statusText);
-          }
-        }
-      };
-
-      if (xhr.upload) {
-        // XMLHttpRequest upload progress function
-        xhr.upload.onprogress = function(event) {
-          if (event.lengthComputable) {
-            // call progress callback
-            opts.up(event.total, event.loaded);
-          }
-        };
-      }
-
-      // XMLHttpRequest download progress function
-      xhr.onprogress = function(event) {
-        if (event.lengthComputable) {
-          // call progress callback
-          opts.down(event.total, event.loaded);
-        }
-      };
-
-      // open request and set headers
-      xhr.open(method, opts.url, opts.sync);
-      xhr.setRequestHeader('Content-type', (opts.json ? cts.json : cts.form));
-      xhr.setRequestHeader('Accept', cts.json);
-
-      opts.headers && u.each(opts.headers, function(header, value) {
-        xhr.setRequestHeader(header, value);
-      });
-
-      // if set, send authorization header
-      if (opts.auth) {
-        xhr.setRequestHeader('Authorization', opts.auth);
-      }
-
-      // send the request
-      xhr.send(data || null);
-
-      return xhr;
-
-    },
-
-
-    /**
-     * set ajax defaults
-     * @param  {object}    opts - new defaults
-     * @return {undefined}
-     */
-    defaults: function(opts) {
-      this.opts = u.extend({}, this.opts, opts);
-    }
-  };
-
-
-  /**
-   * get function
-   * shortcut for ajx GET request
-   * @param  {object} opts - ajax options
-   * @return {object} xhr  - xhr object
-   */
-  u.get = function(opts) {
-    opts = u.extend({}, u.ajax.opts, opts);
-    opts.json = false;
-    opts.url += '?' + (u.param(opts.data) || '');
-    return u.ajax._send(opts, 'GET');
-  };
-
-
-  /**
-   * post, put, patch, options, delete functions
-   * shortcut for ajax POST, PUT, PATCH, OPTIONS and DELETE request
-   * @param  {object} opts - ajax options
-   * @return {object} xhr  - xhr object
-   */
-  var methods = ['post', 'put', 'patch', 'options', 'delete'];
-  u.each(methods, function(index, method) {
-    u[method] = function(opts) {
-      opts = u.extend({}, u.ajax.opts, opts);
-      return u.ajax._send(opts, method.toUpperCase());
-    };
-  });
-
-
-  /**
-   * getScript Function
-   * load a script into global scope
-   * @param  {[type]}   url      [description]
-   * @param  {Function} callback [description]
-   * @return {[type]}            [description]
-   */
-  u.getScript = function(url, callback) {
-		var script = document.createElement('script');
-
-		script.onload = callback || function(){};
-		script.src = url;
-    document.head.appendChild(script).parentNode.removeChild(script);
-	};
-
-
-  /**
-   * defer function
-   * a single "defer()" function that returns an object
-   * that is both a deferred and a thenable promise
-   * from https://gist.github.com/kirbysayshi/1129049
-   * @param  {function} [callbacks] - placeholder for pending callbacks
-   * @param  {*}        [value]     - placeholder for fulfilled value
-   * @return {object}               - the defer object
-   */
-  u.defer = function (callbacks, value) {
-    callbacks = [];
-    return {
-      resolve: function () {
-        value = arguments;
-        while (callbacks.length) {
-          callbacks.shift().apply({}, value);
-        }
-        callbacks = 0;
-        return this;
-      },
-      then: function (callback) {
-        callbacks ? callbacks.push(callback) : callback.apply({}, value);
-        return this;
-      }
-    };
-  };
-
-
-  /**
-   * u session id
-   * @type {string}
-   */
-  u._id = u.uuid();
-
-
-  /**
-   * data object
-   * @type {array}
-   */
-  u._data = [];
-
-
-  /**
-   * if $ is not used assign u to it
-   * @type {object}
-   */
-  window.$ = window.$ || u;
-
-
-  /**
-   * assign u to µ and ujs
-   * @type {object}
-   */
-  window.µ = window.ujs = u;
 
 
   /**

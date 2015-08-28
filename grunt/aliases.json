@@ -1,8 +1,10 @@
 {
   "default": [
+    "concat:combine",
     "watch"
   ],
   "src": [
+    "concat:combine",
     "jshint",
     "notify:src"
   ],
