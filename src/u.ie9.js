@@ -1,5 +1,5 @@
 
-(function(u,window,document) {
+;(function(u, window, document) {
   'use strict';
 
 
@@ -78,4 +78,4 @@
   });
 
 
-})(u,window,document);
+})(u, window, document);
