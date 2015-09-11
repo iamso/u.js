@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.16.0
+ * u.js - Version 0.17.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-08-29
+ * Build date: 2015-09-10
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -502,7 +502,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.16.0';
+  u.version = '0.17.0';
 
 
   /**
@@ -560,7 +560,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.16.0',
+    ujs: '0.17.0',
 
 
     /**
@@ -837,31 +837,52 @@
 
       // Normal Version
       //
-      if (val === undefined) {
+      if (attr === undefined) {
         el = this[0];
+        attr = u.toArray(el.attributes);
+        obj = {};
+
+        u.each(attr, function(i, a) {
+          if (i = a.name.match(/^data\-(.*)/)) {
+            obj[i[1]] = a.value;
+          }
+        });
+
         if ((index = el[u._id]) === undefined) {
-          obj = {};
-          obj[attr] = this[0].getAttribute('data-' + attr);
           el[u._id] = index = u._data.push(obj) - 1;
-          return obj[attr];
+          return obj;
         }
         else {
-          return !!u._data[index][attr] ? u._data[index][attr] : (u._data[index][attr] = this[0].getAttribute('data-' + attr));
+          return u._data[index] = u.extend({}, obj, u._data[index]);
         }
       }
       else {
-        return this.each(function(index, el) {
+        if (val === undefined) {
+          el = this[0];
           if ((index = el[u._id]) === undefined) {
             obj = {};
-            obj[attr] = val;
+            obj[attr] = this[0].getAttribute('data-' + attr);
             el[u._id] = index = u._data.push(obj) - 1;
+            return obj[attr];
           }
           else {
-            u._data[index][attr] = val;
+            return !!u._data[index][attr] ? u._data[index][attr] : (u._data[index][attr] = this[0].getAttribute('data-' + attr));
           }
-        });
+        }
+        else {
+          return this.each(function(index, el) {
+            if ((index = el[u._id]) === undefined) {
+              obj = {};
+              obj[attr] = val;
+              el[u._id] = index = u._data.push(obj) - 1;
+            }
+            else {
+              u._data[index][attr] = val;
+            }
+          });
+        }
       }
-
+      
     },
 
 
