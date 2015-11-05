@@ -434,7 +434,7 @@
   u.get = function(opts) {
     opts = u.extend({}, u.ajax.opts, opts);
     opts.json = false;
-    opts.url += '?' + (u.param(opts.data) || '');
+    opts.url += (opts.url.match(/\?/ig) ? '&' : '?') + (u.param(opts.data) || '');
     return u.ajax._send(opts, 'GET');
   };
 
