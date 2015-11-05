@@ -51,6 +51,7 @@ module.exports = {
       'src/partials/methods/attr.js',
       'src/partials/methods/removeattr.js',
       'src/partials/methods/hasattr.js',
+      'src/partials/methods/prop.js',
       'src/partials/methods/data.js',
       'src/partials/methods/css.js',
       'src/partials/methods/append.js',

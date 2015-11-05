@@ -810,6 +810,20 @@
 
 
     /**
+     * prop method
+     * get or set a property of the underlying DOM object
+     * @param  {string}          prop  - property name
+     * @param  {string}          [val] - property value
+     * @return {(string|object)}         property value or this
+     */
+    prop: function(prop, val) {
+      return val === undefined ? this[0][prop] : this.each(function(index, el) {
+        el[prop] = val;
+      });
+    },
+
+
+    /**
      * data method
      * get or set a data attribute
      * @param  {string}          attr    - attribute name
