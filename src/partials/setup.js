@@ -29,6 +29,32 @@
 
 
   /**
+   * events object
+   * @type {array}
+   */
+  u._events = [];
+  u._events.add = function(id, e, fn, handler) {
+    if (this.find(id, e, fn).length) {
+      return false;
+    }
+    this[id].push({e: e, fn: fn, handler: handler});
+    return true;
+  };
+  u._events.find = function(id, e, fn) {
+    return this[id].filter(function(item) {
+      return item.e === e && item.fn === fn;
+    });
+  };
+  u._events.remove = function(id, e, fn, handler) {
+    handler = this.find(id, e, fn);
+    this[id] = this[id].filter(function(item) {
+      return item.e !== e && item.fn !== fn;
+    });
+    return handler;
+  };
+
+
+  /**
    * if $ is not used assign u to it
    * @type {object}
    */
