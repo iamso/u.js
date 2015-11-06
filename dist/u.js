@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.17.0
+ * u.js - Version 0.18.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-09-10
+ * Build date: 2015-11-06
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -434,7 +434,7 @@
   u.get = function(opts) {
     opts = u.extend({}, u.ajax.opts, opts);
     opts.json = false;
-    opts.url += '?' + (u.param(opts.data) || '');
+    opts.url += (opts.url.match(/\?/ig) ? '&' : '?') + (u.param(opts.data) || '');
     return u.ajax._send(opts, 'GET');
   };
 
@@ -502,7 +502,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.17.0';
+  u.version = '0.18.0';
 
 
   /**
@@ -526,6 +526,32 @@
    * @type {array}
    */
   u._data = [];
+
+
+  /**
+   * events object
+   * @type {array}
+   */
+  u._events = [];
+  u._events.add = function(id, e, fn, handler) {
+    if (this.find(id, e, fn).length) {
+      return false;
+    }
+    this[id].push({e: e, fn: fn, handler: handler});
+    return true;
+  };
+  u._events.find = function(id, e, fn) {
+    return this[id].filter(function(item) {
+      return item.e === e && item.fn === fn;
+    });
+  };
+  u._events.remove = function(id, e, fn, handler) {
+    handler = this.find(id, e, fn);
+    this[id] = this[id].filter(function(item) {
+      return item.e !== e && item.fn !== fn;
+    });
+    return handler;
+  };
 
 
   /**
@@ -560,7 +586,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.17.0',
+    ujs: '0.18.0',
 
 
     /**
@@ -582,10 +608,27 @@
      * @param  {function} handler - event handler function
      * @return {object}   this
      */
-    on: function(event, handler) {
+    on: function(event, selector, handler, fn) {
+      if (/^f/.test(typeof selector)) {
+        handler = selector;
+        fn = handler;
+      }
+      else if (/^s/.test(typeof selector)) {
+        fn = handler;
+        handler = function(e) {
+          if (u(e.target).is(selector)) {
+            fn.apply(e.target, [e]);
+          }
+        };
+      }
       return this.each(function(index, el) {
         var events = event.split(' ');
+        if ((index = el[u._id]) === undefined) {
+          el[u._id] = index = u._data.push({}) - 1;
+          u._events[index] = [];
+        }
         u.each(events, function(i, event){
+          u._events.add(index, event, fn, handler) &&
           el.addEventListener(event, handler);
         });
       });
@@ -599,12 +642,30 @@
      * @param  {function} handler - event handler function
      * @return {object}   this
      */
-    one: function(event, handler) {
+    one: function(event, selector, handler, fn) {
+      if (/^f/.test(typeof selector)) {
+        handler = selector;
+        fn = handler;
+      }
+      else if (/^s/.test(typeof selector)) {
+        fn = handler;
+        handler = function(e) {
+          if (u(e.target).is(selector)) {
+            fn.apply(e.target, [e]);
+          }
+        };
+      }
       return this.each(function(index, el) {
         var events = event.split(' ');
+        if ((index = el[u._id]) === undefined) {
+          el[u._id] = index = u._data.push({}) - 1;
+          u._events[index] = [];
+        }
         u.each(events, function(i, event){
+          u._events.add(index, event, fn, handler);
           el.addEventListener(event, function temp(e) {
             el.removeEventListener(event, temp);
+            u._events.remove(index, event, fn);
             handler.call(this,e);
           });
         });
@@ -619,10 +680,19 @@
      * @param  {function} handler - event handler function
      * @return {object}   this
      */
-    off: function(event, handler) {
+    off: function(event, selector, handler, fn) {
+      if (/^f/.test(typeof selector)) {
+        handler = selector;
+      }
+      fn = handler;
       return this.each(function(index, el) {
         var events = event.split(' ');
+        if ((index = el[u._id]) === undefined) {
+          el[u._id] = index = u._data.push({}) - 1;
+          u._events[index] = [];
+        }
         u.each(events, function(i, event){
+          handler = u._events.remove(index, event, fn)[0].handler;
           el.removeEventListener(event, handler);
         });
       });
@@ -806,6 +876,20 @@
      */
     hasAttr: function(attr) {
       return this[0].hasAttribute(attr);
+    },
+
+
+    /**
+     * prop method
+     * get or set a property of the underlying DOM object
+     * @param  {string}          prop  - property name
+     * @param  {string}          [val] - property value
+     * @return {(string|object)}         property value or this
+     */
+    prop: function(prop, val) {
+      return val === undefined ? this[0][prop] : this.each(function(index, el) {
+        el[prop] = val;
+      });
     },
 
 
