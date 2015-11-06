@@ -608,10 +608,27 @@
      * @param  {function} handler - event handler function
      * @return {object}   this
      */
-    on: function(event, handler) {
+    on: function(event, selector, handler, fn) {
+      if (/^f/.test(typeof selector)) {
+        handler = selector;
+        fn = handler;
+      }
+      else if (/^s/.test(typeof selector)) {
+        fn = handler;
+        handler = function(e) {
+          if (u(e.target).is(selector)) {
+            fn.apply(e.target, [e]);
+          }
+        };
+      }
       return this.each(function(index, el) {
         var events = event.split(' ');
+        if ((index = el[u._id]) === undefined) {
+          el[u._id] = index = u._data.push({}) - 1;
+          u._events[index] = [];
+        }
         u.each(events, function(i, event){
+          u._events.add(index, event, fn, handler) &&
           el.addEventListener(event, handler);
         });
       });
@@ -625,12 +642,30 @@
      * @param  {function} handler - event handler function
      * @return {object}   this
      */
-    one: function(event, handler) {
+    one: function(event, selector, handler, fn) {
+      if (/^f/.test(typeof selector)) {
+        handler = selector;
+        fn = handler;
+      }
+      else if (/^s/.test(typeof selector)) {
+        fn = handler;
+        handler = function(e) {
+          if (u(e.target).is(selector)) {
+            fn.apply(e.target, [e]);
+          }
+        };
+      }
       return this.each(function(index, el) {
         var events = event.split(' ');
+        if ((index = el[u._id]) === undefined) {
+          el[u._id] = index = u._data.push({}) - 1;
+          u._events[index] = [];
+        }
         u.each(events, function(i, event){
+          u._events.add(index, event, fn, handler);
           el.addEventListener(event, function temp(e) {
             el.removeEventListener(event, temp);
+            u._events.remove(index, event, fn);
             handler.call(this,e);
           });
         });
@@ -645,10 +680,19 @@
      * @param  {function} handler - event handler function
      * @return {object}   this
      */
-    off: function(event, handler) {
+    off: function(event, selector, handler, fn) {
+      if (/^f/.test(typeof selector)) {
+        handler = selector;
+      }
+      fn = handler;
       return this.each(function(index, el) {
         var events = event.split(' ');
+        if ((index = el[u._id]) === undefined) {
+          el[u._id] = index = u._data.push({}) - 1;
+          u._events[index] = [];
+        }
         u.each(events, function(i, event){
+          handler = u._events.remove(index, event, fn)[0].handler;
           el.removeEventListener(event, handler);
         });
       });
