@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.18.0
+ * u.js - Version 0.18.1
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-11-06
+ * Build date: 2015-11-07
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -502,7 +502,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.18.0';
+  u.version = '0.18.1';
 
 
   /**
@@ -533,21 +533,32 @@
    * @type {array}
    */
   u._events = [];
-  u._events.add = function(id, e, fn, handler) {
-    if (this.find(id, e, fn).length) {
+  u._events._index = function(el, index) {
+    if ((index = el[u._id]) === undefined) {
+      el[u._id] = index = u._data.push({}) - 1;
+    }
+    if (!this[index]) {
+      this[index] = [];
+    }
+    return index;
+  };
+  u._events.add = function(el, e, fn, handler, index) {
+    index = this._index(el);
+    if (this._find(index, e, fn).length) {
       return false;
     }
-    this[id].push({e: e, fn: fn, handler: handler});
+    this[index].push({e: e, fn: fn, handler: handler});
     return true;
   };
-  u._events.find = function(id, e, fn) {
-    return this[id].filter(function(item) {
+  u._events._find = function(index, e, fn) {
+    return this[index].filter(function(item) {
       return item.e === e && item.fn === fn;
     });
   };
-  u._events.remove = function(id, e, fn, handler) {
-    handler = this.find(id, e, fn);
-    this[id] = this[id].filter(function(item) {
+  u._events.remove = function(el, e, fn, handler, index) {
+    index = this._index(el);
+    handler = this._find(index, e, fn);
+    this[index] = this[index].filter(function(item) {
       return item.e !== e && item.fn !== fn;
     });
     return handler;
@@ -586,7 +597,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.18.0',
+    ujs: '0.18.1',
 
 
     /**
@@ -623,12 +634,8 @@
       }
       return this.each(function(index, el) {
         var events = event.split(' ');
-        if ((index = el[u._id]) === undefined) {
-          el[u._id] = index = u._data.push({}) - 1;
-          u._events[index] = [];
-        }
         u.each(events, function(i, event){
-          u._events.add(index, event, fn, handler) &&
+          u._events.add(el, event, fn, handler) &&
           el.addEventListener(event, handler);
         });
       });
@@ -657,15 +664,11 @@
       }
       return this.each(function(index, el) {
         var events = event.split(' ');
-        if ((index = el[u._id]) === undefined) {
-          el[u._id] = index = u._data.push({}) - 1;
-          u._events[index] = [];
-        }
         u.each(events, function(i, event){
-          u._events.add(index, event, fn, handler);
+          u._events.add(el, event, fn, handler);
           el.addEventListener(event, function temp(e) {
             el.removeEventListener(event, temp);
-            u._events.remove(index, event, fn);
+            u._events.remove(el, event, fn);
             handler.call(this,e);
           });
         });
@@ -687,12 +690,8 @@
       fn = handler;
       return this.each(function(index, el) {
         var events = event.split(' ');
-        if ((index = el[u._id]) === undefined) {
-          el[u._id] = index = u._data.push({}) - 1;
-          u._events[index] = [];
-        }
         u.each(events, function(i, event){
-          handler = u._events.remove(index, event, fn)[0].handler;
+          handler = u._events.remove(el, event, fn)[0].handler;
           el.removeEventListener(event, handler);
         });
       });
@@ -1465,10 +1464,10 @@
 
 
 /*!
- * u.js - Version 0.18.0 - IE 9 fix
+ * u.js - Version 0.18.1 - IE 9 fix
  * Fix for the missing classList in IE 9
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-11-06
+ * Build date: 2015-11-07
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
