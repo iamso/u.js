@@ -20,15 +20,11 @@
       }
       return this.each(function(index, el) {
         var events = event.split(' ');
-        if ((index = el[u._id]) === undefined) {
-          el[u._id] = index = u._data.push({}) - 1;
-          u._events[index] = [];
-        }
         u.each(events, function(i, event){
-          u._events.add(index, event, fn, handler);
+          u._events.add(el, event, fn, handler);
           el.addEventListener(event, function temp(e) {
             el.removeEventListener(event, temp);
-            u._events.remove(index, event, fn);
+            u._events.remove(el, event, fn);
             handler.call(this,e);
           });
         });

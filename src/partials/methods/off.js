@@ -12,12 +12,8 @@
       fn = handler;
       return this.each(function(index, el) {
         var events = event.split(' ');
-        if ((index = el[u._id]) === undefined) {
-          el[u._id] = index = u._data.push({}) - 1;
-          u._events[index] = [];
-        }
         u.each(events, function(i, event){
-          handler = u._events.remove(index, event, fn)[0].handler;
+          handler = u._events.remove(el, event, fn)[0].handler;
           el.removeEventListener(event, handler);
         });
       });

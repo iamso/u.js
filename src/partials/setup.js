@@ -33,21 +33,32 @@
    * @type {array}
    */
   u._events = [];
-  u._events.add = function(id, e, fn, handler) {
-    if (this.find(id, e, fn).length) {
+  u._events._index = function(el, index) {
+    if ((index = el[u._id]) === undefined) {
+      el[u._id] = index = u._data.push({}) - 1;
+    }
+    if (!this[index]) {
+      this[index] = [];
+    }
+    return index;
+  };
+  u._events.add = function(el, e, fn, handler, index) {
+    index = this._index(el);
+    if (this._find(index, e, fn).length) {
       return false;
     }
-    this[id].push({e: e, fn: fn, handler: handler});
+    this[index].push({e: e, fn: fn, handler: handler});
     return true;
   };
-  u._events.find = function(id, e, fn) {
-    return this[id].filter(function(item) {
+  u._events._find = function(index, e, fn) {
+    return this[index].filter(function(item) {
       return item.e === e && item.fn === fn;
     });
   };
-  u._events.remove = function(id, e, fn, handler) {
-    handler = this.find(id, e, fn);
-    this[id] = this[id].filter(function(item) {
+  u._events.remove = function(el, e, fn, handler, index) {
+    index = this._index(el);
+    handler = this._find(index, e, fn);
+    this[index] = this[index].filter(function(item) {
       return item.e !== e && item.fn !== fn;
     });
     return handler;

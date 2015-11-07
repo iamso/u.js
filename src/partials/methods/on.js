@@ -20,12 +20,8 @@
       }
       return this.each(function(index, el) {
         var events = event.split(' ');
-        if ((index = el[u._id]) === undefined) {
-          el[u._id] = index = u._data.push({}) - 1;
-          u._events[index] = [];
-        }
         u.each(events, function(i, event){
-          u._events.add(index, event, fn, handler) &&
+          u._events.add(el, event, fn, handler) &&
           el.addEventListener(event, handler);
         });
       });
