@@ -37,7 +37,9 @@
    */
   u.each = function(array, callback) {
     for(var i in array) {
-      callback.call(array[i], i, array[i]);
+      if (array.hasOwnProperty(i)) {
+        callback.call(array[i], i, array[i]);
+      }
     }
     return array;
   };
@@ -270,9 +272,11 @@
     else {
       var str = [];
       for(var p in obj) {
-        var k = prefix ? prefix + "[" + p + "]" : p,
-        v = obj[p];
-        str.push(typeof v === "object" ? u.param(v, json, k) : encodeURIComponent(k) + "=" + encodeURIComponent(v));
+        if (obj.hasOwnProperty(p)) {
+          var k = prefix ? prefix + "[" + p + "]" : p,
+          v = obj[p];
+          str.push(typeof v === "object" ? u.param(v, json, k) : encodeURIComponent(k) + "=" + encodeURIComponent(v));
+        }
       }
       return str.join("&");
     }
@@ -980,10 +984,12 @@
     css: function(props, val) {
       if (/^o/.test(typeof props)) {
         for(var prop in props) {
-          var prefixed = u.prfx(prop);
-          this.each(function(index, el) {
-            el.style[prefixed] = props[prop];
-          });
+          if (props.hasOwnProperty(prop)) {
+            var prefixed = u.prfx(prop);
+            this.each(function(index, el) {
+              el.style[prefixed] = props[prop];
+            });
+          }
         }
         return this;
       } else {
@@ -1455,7 +1461,9 @@
    */
   u(document).on('DOMContentLoaded', function (e) {
     for (var i in u._defInit) {
-      u._defInit[i](e);
+      if (u._defInit.hasOwnProperty(i)) {
+        u._defInit[i](e);
+      }
     }
     u._defInit = [];
   });
