@@ -4,7 +4,9 @@
    */
   u(document).on('DOMContentLoaded', function (e) {
     for (var i in u._defInit) {
-      u._defInit[i](e);
+      if (u._defInit.hasOwnProperty(i)) {
+        u._defInit[i](e);
+      }
     }
     u._defInit = [];
   });

@@ -9,12 +9,15 @@
       if (/^o/.test(typeof props)) {
         for(var prop in props) {
           var prefixed = u.prfx(prop);
-          this.each(function(index, el) {
-            el.style[prefixed] = props[prop];
-          });
+          if (props.hasOwnProperty(prop)) {
+            this.each(function(index, el) {
+              el.style[prefixed] = props[prop];
+            });
+          }
         }
         return this;
-      } else {
+      }
+      else {
         return val === undefined ? this[0].style[props] : this.each(function(index, el) {
           var prefixed = u.prfx(props);
           el.style[prefixed] = val;

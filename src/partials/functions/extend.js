@@ -14,7 +14,9 @@
     for (i in args) {
       if (i > 0) {
         for(prop in args[i]) {
-          base[prop] = args[i][prop];
+          if (args[i].hasOwnProperty(prop)) {
+            base[prop] = args[i][prop];
+          }
         }
       }
     }

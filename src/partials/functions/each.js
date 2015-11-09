@@ -6,7 +6,9 @@
    */
   u.each = function(array, callback) {
     for(var i in array) {
-      callback.call(array[i], i, array[i]);
+      if (array.hasOwnProperty(i)) {
+        callback.call(array[i], i, array[i]);
+      }
     }
     return array;
   };
