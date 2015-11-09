@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.18.2
+ * u.js - Version 0.18.3
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-11-08
+ * Build date: 2015-11-09
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -37,7 +37,9 @@
    */
   u.each = function(array, callback) {
     for(var i in array) {
-      callback.call(array[i], i, array[i]);
+      if (array.hasOwnProperty(i)) {
+        callback.call(array[i], i, array[i]);
+      }
     }
     return array;
   };
@@ -59,7 +61,9 @@
     for (i in args) {
       if (i > 0) {
         for(prop in args[i]) {
-          base[prop] = args[i][prop];
+          if (args[i].hasOwnProperty(prop)) {
+            base[prop] = args[i][prop];
+          }
         }
       }
     }
@@ -272,7 +276,9 @@
       for(var p in obj) {
         var k = prefix ? prefix + "[" + p + "]" : p,
         v = obj[p];
-        str.push(typeof v === "object" ? u.param(v, json, k) : encodeURIComponent(k) + "=" + encodeURIComponent(v));
+        if (obj.hasOwnProperty(p)) {
+          str.push(typeof v === "object" ? u.param(v, json, k) : encodeURIComponent(k) + "=" + encodeURIComponent(v));
+        }
       }
       return str.join("&");
     }
@@ -502,7 +508,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.18.2';
+  u.version = '0.18.3';
 
 
   /**
@@ -597,7 +603,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.18.2',
+    ujs: '0.18.3',
 
 
     /**
@@ -981,12 +987,15 @@
       if (/^o/.test(typeof props)) {
         for(var prop in props) {
           var prefixed = u.prfx(prop);
-          this.each(function(index, el) {
-            el.style[prefixed] = props[prop];
-          });
+          if (props.hasOwnProperty(prop)) {
+            this.each(function(index, el) {
+              el.style[prefixed] = props[prop];
+            });
+          }
         }
         return this;
-      } else {
+      }
+      else {
         return val === undefined ? this[0].style[props] : this.each(function(index, el) {
           var prefixed = u.prfx(props);
           el.style[prefixed] = val;
@@ -1455,7 +1464,9 @@
    */
   u(document).on('DOMContentLoaded', function (e) {
     for (var i in u._defInit) {
-      u._defInit[i](e);
+      if (u._defInit.hasOwnProperty(i)) {
+        u._defInit[i](e);
+      }
     }
     u._defInit = [];
   });
