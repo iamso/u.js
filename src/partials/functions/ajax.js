@@ -10,7 +10,7 @@
      * @type {object}
      */
     opts: {
-      sync: true,
+      async: true,
       json: true, // true to send as json
       auth: null,
       success: function() {},
@@ -76,7 +76,7 @@
       };
 
       // open request and set headers
-      xhr.open(method, opts.url, opts.sync);
+      xhr.open(method, opts.url, opts.async);
       xhr.setRequestHeader('Content-type', (opts.json ? cts.json : cts.form));
       xhr.setRequestHeader('Accept', cts.json);
 
