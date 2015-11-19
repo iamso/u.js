@@ -8,7 +8,7 @@ This is the API documentation for u.js. Most of the methods and functions can be
 
 ### u(param)
 Creates a u object.
- 
+
 | Parameter | Type | Description |
 |---|---|---|
 | param | string, object, array, function | Can be a css selector, an html string, a dom element, an array of dom elements or a function, which is executed on DOM ready. |
@@ -27,7 +27,7 @@ u(function() {
 
 ## u object Methods
 
-### .on(event, handler)
+### .on(event, selector, handler)
 Add event handlers to element(s).
 
 Returns the u object.
@@ -35,6 +35,7 @@ Returns the u object.
 | Parameter | Type | Description |
 |---|---|---|
 | event | string | Can be a single event name or multiple events separated by a space. |
+| selector | string | **Optional**. A selector string to filter the descendants of the selected elements that trigger the event. |
 | handler | function(**event**) | A function to execute when the event is fired. The function has one parameter, the **event object**. |
 
 ```javascript
@@ -44,7 +45,7 @@ u('selector').on('click', function(event) {
 ```
 
 
-### .one(event, handler)
+### .one(event, selector, handler)
 Add one time event handlers to element(s).
 
 Returns the u object.
@@ -52,6 +53,7 @@ Returns the u object.
 | Parameter | Type | Description |
 |---|---|---|
 | event | string | Can be a single event name or multiple events separated by a space. |
+| selector | string | **Optional**. A selector string to filter the descendants of the selected elements that trigger the event. |
 | handler | function(**event**) | A function to execute when the event is fired. The function has one argument, the **event object**. |
 
 ```javascript
@@ -62,7 +64,7 @@ u('selector').one('click', function(event) {
 
 
 
-### .off(event, handler)
+### .off(event, selector, handler)
 Remove event handlers from element(s).
 
 Returns the u object.
@@ -70,6 +72,7 @@ Returns the u object.
 | Parameter | Type | Description |
 |---|---|---|
 | event | string | Can be a single event name or multiple events separated by a space. |
+| selector | string | **Optional**. A selector string to filter the descendants of the selected elements that trigger the event. |
 | handler | function() | The handler function to be removed. |
 
 ```javascript
@@ -308,6 +311,22 @@ u('selector').hasAttr('id') // true or false
 ```
 
 
+### .prop(property, value)
+Get or set a property's value.
+
+Returns the value or the u object.
+
+| Parameter | Type | Description |
+|---|---|---|
+| property | string | Property name |
+| value | string | **Optional**. New property value. |
+
+```javascript
+u('selector').prop('checked') // true or false
+u('selector').prop('checked', true) // u object
+```
+
+
 ### .data(attribute, value)
 Get or set a data attribute.
 
@@ -433,7 +452,7 @@ Returns a u object with the cloned element.
 u('selector').clone() // u object
 ```
 
-### .contains(element) 
+### .contains(element)
 Check for presence of child element.
 
 Returns a boolean.
@@ -470,7 +489,7 @@ u('selector').children() // u object
 ```
 
 ### .index(element)
-Get the 0 based index of an element. 
+Get the 0 based index of an element.
 
 If no argument is passed, returns the index of the first element in the current u object relative to all sibling elements.
 
@@ -567,7 +586,7 @@ Returns a u object with the matching elements.
 
 ```javascript
 u('selector').filter('.class') // u object
-u('selector').filter(function(index, element) { 
+u('selector').filter(function(index, element) {
 	return u(element).is('.class')
 }) // u object
 ```
@@ -635,7 +654,7 @@ Returns the u object.
 
 ```javascript
 u('selector').empty() // u object
-``` 
+```
 
 ### .bytes()
 Get the bytesize of an input or texterea's value.
@@ -726,7 +745,7 @@ u('selector').blur() // u object
 ## u utility functions
 
 ### u.each(array, callback)
-Iterate array and execute callback function. 
+Iterate array and execute callback function.
 
 Returns the array.
 
@@ -736,7 +755,7 @@ Returns the array.
 | callback | function(index, item) | Callback function for each element in the array. |
 
 ```javascript
-u.each([1,2,3], function(index, item) { 
+u.each([1,2,3], function(index, item) {
 	// do something
 }) // array
 ```
@@ -1005,7 +1024,7 @@ u.js AJAX functions all work pretty much the same. You call the function and pas
 
 | Option | Type | Description |
 |---|---|---|
-| sync | boolean | **Optional**. Sync or Async. **Default true**. |
+| async | boolean | **Optional**. Sync or Async. **Default true**. |
 | json | boolean | **Optional**. Send as JSON or form encoded. **Default true**. |
 | auth | string | **Optional**. String passed in the Authorization HTTP header. **Default null** |
 | headers | object | **Optional**. Object containing additional HTTP headers. |
@@ -1018,7 +1037,7 @@ u.js AJAX functions all work pretty much the same. You call the function and pas
 
 ```javascript
 u.post({
-	sync: true,
+	async: true,
 	json: true,
 	auth: 'Bearer token',
 	headers: {
@@ -1062,4 +1081,3 @@ u.getScript('https://www.google.com/jsapi', function() {
 ```
 
 ---
-
