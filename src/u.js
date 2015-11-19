@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.18.3
+ * u.js - Version 0.19.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-11-09
+ * Build date: 2015-11-19
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -508,7 +508,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.18.3';
+  u.version = '0.19.0';
 
 
   /**
@@ -603,7 +603,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.18.3',
+    ujs: '0.19.0',
 
 
     /**

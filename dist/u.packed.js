@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.18.3
+ * u.js - Version 0.19.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-11-09
+ * Build date: 2015-11-19
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -333,7 +333,7 @@
      * @type {object}
      */
     opts: {
-      sync: true,
+      async: true,
       json: true, // true to send as json
       auth: null,
       success: function() {},
@@ -399,7 +399,7 @@
       };
 
       // open request and set headers
-      xhr.open(method, opts.url, opts.sync);
+      xhr.open(method, opts.url, opts.async);
       xhr.setRequestHeader('Content-type', (opts.json ? cts.json : cts.form));
       xhr.setRequestHeader('Accept', cts.json);
 
@@ -508,7 +508,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.18.3';
+  u.version = '0.19.0';
 
 
   /**
@@ -603,7 +603,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.18.3',
+    ujs: '0.19.0',
 
 
     /**
@@ -1476,10 +1476,10 @@
 
 
 /*!
- * u.js - Version 0.18.3 - IE 9 fix
+ * u.js - Version 0.19.0 - IE 9 fix
  * Fix for the missing classList in IE 9
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-11-09
+ * Build date: 2015-11-19
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
