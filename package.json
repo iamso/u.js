@@ -1,5 +1,6 @@
 {
-  "name": "u.js",
+  "name": "ujs",
+  "realName" : "u.js",
   "version": "0.20.0",
   "description": "micro framework, utility library",
   "repository": {
@@ -10,7 +11,7 @@
     "url": "https://github.com/iamso/u.js/issues"
   },
   "author": {
-    "name": "iamso",
+    "name": "Steve Ottoz",
     "email": "so@dev.so"
   },
   "main": "dist/u.min.js",

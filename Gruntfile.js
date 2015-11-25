@@ -7,7 +7,7 @@ module.exports = function(grunt) {
   require('load-grunt-config')(grunt, {
     config: {
       banner: '/*!\n' +
-              ' * <%= package.name %> - Version <%= package.version %>\n' +
+              ' * <%= package.realName %> - Version <%= package.version %>\n' +
               ' * <%= package.description %>\n' +
               ' * Author: <%= package.author.name %> <<%= package.author.email %>>\n' +
               ' * Build date: <%= grunt.template.today("yyyy-mm-dd") %>\n' +
@@ -15,7 +15,7 @@ module.exports = function(grunt) {
               ' * Released under the <%= package.license %> license\n' +
               ' */',
       bannerIE: '/*!\n' +
-                ' * <%= package.name %> - Version <%= package.version %> - IE 9 fix\n' +
+                ' * <%= package.realName %> - Version <%= package.version %> - IE 9 fix\n' +
                 ' * Fix for the missing classList in IE 9\n' +
                 ' * Author: <%= package.author.name %> <<%= package.author.email %>>\n' +
                 ' * Build date: <%= grunt.template.today("yyyy-mm-dd") %>\n' +
@@ -23,7 +23,7 @@ module.exports = function(grunt) {
                 ' * Released under the <%= package.license %> license\n' +
                 ' */',
       bannerIEpack: '/*!\n' +
-                    ' * <%= package.name %> - Version <%= package.version %> - incl. IE 9 fix\n' +
+                    ' * <%= package.realName %> - Version <%= package.version %> - incl. IE 9 fix\n' +
                     ' * <%= package.description %>\n' +
                     ' * Author: <%= package.author.name %> <<%= package.author.email %>>\n' +
                     ' * Build date: <%= grunt.template.today("yyyy-mm-dd") %>\n' +

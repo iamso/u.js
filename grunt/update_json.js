@@ -9,7 +9,6 @@ module.exports = {
     // the fields to update, as a String Grouping
     //fields: 'name version description repository'
     fields: {
-      'name': 'name',
       'version': 'version',
       'description': 'description',
       'repository': 'repository',
@@ -23,7 +22,6 @@ module.exports = {
     // the fields to update, as a String Grouping
     //fields: 'name version description repository'
     fields: {
-      'name': 'name',
       'version': 'version',
       'description': 'description',
       'keywords': 'keywords'
