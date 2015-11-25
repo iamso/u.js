@@ -20,8 +20,15 @@ bower install u.js
 ```
 
 ### With Components
+
 ```bash
 component install u.js
+```
+
+### With NPM
+
+```bash
+npm install ujs
 ```
 
 
