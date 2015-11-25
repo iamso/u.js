@@ -1,12 +1,23 @@
 /*!
- * u.js - Version 0.19.0
+ * u.js - Version 0.20.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-11-19
+ * Build date: 2015-11-25
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
-;(function(window, document, array, prototype, undefined) {
+;(function (root, factory) {
+  'use strict';
+  var win = !/^u/.test(typeof window) ? window : root;
+  var doc = !/^u/.test(typeof document) ? document : null;
+  if (/^f/.test(typeof define) && define.amd) {
+    define([], factory(win, doc, [], 'prototype'));
+  } else if (/^o/.test(typeof exports)) {
+    module.exports = factory(win, doc, [], 'prototype');
+  } else {
+    root.u = root.ujs = root.µ = factory(win, doc, [], 'prototype');
+  }
+})(!/^u/.test(typeof global) ? global : this.window || this.global, function (window, document, array, prototype, undefined) {
   'use strict';
 
 
@@ -24,7 +35,7 @@
    * @param  {(string|object|function)} arg - selector, dom element or function
    * @return {(object|undefined)}             instance or execute function on dom ready
    */
-  window.u = function(arg) {
+  var u = function(arg) {
     return /^f/.test(typeof arg) ? /c/.test(document.readyState) ? arg() : u._defInit.push(arg) : new Init(arg);
   };
 
@@ -508,7 +519,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.19.0';
+  u.version = '0.20.0';
 
 
   /**
@@ -572,20 +583,6 @@
 
 
   /**
-   * if $ is not used assign u to it
-   * @type {object}
-   */
-  window.$ = window.$ || u;
-
-
-  /**
-   * assign u to µ and ujs
-   * @type {object}
-   */
-  window.µ = window.ujs = u;
-
-
-  /**
    * u prototype definition
    * @type {object}
    */
@@ -603,7 +600,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.19.0',
+    ujs: '0.20.0',
 
 
     /**
@@ -1458,18 +1455,29 @@
   });
 
 
-  /**
-   * DOMContentLoaded function calls
-   * call functions registered with u(func)
-   */
-  u(document).on('DOMContentLoaded', function (e) {
-    for (var i in u._defInit) {
-      if (u._defInit.hasOwnProperty(i)) {
-        u._defInit[i](e);
+  if (document) {
+
+    /**
+     * DOMContentLoaded function calls
+     * call functions registered with u(func)
+     */
+    u(document).on('DOMContentLoaded', function (e) {
+      for (var i in u._defInit) {
+        if (u._defInit.hasOwnProperty(i)) {
+          u._defInit[i](e);
+        }
       }
-    }
-    u._defInit = [];
-  });
+      u._defInit = [];
+    });
+
+  }
 
 
-})(window, document, [], 'prototype');
+
+
+  /**
+   * Return u to the factory
+   */
+  return u;
+
+});
