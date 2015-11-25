@@ -63,17 +63,3 @@
     });
     return handler;
   };
-
-
-  /**
-   * if $ is not used assign u to it
-   * @type {object}
-   */
-  window.$ = window.$ || u;
-
-
-  /**
-   * assign u to µ and ujs
-   * @type {object}
-   */
-  window.µ = window.ujs = u;

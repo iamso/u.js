@@ -1,1 +1,8 @@
-})(window, document, [], 'prototype');
+
+
+  /**
+   * Return u to the factory
+   */
+  return u;
+
+});

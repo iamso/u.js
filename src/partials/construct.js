@@ -12,6 +12,6 @@
    * @param  {(string|object|function)} arg - selector, dom element or function
    * @return {(object|undefined)}             instance or execute function on dom ready
    */
-  window.u = function(arg) {
+  var u = function(arg) {
     return /^f/.test(typeof arg) ? /c/.test(document.readyState) ? arg() : u._defInit.push(arg) : new Init(arg);
   };
