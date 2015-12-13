@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.20.0
+ * u.js - Version 0.21.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-11-25
+ * Build date: 2015-12-13
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
@@ -519,7 +519,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.20.0';
+  u.version = '0.21.0';
 
 
   /**
@@ -600,7 +600,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.20.0',
+    ujs: '0.21.0',
 
 
     /**
@@ -705,22 +705,28 @@
     /**
      * trigger method
      * trigger an event for an element
-     * @param  {string} e    - event name
+     * @param  {string} e      - event name
+     * @param  {string} [data] - custom data
+     * @param  {string} evt    - placeholder for the event object
      * @return {object} this
      */
-    trigger: function(e) {
-      if (document.createEvent) {
-        var event = document.createEvent('HTMLEvents');
-        event.initEvent(e, true, false);
-        return this.each(function(index, el) {
-          el.dispatchEvent(event);
+    trigger: function(e, data, evt) {
+      if (/^f/.test(typeof CustomEvent)) {
+        evt = new CustomEvent(e, {
+          detail: data,
+          bubbles: true,
+          cancelable: false
         });
       }
       else {
-        return this.each(function(index, el) {
-          el.fireEvent('on' + e);
-        });
+        evt = document.createEvent('CustomEvent');
+        evt.initCustomEvent(e, true, false, data);
       }
+      return this.each(function(index, el) {
+        el.dispatchEvent ?
+          el.dispatchEvent(evt) :
+          el.fireEvent('on' + e, evt);
+      });
     },
 
 
@@ -1484,10 +1490,10 @@
 
 
 /*!
- * u.js - Version 0.20.0 - IE 9 fix
+ * u.js - Version 0.21.0 - IE 9 fix
  * Fix for the missing classList in IE 9
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-11-25
+ * Build date: 2015-12-13
  * Copyright (c) 2015 Steve Ottoz
  * Released under the MIT license
  */
