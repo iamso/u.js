@@ -705,22 +705,28 @@
     /**
      * trigger method
      * trigger an event for an element
-     * @param  {string} e    - event name
+     * @param  {string} e      - event name
+     * @param  {string} [data] - custom data
+     * @param  {string} evt    - placeholder for the event object
      * @return {object} this
      */
-    trigger: function(e) {
-      if (document.createEvent) {
-        var event = document.createEvent('HTMLEvents');
-        event.initEvent(e, true, false);
-        return this.each(function(index, el) {
-          el.dispatchEvent(event);
+    trigger: function(e, data, evt) {
+      if (/^f/.test(typeof CustomEvent)) {
+        evt = new CustomEvent(e, {
+          detail: data,
+          bubbles: true,
+          cancelable: false
         });
       }
       else {
-        return this.each(function(index, el) {
-          el.fireEvent('on' + e);
-        });
+        evt = document.createEvent('CustomEvent');
+        evt.initCustomEvent(e, true, false, data);
       }
+      return this.each(function(index, el) {
+        el.dispatchEvent ?
+          el.dispatchEvent(evt) :
+          el.fireEvent('on' + e, evt);
+      });
     },
 
 
