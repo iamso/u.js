@@ -697,17 +697,19 @@ Returns the u object.
 u('selector').remove() // u object
 ```
 
-### .trigger(event)
-Trigger an event on element(s).
+### .trigger(event, data)
+Trigger an event on element(s). Optionally you can pass custom data.
 
 Returns the u object.
 
 | Parameter | Type | Description |
 |---|---|---|
 | event | string | The name of the event. |
+| data | object | **Optional**. Custom data for the event. |
 
 ```javascript
 u('selector').trigger('blur') // u object
+u('selector').trigger('click', {key: 'value'}) // u object
 ```
 
 ### .is(selector)
