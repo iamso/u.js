@@ -5,7 +5,7 @@
      * @return {number} scrollTop
      */
     scrollTop: function(val) {
-      return val === undefined ? this[0].scrollTop : this.each(function(index, el) {
-        el.scrollTop = val;
+      return val === undefined ? (this[0].scrollTop !== undefined ? this[0].scrollTop : (this[0].scrollY || this[0].pageYOffset)) : this.each(function(index, el) {
+        el.scrollTop === undefined || el.scrollTo !== undefined ? el.scrollTo(0, val) : el.scrollTop = val;
       });
     },
