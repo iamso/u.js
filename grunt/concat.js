@@ -42,6 +42,7 @@ module.exports = {
       'src/partials/methods/position.js',
       'src/partials/methods/offset.js',
       'src/partials/methods/scrollTop.js',
+      'src/partials/methods/scrollTo.js',
       'src/partials/methods/width.js',
       'src/partials/methods/outerwidth.js',
       'src/partials/methods/height.js',
