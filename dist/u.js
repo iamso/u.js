@@ -1,9 +1,9 @@
 /*!
- * u.js - Version 0.21.0
+ * u.js - Version 0.22.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2015-12-13
- * Copyright (c) 2015 Steve Ottoz
+ * Build date: 2016-01-22
+ * Copyright (c) 2016 Steve Ottoz
  * Released under the MIT license
  */
 ;(function (root, factory) {
@@ -519,7 +519,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.21.0';
+  u.version = '0.22.0';
 
 
   /**
@@ -600,7 +600,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.21.0',
+    ujs: '0.22.0',
 
 
     /**
@@ -772,9 +772,66 @@
      * @return {number} scrollTop
      */
     scrollTop: function(val) {
-      return val === undefined ? this[0].scrollTop : this.each(function(index, el) {
-        el.scrollTop = val;
+      return val === undefined ? (this[0].scrollTop !== undefined ? this[0].scrollTop : (this[0].scrollY || this[0].pageYOffset)) : this.each(function(index, el) {
+        el.scrollTop === undefined || el.scrollTo !== undefined ? el.scrollTo(0, val) : el.scrollTop = val;
       });
+    },
+
+
+    /**
+     * scrollTo method
+     * scroll to a certain position inside the element
+     * @param  {number}   position - position to scroll to
+     * @param  {number}   duration - duration for the animation
+     * @param  {function} callback - function to call when finished
+     * @return {object}   this
+     */
+    scrollTo: function(position, duration, callback) {
+      var el = this[0],
+          _el = u(el),
+          _win = u(window),
+          winHeight = _win.height(),
+          scrollPos = _el.scrollTop(),
+          docHeight = el.scrollHeight,
+          startPosition = scrollPos,
+          newPosition = position,
+          maxPosition = docHeight - winHeight,
+          time = duration || 1500,
+          timeStep = 16,
+          limit = 3,
+          factor = Math.pow(limit / Math.abs(startPosition - newPosition), 1 / (time / timeStep));
+
+      cancelAnimationFrame(el.animationId);
+      el.animationId = requestAnimationFrame(step);
+
+      function step (time) {
+          position = (maxPosition = docHeight - winHeight) < newPosition ? maxPosition : newPosition;
+          position = position < 0 ? 0 : position;
+
+          if ((Math.abs(scrollPos - position) > limit)) {
+            el.animationId = requestAnimationFrame(step);
+
+            scrollPos += (position - scrollPos) * (1 - factor);
+            _el.scrollTop(scrollPos);
+          }
+          else {
+            _el.scrollTop(position);
+            callback && callback.apply(window);
+          }
+      }
+      return this;
+    },
+
+
+    /**
+     * scrollToTop method
+     * shortcut for scroll to 0
+     * @param  {number}   duration - duration for the animation
+     * @param  {function} callback - function to call when finished
+     * @return {object}   this
+     */
+    scrollToTop: function(duration, callback) {
+      return u(this).scrollTo(0, duration, callback);
     },
 
 
