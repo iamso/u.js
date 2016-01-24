@@ -124,11 +124,11 @@
 
   /**
    * post, put, patch, options, delete functions
-   * shortcut for ajax POST, PUT, PATCH, OPTIONS and DELETE request
+   * shortcut for ajax POST, PUT, PATCH, DELETE, HEAD and OPTIONS request
    * @param  {object} opts - ajax options
    * @return {object} xhr  - xhr object
    */
-  var methods = ['post', 'put', 'patch', 'options', 'delete'];
+  var methods = ['post', 'put', 'patch', 'delete', 'head', 'options'];
   u.each(methods, function(index, method) {
     u[method] = function(opts) {
       opts = u.extend({}, u.ajax.opts, opts);
