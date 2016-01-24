@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.22.0
+ * u.js - Version 0.23.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2016-01-22
+ * Build date: 2016-01-24
  * Copyright (c) 2016 Steve Ottoz
  * Released under the MIT license
  */
@@ -458,11 +458,11 @@
 
   /**
    * post, put, patch, options, delete functions
-   * shortcut for ajax POST, PUT, PATCH, OPTIONS and DELETE request
+   * shortcut for ajax POST, PUT, PATCH, DELETE, HEAD and OPTIONS request
    * @param  {object} opts - ajax options
    * @return {object} xhr  - xhr object
    */
-  var methods = ['post', 'put', 'patch', 'options', 'delete'];
+  var methods = ['post', 'put', 'patch', 'delete', 'head', 'options'];
   u.each(methods, function(index, method) {
     u[method] = function(opts) {
       opts = u.extend({}, u.ajax.opts, opts);
@@ -519,7 +519,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.22.0';
+  u.version = '0.23.0';
 
 
   /**
@@ -600,7 +600,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.22.0',
+    ujs: '0.23.0',
 
 
     /**
