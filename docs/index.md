@@ -429,7 +429,7 @@ Returns a u object with the last element.
 u('selector').last() // u object
 ```
 
-### .get(index)
+### .eq(index)
 Get the element at the specified index out of the collection.
 
 Returns a u object with the element.
@@ -440,7 +440,21 @@ Returns a u object with the element.
 
 
 ```javascript
-u('selector').get(2) // u object
+u('selector').eq(2) // u object
+```
+
+### .get(index)
+Get the element at the specified index out of the collection.
+
+Returns the dom element.
+
+| Parameter | Type | Description |
+|---|---|---|
+| index | number | Index of the element |
+
+
+```javascript
+u('selector').get(2) // dom element
 ```
 
 ### .clone()
