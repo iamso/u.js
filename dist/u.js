@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.23.0
+ * u.js - Version 0.24.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2016-01-24
+ * Build date: 2016-02-17
  * Copyright (c) 2016 Steve Ottoz
  * Released under the MIT license
  */
@@ -519,7 +519,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.23.0';
+  u.version = '0.24.0';
 
 
   /**
@@ -600,7 +600,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.23.0',
+    ujs: '0.24.0',
 
 
     /**
@@ -1146,13 +1146,24 @@
 
 
     /**
+     * eq method
+     * get element of specified index
+     * @param  {number} index - index to get
+     * @return {object} element (u object)
+     */
+    eq: function(index) {
+      return u(this[index]);
+    },
+
+
+    /**
      * get method
      * get element of specified index
      * @param  {number} index - index to get
      * @return {object} element
      */
     get: function(index) {
-      return u(this[index]);
+      return this[index];
     },
 
 
