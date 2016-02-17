@@ -61,6 +61,7 @@ module.exports = {
       'src/partials/methods/after.js',
       'src/partials/methods/first.js',
       'src/partials/methods/last.js',
+      'src/partials/methods/eq.js',
       'src/partials/methods/get.js',
       'src/partials/methods/clone.js',
       'src/partials/methods/contains.js',
