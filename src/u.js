@@ -1152,7 +1152,7 @@
      * @return {object} element
      */
     get: function(index) {
-      return u(this[index]);
+      return this[index];
     },
 
 
