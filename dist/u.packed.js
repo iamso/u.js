@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.24.0
+ * u.js - Version 0.24.1
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2016-02-17
+ * Build date: 2016-03-03
  * Copyright (c) 2016 Steve Ottoz
  * Released under the MIT license
  */
@@ -519,7 +519,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.24.0';
+  u.version = '0.24.1';
 
 
   /**
@@ -600,7 +600,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.24.0',
+    ujs: '0.24.1',
 
 
     /**
@@ -1558,10 +1558,10 @@
 
 
 /*!
- * u.js - Version 0.24.0 - IE 9 fix
+ * u.js - Version 0.24.1 - IE 9 fix
  * Fix for the missing classList in IE 9
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2016-02-17
+ * Build date: 2016-03-03
  * Copyright (c) 2016 Steve Ottoz
  * Released under the MIT license
  */
