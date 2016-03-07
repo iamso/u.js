@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.24.1
+ * u.js - Version 0.24.2
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2016-03-03
+ * Build date: 2016-03-07
  * Copyright (c) 2016 Steve Ottoz
  * Released under the MIT license
  */
@@ -519,7 +519,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.24.1';
+  u.version = '0.24.2';
 
 
   /**
@@ -600,7 +600,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.24.1',
+    ujs: '0.24.2',
 
 
     /**
@@ -1270,7 +1270,7 @@
      * @return {object}         sibling element
      */
     prev: function(sel) {
-      return u(u.toArray(this.prevAll(selector)).shift());
+      return u(u.toArray(this.prevAll(sel)).shift());
     },
 
 
@@ -1558,10 +1558,10 @@
 
 
 /*!
- * u.js - Version 0.24.1 - IE 9 fix
+ * u.js - Version 0.24.2 - IE 9 fix
  * Fix for the missing classList in IE 9
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2016-03-03
+ * Build date: 2016-03-07
  * Copyright (c) 2016 Steve Ottoz
  * Released under the MIT license
  */
