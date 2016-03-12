@@ -827,7 +827,9 @@
      * @return {object}   this
      */
     scrollToTop: function(duration, callback) {
-      return u(this).scrollTo(0, duration, callback);
+      return this.each(function(index, el) {
+        u(el).scrollTo(0, duration, callback);
+      });
     },
 
 
