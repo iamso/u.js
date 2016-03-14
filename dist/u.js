@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.25.0
+ * u.js - Version 0.26.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2016-03-12
+ * Build date: 2016-03-14
  * Copyright (c) 2016 Steve Ottoz
  * Released under the MIT license
  */
@@ -519,7 +519,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.25.0';
+  u.version = '0.26.0';
 
 
   /**
@@ -600,7 +600,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.25.0',
+    ujs: '0.26.0',
 
 
     /**
@@ -1512,15 +1512,17 @@
 
   /**
    * addClass, removeClass and toggleClass methods
-   * @param  {string} cls  - class name
-   * @return {object} this
+   * @param  {string}  cls    - class name
+   * @param  {boolean} force  - (only for toggle) if true add, if false remove class
+   * @return {object}  this
    */
   u.each(props, function(index, prop) {
-    u[prototype][prop] = function(cls) {
+    u[prototype][prop] = function(cls, force) {
       return this.each(function(i, el) {
         var classes =  cls.split(' ');
-        u.each(classes, function(ii, cls){
-          el.classList[maps[index]](cls);
+        u.each(classes, function(ii, cls, args){
+          args = force !== undefined ? [cls, !!force] : [cls];
+          el.classList[maps[index]].apply(el.classList, args);
         });
       });
     };
