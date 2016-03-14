@@ -8,15 +8,17 @@
 
   /**
    * addClass, removeClass and toggleClass methods
-   * @param  {string} cls  - class name
-   * @return {object} this
+   * @param  {string}  cls    - class name
+   * @param  {boolean} force  - (only for toggle) if true add, if false remove class
+   * @return {object}  this
    */
   u.each(props, function(index, prop) {
-    u[prototype][prop] = function(cls) {
+    u[prototype][prop] = function(cls, force) {
       return this.each(function(i, el) {
         var classes =  cls.split(' ');
-        u.each(classes, function(ii, cls){
-          el.classList[maps[index]](cls);
+        u.each(classes, function(ii, cls, args){
+          args = force !== undefined ? [cls, !!force] : [cls];
+          el.classList[maps[index]].apply(el.classList, args);
         });
       });
     };
