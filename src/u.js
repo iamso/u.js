@@ -969,22 +969,6 @@
      */
     data: function(attr, val, el, index, obj) {
 
-      // Shorthand Version
-      //
-      // return val === undefined ?
-      //   (index = el[u._id]) === undefined ?
-      //     u._data[el[u._id] = index = u._data.push({[attr]: this[0].getAttribute('data-' + attr)}) - 1][attr] :
-      //     !!u._data[index][attr] ?
-      //       u._data[index][attr] :
-      //       (u._data[index][attr] = this[0].getAttribute('data-' + attr)) :
-      //   this.each(function(index, el) {
-      //     (index = el[u._id]) === undefined ?
-      //       el[u._id] = index = u._data.push({[attr]: val}) - 1 :
-      //       u._data[index][attr] = val;
-      //   });
-
-      // Normal Version
-      //
       if (attr === undefined) {
         el = this[0];
         attr = u.toArray(el.attributes);
