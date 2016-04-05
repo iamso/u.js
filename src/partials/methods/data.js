@@ -55,5 +55,24 @@
           });
         }
       }
-      
+
+    },
+
+
+    /**
+     * removeData method
+     * remove data attribute
+     * @param  {string}    attr    - attribute name
+     * @param  {undefined} [index] - index placeholder
+     * @return {object}            this
+     */
+    removeData: function(attr, index) {
+      return this.each(function(i, el) {
+        if (attr !== undefined) {
+          if ((index = el[u._id]) !== undefined) {
+            el.removeAttribute('data-' + attr);
+            delete u._data[index][attr];
+          }
+        }
+      });
     },
