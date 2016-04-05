@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.26.0 - IE 9 fix
+ * u.js - Version 0.27.0 - IE 9 fix
  * Fix for the missing classList in IE 9
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2016-03-14
+ * Build date: 2016-04-05
  * Copyright (c) 2016 Steve Ottoz
  * Released under the MIT license
  */

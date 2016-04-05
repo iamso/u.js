@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.26.0
+ * u.js - Version 0.27.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2016-03-14
+ * Build date: 2016-04-05
  * Copyright (c) 2016 Steve Ottoz
  * Released under the MIT license
  */
@@ -519,7 +519,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.26.0';
+  u.version = '0.27.0';
 
 
   /**
@@ -600,7 +600,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.26.0',
+    ujs: '0.27.0',
 
 
     /**
@@ -969,22 +969,6 @@
      */
     data: function(attr, val, el, index, obj) {
 
-      // Shorthand Version
-      //
-      // return val === undefined ?
-      //   (index = el[u._id]) === undefined ?
-      //     u._data[el[u._id] = index = u._data.push({[attr]: this[0].getAttribute('data-' + attr)}) - 1][attr] :
-      //     !!u._data[index][attr] ?
-      //       u._data[index][attr] :
-      //       (u._data[index][attr] = this[0].getAttribute('data-' + attr)) :
-      //   this.each(function(index, el) {
-      //     (index = el[u._id]) === undefined ?
-      //       el[u._id] = index = u._data.push({[attr]: val}) - 1 :
-      //       u._data[index][attr] = val;
-      //   });
-
-      // Normal Version
-      //
       if (attr === undefined) {
         el = this[0];
         attr = u.toArray(el.attributes);
@@ -1030,7 +1014,26 @@
           });
         }
       }
-      
+
+    },
+
+
+    /**
+     * removeData method
+     * remove data attribute
+     * @param  {string}    attr    - attribute name
+     * @param  {undefined} [index] - index placeholder
+     * @return {object}            this
+     */
+    removeData: function(attr, index) {
+      return this.each(function(i, el) {
+        if (attr !== undefined) {
+          if ((index = el[u._id]) !== undefined) {
+            el.removeAttribute('data-' + attr);
+            delete u._data[index][attr];
+          }
+        }
+      });
     },
 
 
