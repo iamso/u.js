@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.27.0
+ * u.js - Version 0.28.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2016-04-05
+ * Build date: 2016-04-06
  * Copyright (c) 2016 Steve Ottoz
  * Released under the MIT license
  */
@@ -519,7 +519,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.27.0';
+  u.version = '0.28.0';
 
 
   /**
@@ -600,7 +600,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.27.0',
+    ujs: '0.28.0',
 
 
     /**
@@ -971,14 +971,7 @@
 
       if (attr === undefined) {
         el = this[0];
-        attr = u.toArray(el.attributes);
-        obj = {};
-
-        u.each(attr, function(i, a) {
-          if (i = a.name.match(/^data\-(.*)/)) {
-            obj[i[1]] = a.value;
-          }
-        });
+        obj = u.extend({}, el.dataset);
 
         if ((index = el[u._id]) === undefined) {
           el[u._id] = index = u._data.push(obj) - 1;
@@ -989,16 +982,17 @@
         }
       }
       else {
+        attr = u.toCamel(u.toDash(attr));
         if (val === undefined) {
           el = this[0];
           if ((index = el[u._id]) === undefined) {
             obj = {};
-            obj[attr] = this[0].getAttribute('data-' + attr);
+            obj[attr] = el.dataset[attr];
             el[u._id] = index = u._data.push(obj) - 1;
             return obj[attr];
           }
           else {
-            return !!u._data[index][attr] ? u._data[index][attr] : (u._data[index][attr] = this[0].getAttribute('data-' + attr));
+            return !!u._data[index][attr] ? u._data[index][attr] : (u._data[index][attr] = el.dataset[attr]);
           }
         }
         else {
@@ -1028,8 +1022,9 @@
     removeData: function(attr, index) {
       return this.each(function(i, el) {
         if (attr !== undefined) {
+          attr = u.toCamel(u.toDash(attr));
           if ((index = el[u._id]) !== undefined) {
-            el.removeAttribute('data-' + attr);
+            delete el.dataset[attr];
             delete u._data[index][attr];
           }
         }
