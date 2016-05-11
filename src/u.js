@@ -474,9 +474,8 @@
   /**
    * getScript Function
    * load a script into global scope
-   * @param  {[type]}   url      [description]
-   * @param  {Function} callback [description]
-   * @return {[type]}            [description]
+   * @param  {string}   url      - url of the script to load
+   * @param  {function} callback - function to call when loaded
    */
   u.getScript = function(url, callback) {
 		var script = document.createElement('script');
@@ -936,7 +935,7 @@
      * hasAttr method
      * check if element has attribute
      * @param  {string} attr - attribute name
-     * @return {object} this
+     * @return {boolean}
      */
     hasAttr: function(attr) {
       return this[0].hasAttribute(attr);
