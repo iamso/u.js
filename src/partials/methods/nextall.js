@@ -5,6 +5,9 @@
      * @return {object}         sibling elements
      */
     nextAll: function(sel) {
+      if (!this.length) {
+        return this;
+      }
       var matched = [],
     	 		el = this[0];
 

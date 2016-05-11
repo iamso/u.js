@@ -5,7 +5,7 @@
      * @return {(string|object)}         text value or this
      */
     val: function(val) {
-      return val === undefined ? this[0].value : this.each(function(index, el) {
+      return val === undefined ? (this.length ? this[0].value : null) : this.each(function(index, el) {
         el.value = val;
       });
     },

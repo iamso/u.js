@@ -4,5 +4,5 @@
      * @return {object} child elements
      */
     children: function() {
-      return u(u.toArray(this[0].children));
+      return this.length ? u(u.toArray(this[0].children)) : this;
     },

@@ -4,6 +4,9 @@
      * @return {object} element
      */
     parents: function(sel) {
+      if (!this.length) {
+        return this;
+      }
       var parents = [],
           finished = false,
           currentElement = this[0];

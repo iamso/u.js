@@ -5,5 +5,5 @@
      * @return {object}       matching elements
      */
     find: function(sel) {
-      return u(u.toArray(this[0].querySelectorAll(sel)));
+      return this.length ? u(u.toArray(this[0].querySelectorAll(sel))) : this;
     },

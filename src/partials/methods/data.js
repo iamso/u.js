@@ -11,6 +11,9 @@
     data: function(attr, val, el, index, obj) {
 
       if (attr === undefined) {
+        if (!this.length) {
+          return {};
+        }
         el = this[0];
         obj = u.extend({}, el.dataset);
 
@@ -25,6 +28,9 @@
       else {
         attr = u.toCamel(u.toDash(attr));
         if (val === undefined) {
+          if (!this.length) {
+            return null;
+          }
           el = this[0];
           if ((index = el[u._id]) === undefined) {
             obj = {};

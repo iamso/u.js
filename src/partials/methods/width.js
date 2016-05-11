@@ -5,7 +5,7 @@
      * @return {number} width
      */
     width: function(val) {
-      return val === undefined ? this[0].clientWidth || this[0].innerWidth : this.each(function(index, el) {
+      return val === undefined ? (this.length ? this[0].clientWidth || this[0].innerWidth : 0) : this.each(function(index, el) {
         el.style.width = val + 'px';
       });
     },

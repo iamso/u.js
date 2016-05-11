@@ -5,5 +5,5 @@
      * @return {boolean}
      */
     hasAttr: function(attr) {
-      return this[0].hasAttribute(attr);
+      return this.length ? this[0].hasAttribute(attr) : false;
     },

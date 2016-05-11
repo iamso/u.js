@@ -4,5 +4,5 @@
      * @return {object} position
      */
     position: function() {
-      return {left: this[0].offsetLeft, top: this[0].offsetTop};
+      return this.length ? {left: this[0].offsetLeft, top: this[0].offsetTop} : {left: 0, top: 0};
     },

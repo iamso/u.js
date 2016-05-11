@@ -5,7 +5,7 @@
      * @return {(string|object)}         html value or this
      */
     outerHTML: function(val) {
-      return val === undefined ? this[0].outerHTML : this.each(function(index, el) {
+      return val === undefined ? (this.length ? this[0].outerHTML : null) : this.each(function(index, el) {
         el.outerHTML = val;
       });
     },

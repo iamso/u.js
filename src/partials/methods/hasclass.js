@@ -5,5 +5,5 @@
      * @return {boolean}
      */
     hasClass: function(cls) {
-      return this[0].classList.contains(cls);
+      return this.length ? this[0].classList.contains(cls) : false;
     },

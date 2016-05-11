@@ -5,5 +5,5 @@
      * @return {boolean}
      */
     contains: function(child) {
-      return /^o/.test(typeof child) ? this[0] !== child[0] && this[0].contains(child[0]) : this[0].querySelector(child) !== null;
+      return this.length ? (/^o/.test(typeof child) ? this[0] !== child[0] && this[0].contains(child[0]) : this[0].querySelector(child) !== null) : false;
     },

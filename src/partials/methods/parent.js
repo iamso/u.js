@@ -4,5 +4,5 @@
      * @return {object} element
      */
     parent: function() {
-      return (this.length < 2) ? u(this[0].parentNode): [];
+      return this.length ? u(this[0].parentNode): this;
     },

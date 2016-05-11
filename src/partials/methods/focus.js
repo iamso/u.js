@@ -4,6 +4,6 @@
      * @return {object} this
      */
     focus: function() {
-      this[0].focus();
+      this.length && this[0].focus();
       return this;
     },

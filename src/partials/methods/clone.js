@@ -4,5 +4,5 @@
      * @return {object} element clone
      */
     clone: function() {
-      return u(this[0].cloneNode(true));
+      return this.length ? u(this[0].cloneNode(true)) : this;
     },

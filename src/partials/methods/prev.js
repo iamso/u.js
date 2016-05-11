@@ -5,5 +5,5 @@
      * @return {object}         sibling element
      */
     prev: function(sel) {
-      return u(u.toArray(this.prevAll(sel)).shift());
+      return this.length ? u(u.toArray(this.prevAll(sel)).shift()) : this;
     },

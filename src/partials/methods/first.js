@@ -4,5 +4,5 @@
      * @return {object} element
      */
     first: function() {
-      return u(this[0]);
+      return this.length ? u(this[0]) : this;
     },

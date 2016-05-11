@@ -6,7 +6,7 @@
      * @return {(string|object)}         property value or this
      */
     prop: function(prop, val) {
-      return val === undefined ? this[0][prop] : this.each(function(index, el) {
+      return val === undefined ? (this.length ? this[0][prop] : null) : this.each(function(index, el) {
         el[prop] = val;
       });
     },
