@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.28.0
+ * u.js - Version 0.29.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2016-04-06
+ * Build date: 2016-05-11
  * Copyright (c) 2016 Steve Ottoz
  * Released under the MIT license
  */
@@ -474,9 +474,8 @@
   /**
    * getScript Function
    * load a script into global scope
-   * @param  {[type]}   url      [description]
-   * @param  {Function} callback [description]
-   * @return {[type]}            [description]
+   * @param  {string}   url      - url of the script to load
+   * @param  {function} callback - function to call when loaded
    */
   u.getScript = function(url, callback) {
 		var script = document.createElement('script');
@@ -519,7 +518,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.28.0';
+  u.version = '0.29.0';
 
 
   /**
@@ -600,7 +599,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.28.0',
+    ujs: '0.29.0',
 
 
     /**
@@ -737,7 +736,7 @@
      * @return {boolean}
      */
     hasClass: function(cls) {
-      return this[0].classList.contains(cls);
+      return this.length ? this[0].classList.contains(cls) : false;
     },
 
 
@@ -747,7 +746,7 @@
      * @return {object} position
      */
     position: function() {
-      return {left: this[0].offsetLeft, top: this[0].offsetTop};
+      return this.length ? {left: this[0].offsetLeft, top: this[0].offsetTop} : {left: 0, top: 0};
     },
 
 
@@ -757,6 +756,12 @@
      * @return {object} offset
      */
     offset: function() {
+      if (!this.length) {
+        return {
+          top: 0,
+          left: 0
+        };
+      }
       var rect = this[0].getBoundingClientRect();
       return {
         top: rect.top + document.body.scrollTop,
@@ -772,7 +777,7 @@
      * @return {number} scrollTop
      */
     scrollTop: function(val) {
-      return val === undefined ? (this[0].scrollTop !== undefined ? this[0].scrollTop : (this[0].scrollY || this[0].pageYOffset)) : this.each(function(index, el) {
+      return val === undefined ? (this.length ? (this[0].scrollTop !== undefined ? this[0].scrollTop : (this[0].scrollY || this[0].pageYOffset)) : 0) : this.each(function(index, el) {
         el.scrollTop === undefined || el.scrollTo !== undefined ? el.scrollTo(0, val) : el.scrollTop = val;
       });
     },
@@ -840,7 +845,7 @@
      * @return {number} width
      */
     width: function(val) {
-      return val === undefined ? this[0].clientWidth || this[0].innerWidth : this.each(function(index, el) {
+      return val === undefined ? (this.length ? this[0].clientWidth || this[0].innerWidth : 0) : this.each(function(index, el) {
         el.style.width = val + 'px';
       });
     },
@@ -853,6 +858,9 @@
      * @return {number}  outerWidth
      */
     outerWidth: function(margin) {
+      if (!this.length) {
+        return 0;
+      }
       return margin ? this[0].offsetWidth + parseInt(getComputedStyle(this[0]).marginLeft) + parseInt(getComputedStyle(this[0]).marginRight) : this[0].offsetWidth;
     },
 
@@ -864,7 +872,7 @@
      * @return {number} height
      */
     height: function(val) {
-      return val === undefined ? this[0].clientHeight || this[0].innerHeight : this.each(function(index, el) {
+      return val === undefined ? (this.length ? this[0].clientHeight || this[0].innerHeight : 0) : this.each(function(index, el) {
         el.style.height = val + 'px';
       });
     },
@@ -877,6 +885,9 @@
      * @return {number}  outerHeight
      */
     outerHeight: function(margin) {
+      if (!this.length) {
+        return 0;
+      }
       return margin ? this[0].offsetHeight + parseInt(getComputedStyle(this[0]).marginTop) + parseInt(getComputedStyle(this[0]).marginBottom) : this[0].offsetHeight;
     },
 
@@ -913,7 +924,7 @@
      * @return {(string|object)}         attribute value or this
      */
     attr: function(attr, val) {
-      return val === undefined ? this[0].getAttribute(attr) : this.each(function(index, el) {
+      return val === undefined ? (this.length ? this[0].getAttribute(attr) : null) : this.each(function(index, el) {
         el.setAttribute(attr, val);
       });
     },
@@ -936,10 +947,10 @@
      * hasAttr method
      * check if element has attribute
      * @param  {string} attr - attribute name
-     * @return {object} this
+     * @return {boolean}
      */
     hasAttr: function(attr) {
-      return this[0].hasAttribute(attr);
+      return this.length ? this[0].hasAttribute(attr) : false;
     },
 
 
@@ -951,7 +962,7 @@
      * @return {(string|object)}         property value or this
      */
     prop: function(prop, val) {
-      return val === undefined ? this[0][prop] : this.each(function(index, el) {
+      return val === undefined ? (this.length ? this[0][prop] : null) : this.each(function(index, el) {
         el[prop] = val;
       });
     },
@@ -970,6 +981,9 @@
     data: function(attr, val, el, index, obj) {
 
       if (attr === undefined) {
+        if (!this.length) {
+          return {};
+        }
         el = this[0];
         obj = u.extend({}, el.dataset);
 
@@ -984,6 +998,9 @@
       else {
         attr = u.toCamel(u.toDash(attr));
         if (val === undefined) {
+          if (!this.length) {
+            return null;
+          }
           el = this[0];
           if ((index = el[u._id]) === undefined) {
             obj = {};
@@ -1052,7 +1069,7 @@
         return this;
       }
       else {
-        return val === undefined ? this[0].style[props] : this.each(function(index, el) {
+        return val === undefined ? (this.length ? this[0].style[props] : null) : this.each(function(index, el) {
           var prefixed = u.prfx(props);
           el.style[prefixed] = val;
         });
@@ -1127,7 +1144,7 @@
      * @return {object} element
      */
     first: function() {
-      return u(this[0]);
+      return this.length ? u(this[0]) : this;
     },
 
 
@@ -1137,7 +1154,7 @@
      * @return {object} element
      */
     last: function() {
-      return u(this[this.length - 1]);
+      return this.length ? u(this[this.length - 1]) : this;
     },
 
 
@@ -1169,7 +1186,7 @@
      * @return {object} element clone
      */
     clone: function() {
-      return u(this[0].cloneNode(true));
+      return this.length ? u(this[0].cloneNode(true)) : this;
     },
 
 
@@ -1180,7 +1197,7 @@
      * @return {boolean}
      */
     contains: function(child) {
-      return /^o/.test(typeof child) ? this[0] !== child[0] && this[0].contains(child[0]) : this[0].querySelector(child) !== null;
+      return this.length ? (/^o/.test(typeof child) ? this[0] !== child[0] && this[0].contains(child[0]) : this[0].querySelector(child) !== null) : false;
     },
 
 
@@ -1191,7 +1208,7 @@
      * @return {object}       matching elements
      */
     find: function(sel) {
-      return u(u.toArray(this[0].querySelectorAll(sel)));
+      return this.length ? u(u.toArray(this[0].querySelectorAll(sel))) : this;
     },
 
 
@@ -1215,6 +1232,9 @@
      * @return {boolean}
      */
     is: function(sel) {
+      if (!this.length) {
+        return false;
+      }
       var m = (this[0].matches || this[0].matchesSelector || this[0].msMatchesSelector || this[0].mozMatchesSelector || this[0].webkitMatchesSelector || this[0].oMatchesSelector);
       if (m) {
         return m.call(this[0], sel);
@@ -1237,7 +1257,7 @@
      * @return {object} child elements
      */
     children: function() {
-      return u(u.toArray(this[0].children));
+      return this.length ? u(u.toArray(this[0].children)) : this;
     },
 
 
@@ -1266,7 +1286,7 @@
      * @return {object}         sibling element
      */
     prev: function(sel) {
-      return u(u.toArray(this.prevAll(sel)).shift());
+      return this.length ? u(u.toArray(this.prevAll(sel)).shift()) : this;
     },
 
 
@@ -1277,6 +1297,9 @@
      * @return {object}         sibling elements
      */
     prevAll: function(sel) {
+      if (!this.length) {
+        return this;
+      }
       var matched = [],
     	 		el = this[0];
 
@@ -1296,7 +1319,7 @@
      * @return {object}         sibling element
      */
     next: function(sel) {
-      return u(u.toArray(this.nextAll(sel)).shift());
+      return this.length ? u(u.toArray(this.nextAll(sel)).shift()) : this;
     },
 
 
@@ -1307,6 +1330,9 @@
      * @return {object}         sibling elements
      */
     nextAll: function(sel) {
+      if (!this.length) {
+        return this;
+      }
       var matched = [],
     	 		el = this[0];
 
@@ -1326,6 +1352,9 @@
      * @return {object}         sibling elements
      */
     siblings: function(sel) {
+      if (!this.length) {
+        return this;
+      }
       var el = this[0];
       return u(array.filter.call(el.parentNode.children, function(child) {
         return sel ? child !== el && u(child).is(sel) : child !== el;
@@ -1339,7 +1368,7 @@
      * @return {object} element
      */
     parent: function() {
-      return (this.length < 2) ? u(this[0].parentNode): [];
+      return this.length ? u(this[0].parentNode): this;
     },
 
 
@@ -1349,6 +1378,9 @@
      * @return {object} element
      */
     parents: function(sel) {
+      if (!this.length) {
+        return this;
+      }
       var parents = [],
           finished = false,
           currentElement = this[0];
@@ -1378,7 +1410,7 @@
      * @return {(string|object)}         text value or this
      */
     text: function(val) {
-      return val === undefined ? this[0].textContent : this.each(function(index, el) {
+      return val === undefined ? (this.length ? this[0].textContent : null) : this.each(function(index, el) {
         el.textContent = val;
       });
     },
@@ -1391,7 +1423,7 @@
      * @return {(string|object)}         html value or this
      */
     html: function(val) {
-      return val === undefined ? this[0].innerHTML : this.each(function(index, el) {
+      return val === undefined ? (this.length ? this[0].innerHTML : null) : this.each(function(index, el) {
         el.innerHTML = val;
       });
     },
@@ -1404,7 +1436,7 @@
      * @return {(string|object)}         html value or this
      */
     outerHTML: function(val) {
-      return val === undefined ? this[0].outerHTML : this.each(function(index, el) {
+      return val === undefined ? (this.length ? this[0].outerHTML : null) : this.each(function(index, el) {
         el.outerHTML = val;
       });
     },
@@ -1417,7 +1449,7 @@
      * @return {(string|object)}         text value or this
      */
     val: function(val) {
-      return val === undefined ? this[0].value : this.each(function(index, el) {
+      return val === undefined ? (this.length ? this[0].value : null) : this.each(function(index, el) {
         el.value = val;
       });
     },
@@ -1453,7 +1485,7 @@
      * @return {number} byte size
      */
     bytes: function() {
-      return u.bytes(this[0].value || this[0].textContent);
+      return this.length ? u.bytes(this[0].value || this[0].textContent) : 0;
     },
 
 
@@ -1463,7 +1495,7 @@
      * @return {object} this
      */
     focus: function() {
-      this[0].focus();
+      this.length && this[0].focus();
       return this;
     },
 
