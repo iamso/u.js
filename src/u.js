@@ -147,7 +147,7 @@
    * @param  {object} nl - NodeList object
    * @return {object}      array
    */
-  u.toArray = function(nl) {
+  u.toArray = u.makeArray = function(nl) {
     return array.slice.call(nl);
   },
 
@@ -1486,6 +1486,16 @@
      */
     bytes: function() {
       return this.length ? u.bytes(this[0].value || this[0].textContent) : 0;
+    },
+
+
+    /**
+     * toArray method
+     * get the current collection as an array
+     * @return {object} array of this
+     */
+    toArray: function() {
+      return u.toArray(this);
     },
 
 

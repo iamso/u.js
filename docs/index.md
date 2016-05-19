@@ -679,6 +679,15 @@ Returns the number of bytes.
 u('selector').bytes() // bytesize
 ```
 
+### .toArray()
+Get the current collection as an array.
+
+Returns array of this.
+
+```javascript
+u('selector').toArray() // array
+```
+
 ### .parent()
 Get the direct parent element.
 
@@ -850,6 +859,9 @@ Returns an array.
 ```javascript
 u.toArray(docuemnt.querySelectorAll('li')) // array
 ```
+
+### u.makeArray()
+Alias for u.toArray().
 
 ### u.toDash(string)
 Converts a camelCase string to dash-separated string.

@@ -84,6 +84,7 @@ module.exports = {
       'src/partials/methods/empty.js',
       'src/partials/methods/remove.js',
       'src/partials/methods/bytes.js',
+      'src/partials/methods/toarray.js',
       'src/partials/methods/focus.js',
       'src/partials/methods/blur.js',
       'src/partials/methods/extend.js',

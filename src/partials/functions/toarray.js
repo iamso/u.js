@@ -4,6 +4,6 @@
    * @param  {object} nl - NodeList object
    * @return {object}      array
    */
-  u.toArray = function(nl) {
+  u.toArray = u.makeArray = function(nl) {
     return array.slice.call(nl);
   },
