@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.29.0
+ * u.js - Version 0.30.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2016-05-11
+ * Build date: 2016-05-19
  * Copyright (c) 2016 Steve Ottoz
  * Released under the MIT license
  */
@@ -147,7 +147,7 @@
    * @param  {object} nl - NodeList object
    * @return {object}      array
    */
-  u.toArray = function(nl) {
+  u.toArray = u.makeArray = function(nl) {
     return array.slice.call(nl);
   },
 
@@ -518,7 +518,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.29.0';
+  u.version = '0.30.0';
 
 
   /**
@@ -599,7 +599,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.29.0',
+    ujs: '0.30.0',
 
 
     /**
@@ -1490,6 +1490,16 @@
 
 
     /**
+     * toArray method
+     * get the current collection as an array
+     * @return {object} array of this
+     */
+    toArray: function() {
+      return u.toArray(this);
+    },
+
+
+    /**
      * focus method
      * give an element focus
      * @return {object} this
@@ -1588,10 +1598,10 @@
 
 
 /*!
- * u.js - Version 0.29.0 - IE 9 fix
+ * u.js - Version 0.30.0 - IE 9 fix
  * Fix for the missing classList in IE 9
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2016-05-11
+ * Build date: 2016-05-19
  * Copyright (c) 2016 Steve Ottoz
  * Released under the MIT license
  */
