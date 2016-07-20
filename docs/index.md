@@ -1044,6 +1044,44 @@ setTimeout(function() {
 ```
 
 
+### u.debounce(fn, delay)
+Debounce a function.
+
+Returns a function debouncing the passed in function.
+
+| Parameter | Type | Description |
+|---|---|---|
+| fn | function | Function to be debounced. |
+| delay | number | **Optional**. Delay for the debouncing. **Default 250** |
+| scope | object | **Optional**. The scope to apply the function in. **Default this** |
+
+```javascript
+// this calls the function when the resizing stops for at least 500 milliseconds
+u(window).on('resize', u.debounce(function() {
+	console.log('window resize event');
+}, 500));
+```
+
+
+### u.throttle(fn, threshhold, scope)
+Throttle a function.
+
+Returns a function throttling the passed in function.
+
+| Parameter | Type | Description |
+|---|---|---|
+| fn | function | Function to be throttled. |
+| threshhold | number | **Optional**. Threshhold for the throttling. **Default 250** |
+| scope | object | **Optional**. The scope to apply the function in. **Default this** |
+
+```javascript
+// this calls the function when starting to resize and every 500 milliseconds while still resizing
+u(window).on('resize', u.throttle(function() {
+	console.log('window resize event');
+}, 500));
+```
+
+
 ### AJAX functions
 #### u.get(options), u.post(options), u.put(options), u.patch(options), u.options(options), u.delete(options)
 u.js AJAX functions all work pretty much the same. You call the function and pass the options object. All options work the same on all those functions, except for the get function, which ignores the json flag.
