@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.30.0
+ * u.js - Version 0.31.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2016-05-19
+ * Build date: 2016-07-20
  * Copyright (c) 2016 Steve Ottoz
  * Released under the MIT license
  */
@@ -90,6 +90,58 @@
    */
   u.trim = function(val) {
     return val.replace(/^\s+|\s+$/g, '');
+  };
+
+
+  /**
+   * debounce function
+   * @param  {function} fn      - function to be debounced
+   * @param  {number}   [delay] - delay for the debouncing
+   * @param  {object}   [scope] - the scope to apply the function in
+   * @return {function}         - function debouncing the passed in function
+   */
+  u.debounce = function(fn, delay, scope) {
+    var timer = null;
+    delay = delay || 250;
+    return function () {
+      var context = scope || this,
+          args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        fn.apply(context, args);
+      }, delay);
+    };
+  };
+
+
+  /**
+   * throttle function
+   * @param  {function} fn           - function to be throttled
+   * @param  {number}   [threshhold] - threshhold for the throttling
+   * @param  {object}   [scope]      - the scope to apply the function in
+   * @return {function}              - function throttling the passed in function
+   */
+  u.throttle = function(fn, threshhold, scope) {
+    var last,
+        deferTimer;
+    threshhold = threshhold || 250;
+    return function () {
+      var context = scope || this,
+          now = +new Date,
+          args = arguments;
+      if (last && now < last + threshhold) {
+        // hold on to it
+        clearTimeout(deferTimer);
+        deferTimer = setTimeout(function () {
+          last = now;
+          fn.apply(context, args);
+        }, threshhold);
+      }
+      else {
+        last = now;
+        fn.apply(context, args);
+      }
+    };
   };
 
 
@@ -518,7 +570,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.30.0';
+  u.version = '0.31.0';
 
 
   /**
@@ -599,7 +651,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.30.0',
+    ujs: '0.31.0',
 
 
     /**
@@ -1598,10 +1650,10 @@
 
 
 /*!
- * u.js - Version 0.30.0 - IE 9 fix
+ * u.js - Version 0.31.0 - IE 9 fix
  * Fix for the missing classList in IE 9
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2016-05-19
+ * Build date: 2016-07-20
  * Copyright (c) 2016 Steve Ottoz
  * Released under the MIT license
  */
