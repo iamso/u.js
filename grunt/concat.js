@@ -11,6 +11,8 @@ module.exports = {
       'src/partials/functions/each.js',
       'src/partials/functions/extend.js',
       'src/partials/functions/trim.js',
+      'src/partials/functions/debounce.js',
+      'src/partials/functions/throttle.js',
       'src/partials/functions/type.js',
       'src/partials/functions/array.js',
       'src/partials/functions/inarray.js',

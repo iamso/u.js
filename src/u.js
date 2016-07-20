@@ -94,6 +94,58 @@
 
 
   /**
+   * debounce function
+   * @param  {function} fn      - function to be debounced
+   * @param  {number}   [delay] - delay for the debouncing
+   * @param  {object}   [scope] - the scope to apply the function in
+   * @return {function}         - function debouncing the passed in function
+   */
+  u.debounce = function(fn, delay, scope) {
+    var timer = null;
+    delay = delay || 250;
+    return function () {
+      var context = scope || this,
+          args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        fn.apply(context, args);
+      }, delay);
+    };
+  };
+
+
+  /**
+   * throttle function
+   * @param  {function} fn           - function to be throttled
+   * @param  {number}   [threshhold] - threshhold for the throttling
+   * @param  {object}   [scope]      - the scope to apply the function in
+   * @return {function}              - function throttling the passed in function
+   */
+  u.throttle = function(fn, threshhold, scope) {
+    var last,
+        deferTimer;
+    threshhold = threshhold || 250;
+    return function () {
+      var context = scope || this,
+          now = +new Date,
+          args = arguments;
+      if (last && now < last + threshhold) {
+        // hold on to it
+        clearTimeout(deferTimer);
+        deferTimer = setTimeout(function () {
+          last = now;
+          fn.apply(context, args);
+        }, threshhold);
+      }
+      else {
+        last = now;
+        fn.apply(context, args);
+      }
+    };
+  };
+
+
+  /**
    * type function
    * get the type of an object
    * @param  {*}      obj - object to check
