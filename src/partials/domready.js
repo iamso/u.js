@@ -1,4 +1,4 @@
-  if (document) {
+  if (!/^u/.test(typeof document)) {
 
     /**
      * DOMContentLoaded function calls
