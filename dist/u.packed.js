@@ -1,24 +1,27 @@
 /*!
- * u.js - Version 0.31.0
+ * u.js - Version 0.32.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2016-07-20
+ * Build date: 2016-07-29
  * Copyright (c) 2016 Steve Ottoz
  * Released under the MIT license
  */
 ;(function (root, factory) {
   'use strict';
-  var win = !/^u/.test(typeof window) ? window : root;
-  var doc = !/^u/.test(typeof document) ? document : null;
   if (/^f/.test(typeof define) && define.amd) {
-    define([], factory(win, doc, [], 'prototype'));
-  } else if (/^o/.test(typeof exports)) {
-    module.exports = factory(win, doc, [], 'prototype');
-  } else {
-    root.u = root.ujs = root.µ = factory(win, doc, [], 'prototype');
+    define('ujs', [], factory);
   }
-})(!/^u/.test(typeof global) ? global : this.window || this.global, function (window, document, array, prototype, undefined) {
+  else if (/^o/.test(typeof exports)) {
+    module.exports = factory();
+  }
+  else {
+    root.u = root.ujs = root.µ = factory();
+  }
+})(!/^u/.test(typeof window) ? window : this, function (undefined) {
   'use strict';
+
+  var array = [];
+  var prototype = 'prototype';
 
 
   /**
@@ -570,7 +573,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.31.0';
+  u.version = '0.32.0';
 
 
   /**
@@ -651,7 +654,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.31.0',
+    ujs: '0.32.0',
 
 
     /**
@@ -1621,7 +1624,7 @@
   });
 
 
-  if (document) {
+  if (!/^u/.test(typeof document)) {
 
     /**
      * DOMContentLoaded function calls
@@ -1650,10 +1653,10 @@
 
 
 /*!
- * u.js - Version 0.31.0 - IE 9 fix
+ * u.js - Version 0.32.0 - IE 9 fix
  * Fix for the missing classList in IE 9
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2016-07-20
+ * Build date: 2016-07-29
  * Copyright (c) 2016 Steve Ottoz
  * Released under the MIT license
  */
