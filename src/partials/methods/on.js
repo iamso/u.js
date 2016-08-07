@@ -13,8 +13,15 @@
       else if (/^s/.test(typeof selector)) {
         fn = handler;
         handler = function(e) {
+          var element;
           if (u(e.target).is(selector)) {
-            fn.apply(e.target, [e]);
+            element = e.target;
+          }
+          else if (u(e.target).parents(selector).length) {
+            element = u(e.target).parents(selector)[0];
+          }
+          if (element) {
+            fn.apply(element, [e]);
           }
         };
       }
