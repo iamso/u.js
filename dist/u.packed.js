@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.32.1
+ * u.js - Version 0.33.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2016-08-06
+ * Build date: 2016-08-07
  * Copyright (c) 2016 Steve Ottoz
  * Released under the MIT license
  */
@@ -573,7 +573,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.32.1';
+  u.version = '0.33.0';
 
 
   /**
@@ -654,7 +654,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.32.1',
+    ujs: '0.33.0',
 
 
     /**
@@ -684,8 +684,15 @@
       else if (/^s/.test(typeof selector)) {
         fn = handler;
         handler = function(e) {
+          var element;
           if (u(e.target).is(selector)) {
-            fn.apply(e.target, [e]);
+            element = e.target;
+          }
+          else if (u(e.target).parents(selector).length) {
+            element = u(e.target).parents(selector)[0];
+          }
+          if (element) {
+            fn.apply(element, [e]);
           }
         };
       }
@@ -714,8 +721,15 @@
       else if (/^s/.test(typeof selector)) {
         fn = handler;
         handler = function(e) {
+          var element;
           if (u(e.target).is(selector)) {
-            fn.apply(e.target, [e]);
+            element = e.target;
+          }
+          else if (u(e.target).parents(selector).length) {
+            element = u(e.target).parents(selector)[0];
+          }
+          if (element) {
+            fn.apply(element, [e]);
           }
         };
       }
@@ -1655,10 +1669,10 @@
 
 
 /*!
- * u.js - Version 0.32.1 - IE 9 fix
+ * u.js - Version 0.33.0 - IE 9 fix
  * Fix for the missing classList in IE 9
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2016-08-06
+ * Build date: 2016-08-07
  * Copyright (c) 2016 Steve Ottoz
  * Released under the MIT license
  */
