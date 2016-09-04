@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.33.0
+ * u.js - Version 0.33.1
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2016-08-07
+ * Build date: 2016-09-04
  * Copyright (c) 2016 Steve Ottoz
  * Released under the MIT license
  */
@@ -334,6 +334,9 @@
    * @return {string}           prepared string
    */
   u.param = function(obj, json, prefix) {
+    if (!/^o/.test(typeof obj)) {
+      return obj;
+    }
     if (json) {
       return JSON.stringify(obj);
     }
@@ -573,7 +576,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.33.0';
+  u.version = '0.33.1';
 
 
   /**
@@ -654,7 +657,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.33.0',
+    ujs: '0.33.1',
 
 
     /**
@@ -1669,10 +1672,10 @@
 
 
 /*!
- * u.js - Version 0.33.0 - IE 9 fix
+ * u.js - Version 0.33.1 - IE 9 fix
  * Fix for the missing classList in IE 9
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2016-08-07
+ * Build date: 2016-09-04
  * Copyright (c) 2016 Steve Ottoz
  * Released under the MIT license
  */

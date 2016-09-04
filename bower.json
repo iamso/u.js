@@ -1,6 +1,6 @@
 {
   "name": "u.js",
-  "version": "0.33.0",
+  "version": "0.33.1",
   "description": "micro framework, utility library",
   "repository": {
     "type": "git",
@@ -33,5 +33,8 @@
     "library",
     "ujs",
     "u.js"
-  ]
+  ],
+  "dependencies": {
+    "ujs": "0.*"
+  }
 }
