@@ -334,6 +334,9 @@
    * @return {string}           prepared string
    */
   u.param = function(obj, json, prefix) {
+    if (!/^o/.test(typeof obj)) {
+      return obj;
+    }
     if (json) {
       return JSON.stringify(obj);
     }
