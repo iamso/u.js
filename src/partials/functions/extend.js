@@ -11,11 +11,16 @@
 
     args[1] || (args[1] = base, base = u);
 
-    for (i in args) {
-      if (i > 0) {
-        for(prop in args[i]) {
-          if (args[i].hasOwnProperty(prop)) {
-            base[prop] = args[i][prop];
+    if (/^f/.test(typeof Object.assign)) {
+      Object.assign.apply(Object, args);
+    }
+    else {
+      for (i in args) {
+        if (i > 0) {
+          for (prop in args[i]) {
+            if (args[i].hasOwnProperty(prop)) {
+              base[prop] = args[i][prop];
+            }
           }
         }
       }
