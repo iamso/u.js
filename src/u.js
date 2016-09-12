@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.33.1
+ * u.js - Version 0.33.2
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2016-09-04
+ * Build date: 2016-09-12
  * Copyright (c) 2016 Steve Ottoz
  * Released under the MIT license
  */
@@ -72,11 +72,16 @@
 
     args[1] || (args[1] = base, base = u);
 
-    for (i in args) {
-      if (i > 0) {
-        for(prop in args[i]) {
-          if (args[i].hasOwnProperty(prop)) {
-            base[prop] = args[i][prop];
+    if (/^f/.test(typeof Object.assign)) {
+      Object.assign.apply(Object, args);
+    }
+    else {
+      for (i in args) {
+        if (i > 0) {
+          for (prop in args[i]) {
+            if (args[i].hasOwnProperty(prop)) {
+              base[prop] = args[i][prop];
+            }
           }
         }
       }
@@ -576,7 +581,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.33.1';
+  u.version = '0.33.2';
 
 
   /**
@@ -657,7 +662,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.33.1',
+    ujs: '0.33.2',
 
 
     /**
