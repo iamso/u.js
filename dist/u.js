@@ -1,8 +1,8 @@
 /*!
- * u.js - Version 0.33.2
+ * u.js - Version 0.34.0
  * micro framework, utility library
  * Author: Steve Ottoz <so@dev.so>
- * Build date: 2016-09-12
+ * Build date: 2016-11-01
  * Copyright (c) 2016 Steve Ottoz
  * Released under the MIT license
  */
@@ -97,7 +97,7 @@
    * @return {string}       trimmed value
    */
   u.trim = function(val) {
-    return val.replace(/^\s+|\s+$/g, '');
+    return val.trim();
   };
 
 
@@ -581,7 +581,7 @@
    * u version
    * @type {string}
    */
-  u.version = '0.33.2';
+  u.version = '0.34.0';
 
 
   /**
@@ -662,7 +662,7 @@
      * u.js object identifier
      * @type {string}
      */
-    ujs: '0.33.2',
+    ujs: '0.34.0',
 
 
     /**
@@ -1148,7 +1148,7 @@
         return this;
       }
       else {
-        return val === undefined ? (this.length ? this[0].style[props] : null) : this.each(function(index, el) {
+        return val === undefined ? (this.length ? getComputedStyle(this[0])[props] : null) : this.each(function(index, el) {
           var prefixed = u.prfx(props);
           el.style[prefixed] = val;
         });
@@ -1314,19 +1314,10 @@
       if (!this.length) {
         return false;
       }
-      var m = (this[0].matches || this[0].matchesSelector || this[0].msMatchesSelector || this[0].mozMatchesSelector || this[0].webkitMatchesSelector || this[0].oMatchesSelector);
-      if (m) {
-        return m.call(this[0], sel);
-      }
-      else if (this[0].parentNode) {
-        var n = this[0].parentNode.querySelectorAll(sel);
-        for (var i = n.length; i--;) {
-          if (n[i] === this[0]) {
-            return true;
-          }
-        }
-      }
-      return false;
+      var m = (this[0].matches || this[0].matchesSelector || this[0].msMatchesSelector || this[0].mozMatchesSelector || this[0].webkitMatchesSelector || this[0].oMatchesSelector || function(s) {
+        return [].indexOf.call(document.querySelectorAll(s), this) !== -1;
+      });
+      return m.call(this[0], sel);
     },
 
 
