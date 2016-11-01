@@ -5,5 +5,5 @@
    * @return {string}       trimmed value
    */
   u.trim = function(val) {
-    return val.replace(/^\s+|\s+$/g, '');
+    return val.trim();
   };
