@@ -18,7 +18,7 @@
         return this;
       }
       else {
-        return val === undefined ? (this.length ? this[0].style[props] : null) : this.each(function(index, el) {
+        return val === undefined ? (this.length ? getComputedStyle(this[0])[props] : null) : this.each(function(index, el) {
           var prefixed = u.prfx(props);
           el.style[prefixed] = val;
         });
