@@ -16,13 +16,13 @@ Install
 ### With Bower
 
 ```bash
-bower install u.js
+bower install ujs
 ```
 
 ### With Components
 
 ```bash
-component install u.js
+component install ujs
 ```
 
 ### With NPM
@@ -30,8 +30,6 @@ component install u.js
 ```bash
 npm install ujs
 ```
-
-
 
 Documentation
 -------------
