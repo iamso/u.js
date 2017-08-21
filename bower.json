@@ -1,6 +1,6 @@
 {
   "name": "ujs",
-  "version": "0.34.0",
+  "version": "0.34.1",
   "description": "micro framework, utility library",
   "repository": {
     "type": "git",
