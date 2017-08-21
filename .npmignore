@@ -46,5 +46,6 @@ demo
 docs
 grunt
 Gruntfile.json
+Gruntfile.js
 src
-
+_resources
